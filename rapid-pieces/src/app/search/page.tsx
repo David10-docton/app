@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Search, Filter, Star, MapPin, Clock, ChevronLeft, ChevronRight, X, Camera } from 'lucide-react';
+import Image from 'next/image';
+import { Search, Filter, Star, MapPin, Clock, X, Camera, Menu } from 'lucide-react';
 import BottomNav from '@/components/BottomNav';
-import { POPULAR_BRANDS, POPULAR_CATEGORIES, BENIN_LOCATIONS, QUALITY_LEVELS, DELIVERY_OPTIONS } from '@/lib/types';
-import { mockOffers } from '@/lib/mockData';
+import { POPULAR_BRANDS, BENIN_LOCATIONS, QUALITY_LEVELS } from '@/lib/types';
 
 const allResults = [
   { id: '1', part: 'Plaquettes de frein avant', brand: 'Toyota', model: 'Corolla 2018', price: 62000, oldPrice: 75000, quality: 'OEM' as const, seller: 'Auto Pièces Cotonou', score: 92, delivery: '1h', rating: 4.8, location: 'Cotonou', image: '🛞' },
@@ -40,10 +40,45 @@ export default function SearchPage() {
 
   return (
     <div className="min-h-screen bg-rp-bg">
-      {/* Search Header */}
-      <div className="bg-white px-4 pt-12 pb-4 border-b border-rp-border sticky top-0 z-40">
+      {/* Desktop Header */}
+      <header className="hidden lg:block bg-white border-b border-rp-border sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-3">
+            <Image src="/logo_rapidePiece.jpeg" alt="Rapid Pièces" width={48} height={48} className="h-12 w-auto object-contain rounded-lg" priority />
+            <span className="text-lg font-bold text-rp-text">Rapid Pièces</span>
+          </Link>
+          <div className="flex-1 max-w-xl mx-6">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-rp-text-muted" />
+              <input
+                type="text"
+                placeholder="Rechercher une pièce..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                className="w-full pl-10 pr-10 py-3 bg-rp-bg rounded-xl text-sm border-0 focus:ring-2 focus:ring-rp-primary outline-none"
+              />
+              {query && (
+                <button onClick={() => setQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2">
+                  <X className="w-4 h-4 text-rp-text-muted" />
+                </button>
+              )}
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <Link href="/" className="text-sm text-rp-text-muted hover:text-rp-primary">Accueil</Link>
+            <Link href="/orders" className="text-sm text-rp-text-muted hover:text-rp-primary">Commandes</Link>
+            <Link href="/profile" className="w-8 h-8 bg-rp-primary rounded-full flex items-center justify-center text-white text-xs font-bold">JK</Link>
+          </div>
+        </div>
+      </header>
+
+      {/* Mobile Search Header */}
+      <div className="lg:hidden bg-white px-4 pt-12 pb-4 border-b border-rp-border sticky top-0 z-40">
         <div className="max-w-lg mx-auto">
           <div className="flex items-center gap-3">
+            <Link href="/" className="flex-shrink-0">
+              <Image src="/logo_rapidePiece.jpeg" alt="RP" width={36} height={36} className="h-9 w-auto object-contain rounded-lg" priority />
+            </Link>
             <div className="flex-1 relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-rp-text-muted" />
               <input
@@ -61,14 +96,14 @@ export default function SearchPage() {
             </div>
             <button 
               onClick={() => setShowFilters(!showFilters)}
-              className="w-10 h-10 bg-rp-primary rounded-xl flex items-center justify-center"
+              className="w-10 h-10 bg-rp-primary rounded-xl flex items-center justify-center flex-shrink-0"
             >
               <Filter className="w-5 h-5 text-white" />
             </button>
           </div>
 
           {/* Quick Brand Tags */}
-          <div className="flex gap-2 mt-3 overflow-x-auto pb-1 -mx-4 px-4">
+          <div className="flex gap-2 mt-3 overflow-x-auto pb-1">
             {POPULAR_BRANDS.slice(0, 8).map(brand => (
               <button
                 key={brand}
@@ -138,7 +173,7 @@ export default function SearchPage() {
       )}
 
       {/* Sort Bar */}
-      <div className="px-4 py-3 max-w-lg mx-auto">
+      <div className="px-4 lg:px-6 py-3 max-w-7xl mx-auto">
         <div className="flex items-center justify-between">
           <p className="text-sm text-rp-text-muted">{filteredResults.length} résultats</p>
           <div className="flex gap-2">
@@ -161,46 +196,48 @@ export default function SearchPage() {
         </div>
       </div>
 
-      {/* Results */}
-      <div className="max-w-lg mx-auto px-4 space-y-3 pb-20">
-        {filteredResults.map((result) => (
-          <Link key={result.id} href={`/offers/${result.id}`} className="block bg-white rounded-2xl p-4 shadow-sm card-hover">
-            <div className="flex gap-3">
-              <div className="w-16 h-16 bg-rp-bg rounded-xl flex items-center justify-center text-3xl flex-shrink-0">
-                {result.image}
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <h3 className="font-semibold text-sm text-rp-text">{result.part}</h3>
-                    <p className="text-xs text-rp-text-muted">{result.brand} {result.model}</p>
+      {/* Results - Responsive Grid */}
+      <div className="max-w-7xl mx-auto px-4 lg:px-6 pb-20 lg:pb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4">
+          {filteredResults.map((result) => (
+            <Link key={result.id} href={`/offers/${result.id}`} className="block bg-white rounded-2xl p-4 shadow-sm card-hover">
+              <div className="flex gap-3 sm:flex-col sm:gap-2">
+                <div className="w-16 h-16 sm:w-full sm:h-32 bg-rp-bg rounded-xl flex items-center justify-center text-3xl sm:text-5xl flex-shrink-0">
+                  {result.image}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-start justify-between sm:flex-col sm:gap-1">
+                    <div>
+                      <h3 className="font-semibold text-sm text-rp-text">{result.part}</h3>
+                      <p className="text-xs text-rp-text-muted">{result.brand} {result.model}</p>
+                    </div>
+                    <div className="text-right sm:text-left flex-shrink-0">
+                      <p className="font-bold text-rp-primary">{result.price.toLocaleString()} <span className="text-xs">FCFA</span></p>
+                      {result.oldPrice && (
+                        <p className="text-xs text-rp-text-muted line-through">{result.oldPrice.toLocaleString()} FCFA</p>
+                      )}
+                    </div>
                   </div>
-                  <div className="text-right flex-shrink-0">
-                    <p className="font-bold text-rp-primary">{result.price.toLocaleString()} <span className="text-xs">FCFA</span></p>
-                    {result.oldPrice && (
-                      <p className="text-xs text-rp-text-muted line-through">{result.oldPrice.toLocaleString()} FCFA</p>
-                    )}
+                  <div className="flex items-center gap-2 mt-2 flex-wrap">
+                    <span className="flex items-center gap-1 text-xs bg-rp-primary/10 text-rp-primary px-2 py-0.5 rounded-full font-semibold">
+                      Score {result.score}
+                    </span>
+                    <span className="text-xs bg-rp-bg text-rp-text-muted px-2 py-0.5 rounded-full">{result.quality}</span>
+                    <span className="flex items-center gap-1 text-xs text-rp-text-muted">
+                      <Clock className="w-3 h-3" /> {result.delivery}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between mt-2">
+                    <span className="text-xs text-rp-text-muted">{result.seller}</span>
+                    <span className="flex items-center gap-1 text-xs">
+                      <Star className="w-3 h-3 fill-rp-gold text-rp-gold" /> {result.rating}
+                    </span>
                   </div>
                 </div>
-                <div className="flex items-center gap-2 mt-2 flex-wrap">
-                  <span className="flex items-center gap-1 text-xs bg-rp-primary/10 text-rp-primary px-2 py-0.5 rounded-full font-semibold">
-                    Score {result.score}
-                  </span>
-                  <span className="text-xs bg-rp-bg text-rp-text-muted px-2 py-0.5 rounded-full">{result.quality}</span>
-                  <span className="flex items-center gap-1 text-xs text-rp-text-muted">
-                    <Clock className="w-3 h-3" /> {result.delivery}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between mt-2">
-                  <span className="text-xs text-rp-text-muted">{result.seller}</span>
-                  <span className="flex items-center gap-1 text-xs">
-                    <Star className="w-3 h-3 fill-rp-gold text-rp-gold" /> {result.rating}
-                  </span>
-                </div>
               </div>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          ))}
+        </div>
 
         {filteredResults.length === 0 && (
           <div className="text-center py-12">
@@ -211,9 +248,9 @@ export default function SearchPage() {
         )}
 
         {/* Photo Search CTA */}
-        <div className="bg-gradient-to-r from-rp-accent/20 to-rp-accent/10 rounded-2xl p-4 border border-rp-accent/30">
+        <div className="bg-gradient-to-r from-rp-accent/20 to-rp-accent/10 rounded-2xl p-4 border border-rp-accent/30 mt-4">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-rp-accent rounded-xl flex items-center justify-center">
+            <div className="w-12 h-12 bg-rp-accent rounded-xl flex items-center justify-center flex-shrink-0">
               <Camera className="w-6 h-6 text-white" />
             </div>
             <div>

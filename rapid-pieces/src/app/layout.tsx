@@ -1,6 +1,7 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { AuthProvider } from "@/lib/auth";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,11 +13,21 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: "#E63946",
+};
+
 export const metadata: Metadata = {
   title: "Rapid Pièces — Trouvez. Comparez. Commandez. Recevez.",
   description: "La bourse digitale des pièces automobiles. Trouvez la pièce qu'il vous faut au meilleur prix, au bon endroit.",
-  manifest: "/manifest.json",
-
+  icons: {
+    icon: "/logo_rapidePiece.jpeg",
+    apple: "/logo_rapidePiece.jpeg",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -27,9 +38,15 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-        <link rel="apple-touch-icon" href="/icon-192.png" />
+        <link rel="apple-touch-icon" href="/logo_rapidePiece.jpeg" />
       </head>
-      <body className="min-h-screen bg-rp-bg">{children}</body>
+      <body className="min-h-screen bg-rp-bg">
+        <AuthProvider>
+          <div className="app-container">
+            {children}
+          </div>
+        </AuthProvider>
+      </body>
     </html>
   );
 }

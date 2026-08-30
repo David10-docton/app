@@ -1,7 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { Plus, Search, Edit3, Trash2, Package, BarChart3, TrendingUp, Eye } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Plus, Search, Edit3, Trash2, Package, TrendingUp, Eye } from 'lucide-react';
 import BottomNav from '@/components/BottomNav';
 import { POPULAR_BRANDS, POPULAR_CATEGORIES } from '@/lib/types';
 
@@ -25,10 +27,29 @@ export default function SellerCataloguePage() {
 
   return (
     <div className="min-h-screen bg-rp-bg">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-rp-secondary to-rp-secondary-light text-white px-4 pt-12 pb-6">
+      {/* Desktop Header */}
+      <header className="hidden lg:block bg-white border-b border-rp-border sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+          <Link href="/seller" className="flex items-center gap-3">
+            <Image src="/logo_rapidePiece.jpeg" alt="Rapid Pièces" width={48} height={48} className="h-12 w-auto object-contain rounded-lg" priority />
+            <span className="text-lg font-bold text-rp-text">Espace Vendeur</span>
+          </Link>
+          <div className="flex items-center gap-3">
+            <Link href="/seller" className="text-sm text-rp-text-muted hover:text-rp-primary">Dashboard</Link>
+            <Link href="/seller/requests" className="text-sm text-rp-text-muted hover:text-rp-primary">Demandes</Link>
+            <Link href="/seller/catalogue" className="text-sm font-semibold text-rp-primary">Catalogue</Link>
+            <Link href="/seller/orders" className="text-sm text-rp-text-muted hover:text-rp-primary">Ventes</Link>
+          </div>
+        </div>
+      </header>
+
+      {/* Mobile Header */}
+      <div className="lg:hidden bg-gradient-to-r from-rp-secondary to-rp-secondary-light text-white px-4 pt-12 pb-6">
         <div className="max-w-lg mx-auto">
-          <h1 className="text-xl font-bold mb-1">Mon catalogue</h1>
+          <div className="flex items-center gap-3 mb-3">
+            <Image src="/logo_rapidePiece.jpeg" alt="RP" width={40} height={40} className="h-10 w-auto object-contain rounded-lg bg-white" priority />
+            <h1 className="text-xl font-bold">Mon catalogue</h1>
+          </div>
           <p className="text-white/70 text-xs">{myCatalogue.length} produits • {myCatalogue.filter(p => p.stock > 0).length} en stock</p>
           
           {/* Tabs */}
@@ -53,7 +74,7 @@ export default function SellerCataloguePage() {
         </div>
       </div>
 
-      <div className="max-w-lg mx-auto px-4 py-4 pb-20">
+      <div className="max-w-7xl mx-auto px-4 lg:px-6 py-4 pb-20 lg:pb-6">
         {selectedTab === 'catalogue' && (
           <>
             {/* Search + Add */}
@@ -131,7 +152,7 @@ export default function SellerCataloguePage() {
             )}
 
             {/* Product List */}
-            <div className="space-y-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {filtered.map((product) => (
                 <div key={product.id} className="bg-white rounded-xl p-4 shadow-sm">
                   <div className="flex items-start justify-between mb-2">
