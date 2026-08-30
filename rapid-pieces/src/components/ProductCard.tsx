@@ -1,7 +1,32 @@
 'use client';
 
 import Link from 'next/link';
-import { Star, ShoppingCart, MapPin, Clock, Shield, Truck, BadgeCheck } from 'lucide-react';
+import { Star, ShoppingCart, Clock, Truck, BadgeCheck, Wrench, Settings, Lightbulb, Snowflake, Droplets, Gauge, Car, Cpu, CircuitBoard } from 'lucide-react';
+import { useState } from 'react';
+
+const categoryIcons: Record<string, React.ReactNode> = {
+  'Freinage': <Wrench className="w-12 h-12 text-red-500" />,
+  'Moteur': <Settings className="w-12 h-12 text-blue-500" />,
+  'Éclairage': <Lightbulb className="w-12 h-12 text-amber-500" />,
+  'Climatisation': <Snowflake className="w-12 h-12 text-cyan-500" />,
+  'Filtration': <Droplets className="w-12 h-12 text-blue-400" />,
+  'Suspension': <Gauge className="w-12 h-12 text-green-500" />,
+  'Carrosserie': <Car className="w-12 h-12 text-gray-500" />,
+  'Électronique': <CircuitBoard className="w-12 h-12 text-purple-500" />,
+  'Transmission': <Cpu className="w-12 h-12 text-orange-500" />,
+};
+
+const categoryColors: Record<string, string> = {
+  'Freinage': 'from-red-50 to-red-100',
+  'Moteur': 'from-blue-50 to-blue-100',
+  'Éclairage': 'from-amber-50 to-amber-100',
+  'Climatisation': 'from-cyan-50 to-cyan-100',
+  'Filtration': 'from-blue-50 to-blue-100',
+  'Suspension': 'from-green-50 to-green-100',
+  'Carrosserie': 'from-gray-50 to-gray-100',
+  'Électronique': 'from-purple-50 to-purple-100',
+  'Transmission': 'from-orange-50 to-orange-100',
+};
 
 interface ProductCardProps {
   id: string;
@@ -28,15 +53,29 @@ export default function ProductCard({
   sellerBadge, rating, reviews, delivery, deliveryTime, inStock, category, image
 }: ProductCardProps) {
   const discount = oldPrice ? Math.round(((oldPrice - price) / oldPrice) * 100) : 0;
+  const [imgError, setImgError] = useState(false);
+  const [imgLoaded, setImgLoaded] = useState(false);
+  
+  const showFallback = !image || imgError || !imgLoaded;
 
   return (
     <Link href={`/offers/${id}`} className="group block bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl overflow-hidden hover:shadow-lg hover:border-red-300 dark:hover:border-red-600 transition-all duration-200">
       {/* Image */}
       <div className="relative h-40 sm:h-48 bg-gray-100 dark:bg-slate-700 flex items-center justify-center overflow-hidden">
-        {image ? (
-          <img src={image} alt={name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-        ) : (
-          <div className="text-5xl opacity-30">🔧</div>
+        {image && !imgError && (
+          <img 
+            src={image} 
+            alt={name} 
+            className={`w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ${imgLoaded ? 'block' : 'hidden'}`}
+            onLoad={() => setImgLoaded(true)}
+            onError={() => setImgError(true)}
+          />
+        )}
+        {showFallback && (
+          <div className={`w-full h-full bg-gradient-to-br ${categoryColors[category] || 'from-gray-50 to-gray-100'} dark:from-slate-700 dark:to-slate-600 flex flex-col items-center justify-center gap-2 group-hover:scale-105 transition-transform duration-300`}>
+            {categoryIcons[category] || <Wrench className="w-12 h-12 text-gray-400" />}
+            <span className="text-xs font-medium text-gray-500 dark:text-gray-300 text-center px-2">{name}</span>
+          </div>
         )}
         {discount > 0 && (
           <span className="absolute top-2 left-2 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">

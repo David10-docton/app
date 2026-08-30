@@ -79,17 +79,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return true;
     }
 
-    // Simple validation for demo - any email/password combo works for the matching role
-    if (email && password && role) {
-      const demoUser: User = {
-        id: `${role}_${Date.now()}`,
-        name: email.split('@')[0],
-        email,
-        role,
-      };
-      setUser(demoUser);
-      localStorage.setItem('rp_user', JSON.stringify(demoUser));
-      return true;
+    // Check registered users in localStorage
+    const registered = localStorage.getItem('rp_registered_users');
+    if (registered) {
+      try {
+        const users: Record<string, { password: string; user: User }> = JSON.parse(registered);
+        const found = users[email];
+        if (found && found.password === password && found.user.role === role) {
+          setUser(found.user);
+          localStorage.setItem('rp_user', JSON.stringify(found.user));
+          return true;
+        }
+      } catch {}
     }
 
     return false;
@@ -106,6 +107,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       phone: data.phone,
       location: data.location,
     };
+    
+    // Save to registered users
+    const registered = localStorage.getItem('rp_registered_users');
+    let users: Record<string, { password: string; user: User }> = {};
+    if (registered) {
+      try { users = JSON.parse(registered); } catch {}
+    }
+    users[data.email] = { password: data.password || '', user: newUser };
+    localStorage.setItem('rp_registered_users', JSON.stringify(users));
     
     setUser(newUser);
     localStorage.setItem('rp_user', JSON.stringify(newUser));

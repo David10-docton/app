@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Users, ShoppingBag, DollarSign, Globe, Shield, Package, Bell, Menu, X, LogOut, TrendingUp, Clock, AlertTriangle, BarChart3, ChevronRight, Eye, Truck, Star } from 'lucide-react';
+import { Users, ShoppingBag, DollarSign, Globe, Shield, Package, Bell, Menu, X, LogOut, TrendingUp, Clock, AlertTriangle, BarChart3, ChevronRight, Eye, Truck, Star, ImageIcon } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { dashboardKPIs } from '@/lib/mockData';
 
@@ -177,6 +177,7 @@ export default function AdminDashboard() {
               { href: '/admin/sellers', icon: Users, label: 'Vendeurs', count: '127', color: 'text-red-600' },
               { href: '/admin/orders', icon: ShoppingBag, label: 'Transactions', count: '500+', color: 'text-emerald-400' },
               { href: '/admin/requests', icon: Package, label: 'Demandes', count: '234/mois', color: 'text-blue-400' },
+              { href: '/admin/images', icon: ImageIcon, label: 'Images', count: '12 produits', color: 'text-pink-400' },
               { href: '/admin/settings', icon: Shield, label: 'Configuration', count: 'Plateforme', color: 'text-purple-400' },
             ].map(item => {
               const Icon = item.icon;

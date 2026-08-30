@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { Camera } from 'lucide-react';
 import Logo from '@/components/Logo';
 
 const categories = [
@@ -81,19 +82,19 @@ export default function SearchPage() {
           </button>
         </div>
 
-        {/* Photo search coming soon */}
-        <div className="block bg-gradient-to-r from-purple-50 to-gray-50 rounded-xl p-4 border border-purple-200">
+        {/* Photo search */}
+        <Link href="/photo-search" className="block bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 rounded-xl p-4 border border-purple-200 dark:border-purple-800 hover:shadow-md transition-all">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center">
-              <span className="text-2xl">📷</span>
+            <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-xl flex items-center justify-center">
+              <Camera className="w-6 h-6 text-purple-600" />
             </div>
             <div className="flex-1">
-              <div className="text-sm font-bold text-gray-900 dark:text-white dark:text-white">Recherche par photo</div>
-              <div className="text-xs text-purple-600">AI Part Finder — Photographiez une pièce, l&apos;IA identifie la référence</div>
+              <div className="text-sm font-bold text-gray-900 dark:text-white">Recherche par photo</div>
+              <div className="text-xs text-purple-600 dark:text-purple-400">AI Part Finder — Photographiez une pièce, l&apos;IA identifie la référence</div>
             </div>
-            <span className="text-xs bg-purple-100 text-purple-600 px-2 py-1 rounded-full font-bold">Coming Soon</span>
+            <span className="text-xs bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-2 py-1 rounded-full font-bold">Activer →</span>
           </div>
-        </div>
+        </Link>
 
         {/* Filters */}
         {showFilters && (
