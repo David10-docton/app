@@ -213,16 +213,6 @@ export default function LoginPage() {
                 </button>
               </form>
 
-              {/* Demo hint */}
-              <div className="mt-4 p-3 bg-blue-50 rounded-xl">
-                <p className="text-[10px] text-blue-600 font-medium mb-1">💡 Identifiants de démo :</p>
-                <div className="space-y-0.5">
-                  <p className="text-[10px] text-blue-600">Acheteur : <strong>acheteur@rapidpieces.com</strong> / <strong>acheteur123</strong></p>
-                  <p className="text-[10px] text-blue-600">Vendeur : <strong>vendeur@rapidpieces.com</strong> / <strong>vendeur123</strong></p>
-                  <p className="text-[10px] text-blue-600">Admin : <strong>admin</strong> / <strong>embr@y@ge</strong> (sans choix de rôle)</p>
-                </div>
-              </div>
-
               <div className="mt-4 text-center">
                 <p className="text-xs text-rp-text-muted">
                   Pas encore de compte ?{' '}
