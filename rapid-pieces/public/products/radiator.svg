@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none">
+  <rect width="400" height="400" fill="#F8FAFC"/>
+  <rect x="120" y="100" width="160" height="180" rx="4" fill="#6B7280"/>
+  <line x1="140" y1="120" x2="140" y2="260" stroke="#9CA3AF" stroke-width="2"/>
+  <line x1="160" y1="120" x2="160" y2="260" stroke="#9CA3AF" stroke-width="2"/>
+  <line x1="180" y1="120" x2="180" y2="260" stroke="#9CA3AF" stroke-width="2"/>
+  <line x1="200" y1="120" x2="200" y2="260" stroke="#9CA3AF" stroke-width="2"/>
+  <line x1="220" y1="120" x2="220" y2="260" stroke="#9CA3AF" stroke-width="2"/>
+  <line x1="240" y1="120" x2="240" y2="260" stroke="#9CA3AF" stroke-width="2"/>
+  <line x1="260" y1="120" x2="260" y2="260" stroke="#9CA3AF" stroke-width="2"/>
+  <text x="200" y="320" text-anchor="middle" font-size="14" font-weight="600" fill="#374151">RADIATEUR</text>
+</svg>

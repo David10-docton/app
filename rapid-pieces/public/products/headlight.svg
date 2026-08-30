@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none">
+  <rect width="400" height="400" fill="#F8FAFC"/>
+  <ellipse cx="200" cy="180" rx="90" ry="70" fill="#E5E7EB"/>
+  <ellipse cx="200" cy="180" rx="60" ry="45" fill="#FCD34D"/>
+  <ellipse cx="200" cy="180" rx="30" ry="22" fill="#FDE68A"/>
+  <circle cx="200" cy="180" r="10" fill="#FEF3C7"/>
+  <text x="200" y="300" text-anchor="middle" font-size="14" font-weight="600" fill="#374151">PHARE AVANT</text>
+</svg>

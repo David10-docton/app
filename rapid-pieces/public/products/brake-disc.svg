@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none">
+  <rect width="400" height="400" fill="#F8FAFC"/>
+  <circle cx="200" cy="180" r="85" fill="#9CA3AF"/>
+  <circle cx="200" cy="180" r="65" fill="#D1D5DB"/>
+  <circle cx="200" cy="180" r="25" fill="#6B7280"/>
+  <circle cx="200" cy="180" r="10" fill="#374151"/>
+  <circle cx="160" cy="140" r="5" fill="#9CA3AF"/>
+  <circle cx="240" cy="140" r="5" fill="#9CA3AF"/>
+  <circle cx="160" cy="220" r="5" fill="#9CA3AF"/>
+  <circle cx="240" cy="220" r="5" fill="#9CA3AF"/>
+  <text x="200" y="320" text-anchor="middle" font-size="14" font-weight="600" fill="#374151">DISQUE DE FREIN</text>
+</svg>

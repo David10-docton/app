@@ -15,7 +15,7 @@ export const products = [
     deliveryTime: '< 1h',
     inStock: true,
     category: 'Freinage',
-    image: '/products/brake-pads.jpg',
+    image: '/products/brake-pads.svg',
   },
   {
     id: '2',
@@ -33,7 +33,7 @@ export const products = [
     deliveryTime: '< 2h',
     inStock: true,
     category: 'Filtration',
-    image: '/products/oil-filter.jpg',
+    image: '/products/oil-filter.svg',
   },
   {
     id: '3',
@@ -50,7 +50,7 @@ export const products = [
     deliveryTime: '< 2h',
     inStock: true,
     category: 'Moteur',
-    image: '/products/alternator.jpg',
+    image: '/products/alternator.svg',
   },
   {
     id: '4',
@@ -68,7 +68,7 @@ export const products = [
     deliveryTime: '< 2h',
     inStock: true,
     category: 'Suspension',
-    image: '/products/shock-absorber.jpg',
+    image: '/products/shock-absorber.svg',
   },
   {
     id: '5',
@@ -86,7 +86,7 @@ export const products = [
     deliveryTime: '48h',
     inStock: false,
     category: 'Transmission',
-    image: '/products/clutch-kit.jpg',
+    image: '/products/clutch-kit.svg',
   },
   {
     id: '6',
@@ -103,7 +103,7 @@ export const products = [
     deliveryTime: '< 1h',
     inStock: true,
     category: 'Électronique',
-    image: '/products/battery.jpg',
+    image: '/products/battery.svg',
   },
   {
     id: '7',
@@ -121,7 +121,7 @@ export const products = [
     deliveryTime: '< 1h',
     inStock: true,
     category: 'Suspension',
-    image: '/products/tire.jpg',
+    image: '/products/tire.svg',
   },
   {
     id: '8',
@@ -138,7 +138,7 @@ export const products = [
     deliveryTime: '< 2h',
     inStock: true,
     category: 'Électronique',
-    image: '/products/ignition.jpg',
+    image: '/products/ignition.svg',
   },
   {
     id: '9',
@@ -156,7 +156,7 @@ export const products = [
     deliveryTime: '7 jours',
     inStock: false,
     category: 'Éclairage',
-    image: '/products/headlight.jpg',
+    image: '/products/headlight.svg',
   },
   {
     id: '10',
@@ -173,7 +173,7 @@ export const products = [
     deliveryTime: '< 2h',
     inStock: true,
     category: 'Moteur',
-    image: '/products/radiator.jpg',
+    image: '/products/radiator.svg',
   },
   {
     id: '11',
@@ -190,7 +190,7 @@ export const products = [
     deliveryTime: '< 1h',
     inStock: true,
     category: 'Freinage',
-    image: '/products/brake-disc.jpg',
+    image: '/products/brake-disc.svg',
   },
   {
     id: '12',
@@ -207,7 +207,7 @@ export const products = [
     deliveryTime: '< 2h',
     inStock: true,
     category: 'Moteur',
-    image: '/products/belt.jpg',
+    image: '/products/belt.svg',
   },
 ];
 
