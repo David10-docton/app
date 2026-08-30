@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Trophy, Banknote, Star, BarChart3, Crown, MapPin, CheckCircle2, Gem, ArrowRight } from 'lucide-react';
+import BottomNav from '@/components/BottomNav';
 
 const offers = [
   {
@@ -255,6 +256,7 @@ export default function OffersPage() {
           </div>
         )}
       </div>
+      <BottomNav />
     </div>
   );
 }

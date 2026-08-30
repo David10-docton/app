@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Users, TrendingDown, Clock, CheckCircle, Package, CheckCircle2, Calendar } from 'lucide-react';
+import BottomNav from '@/components/BottomNav';
 
 const groupBuys = [
   {
@@ -188,6 +189,8 @@ export default function GroupBuyPage() {
           ))}
         </div>
       </div>
+
+      <BottomNav />
     </div>
   );
 }

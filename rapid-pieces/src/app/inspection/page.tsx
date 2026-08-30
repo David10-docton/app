@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Camera, CheckCircle, XCircle, AlertTriangle, Shield, Upload, AlertCircle, ClipboardList } from 'lucide-react';
+import BottomNav from '@/components/BottomNav';
 
 const inspectionSteps = [
   { step: 1, label: 'Photo de la pièce', desc: 'Le vendeur prend des photos de la pièce', icon: Camera },
@@ -153,6 +154,8 @@ export default function InspectionPage() {
           </div>
         </div>
       </div>
+
+      <BottomNav />
     </div>
   );
 }

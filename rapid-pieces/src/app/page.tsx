@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Search, ShoppingCart, Package, Menu, X, Shield, Phone, Store, ChevronRight, TrendingUp, Clock, MapPin, ArrowRight } from 'lucide-react';
+import BottomNav from '@/components/BottomNav';
 import ThemeToggle from '@/components/ThemeToggle';
 import ProductCard from '@/components/ProductCard';
 import CategoryCard from '@/components/CategoryCard';
@@ -247,33 +248,7 @@ export default function Home() {
         </section>
       </div>
 
-      {/* Bottom Nav (mobile) */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-900 border-t border-gray-200 dark:border-slate-700 z-50 shadow-lg">
-        <div className="flex items-center justify-around h-16 max-w-lg mx-auto">
-          {[
-            { href: '/', label: 'Accueil', icon: Search },
-            { href: '/requests/new', label: 'Demander', icon: ShoppingCart, center: true },
-            { href: '/orders', label: 'Commandes', icon: Package },
-            { href: '/profile', label: 'Profil', icon: Store },
-          ].map(tab => {
-            const Icon = tab.icon;
-            if (tab.center) return (
-              <Link key={tab.href} href={tab.href} className="flex flex-col items-center -mt-4">
-                <div className="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center shadow-lg shadow-red-600/30">
-                  <Icon className="w-6 h-6 text-white" />
-                </div>
-                <span className="text-[10px] mt-1 text-red-600 font-medium">{tab.label}</span>
-              </Link>
-            );
-            return (
-              <Link key={tab.href} href={tab.href} className="flex flex-col items-center">
-                <Icon className="w-5 h-5 text-gray-400 dark:text-slate-500" />
-                <span className="text-[10px] mt-0.5 text-gray-400 dark:text-slate-500">{tab.label}</span>
-              </Link>
-            );
-          })}
-        </div>
-      </nav>
+      <BottomNav />
     </div>
   );
 }

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Plus, ChevronRight, Calendar, MapPin, Wrench, Shield, AlertTriangle, Car, Lightbulb, Check, ArrowRight } from 'lucide-react';
+import BottomNav from '@/components/BottomNav';
 
 const vehicles = [
   {
@@ -208,6 +209,8 @@ export default function VehicleHistoryPage() {
           </>
         )}
       </div>
+
+      <BottomNav />
     </div>
   );
 }

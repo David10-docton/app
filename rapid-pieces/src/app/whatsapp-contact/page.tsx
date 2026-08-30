@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Shield, Phone, MessageSquare, AlertTriangle, Lock, Eye, BarChart3, Bot } from 'lucide-react';
+import BottomNav from '@/components/BottomNav';
 
 const conversations = [
   {
@@ -191,6 +192,8 @@ export default function WhatsAppContactPage() {
           </div>
         )}
       </div>
+
+      <BottomNav />
     </div>
   );
 }

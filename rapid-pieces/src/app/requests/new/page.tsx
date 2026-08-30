@@ -4,7 +4,9 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, Camera, Upload, MapPin, ChevronDown, X, Check, FileText, Car, Phone, MessageSquare, Truck, Zap, Globe, Rocket } from 'lucide-react';
+import { ArrowLeft, Camera, Upload, MapPin, ChevronDown, X, Check, FileText, Car, Phone, MessageSquare, Truck, Zap, Globe, Rocket, ArrowRight } from 'lucide-react';
+import BottomNav from '@/components/BottomNav';
+import BottomActionBar from '@/components/BottomActionBar';
 
 
 const brands = ['Toyota', 'Honda', 'Mercedes-Benz', 'BMW', 'Volkswagen', 'Hyundai', 'Nissan', 'Ford', 'Peugeot', 'Renault', 'Kia', 'Mitsubishi', 'Isuzu', 'Land Rover', 'Suzuki', 'Mazda'];
@@ -208,11 +210,7 @@ export default function NewRequestPage() {
               </div>
             </div>
 
-            <button onClick={() => setStep(2)} disabled={!form.brand || !form.model || !form.year || (searchMode === 'vin' && !form.vin)}
-              className="w-full py-3.5 bg-red-600 text-white rounded-xl text-sm font-bold shadow-lg shadow-red-600/20 hover:bg-red-600-dark transition-colors disabled:opacity-40">
-              Continuer
-            </button>
-          </div>
+            </div>
         )}
 
         {/* ===== ÉTAPE 2 : Pièce + Description ===== */}
@@ -260,14 +258,7 @@ export default function NewRequestPage() {
               </div>
             </div>
 
-            <div className="flex gap-3">
-              <button onClick={() => setStep(1)} className="flex-1 py-3 bg-gray-200 text-gray-900 dark:text-white rounded-xl text-sm font-medium">Retour</button>
-              <button onClick={() => setStep(3)} disabled={!form.partName}
-                className="flex-1 py-3 bg-red-600 text-white rounded-xl text-sm font-bold shadow-lg shadow-red-600/20 disabled:opacity-40">
-                Continuer
-              </button>
             </div>
-          </div>
         )}
 
         {/* ===== ÉTAPE 3 : Livraison + Contact ===== */}
@@ -343,17 +334,40 @@ export default function NewRequestPage() {
                 <div className="flex justify-between"><span className="text-gray-400 dark:text-slate-500 dark:text-slate-500">Ville</span><span className="text-gray-900 dark:text-white font-medium">{form.city || '—'}</span></div>
               </div>
             </div>
+          </div>
+        )}
 
-            <div className="flex gap-3">
-              <button onClick={() => setStep(2)} className="flex-1 py-3 bg-gray-200 text-gray-900 dark:text-white rounded-xl text-sm font-medium">Retour</button>
+        <BottomActionBar>
+          {step === 1 && (
+            <button onClick={() => setStep(2)} disabled={!form.brand || !form.model || !form.year || (searchMode === 'vin' && !form.vin)}
+              className="flex-1 py-3.5 bg-red-600 text-white rounded-xl text-sm font-bold shadow-lg shadow-red-600/20 hover:bg-red-600-dark transition-colors disabled:opacity-40 flex items-center justify-center gap-2">
+              Continuer
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          )}
+          {step === 2 && (
+            <>
+              <button onClick={() => setStep(1)} className="py-3 px-5 bg-gray-200 dark:bg-slate-700 text-gray-900 dark:text-white rounded-xl text-sm font-medium">Retour</button>
+              <button onClick={() => setStep(3)} disabled={!form.partName}
+                className="flex-1 py-3 bg-red-600 text-white rounded-xl text-sm font-bold shadow-lg shadow-red-600/20 disabled:opacity-40 flex items-center justify-center gap-2">
+                Continuer
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </>
+          )}
+          {step === 3 && (
+            <>
+              <button onClick={() => setStep(2)} className="py-3 px-5 bg-gray-200 dark:bg-slate-700 text-gray-900 dark:text-white rounded-xl text-sm font-medium">Retour</button>
               <button onClick={handleSubmit} disabled={!form.city}
                 className="flex-1 py-3.5 bg-red-600 text-white rounded-xl text-sm font-bold shadow-lg shadow-red-600/20 disabled:opacity-40 flex items-center justify-center gap-2">
                 <Rocket className="w-4 h-4" /> Publier la demande
               </button>
-            </div>
-          </div>
-        )}
+            </>
+          )}
+        </BottomActionBar>
       </div>
+
+      <BottomNav />
     </div>
   );
 }

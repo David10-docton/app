@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import { Lock, RefreshCw, Scale, Shield, CheckCircle2, PenLine, Banknote, CreditCard, Package, AlertOctagon } from 'lucide-react';
+import BottomNav from '@/components/BottomNav';
 
 const protections = [
   {
@@ -176,8 +176,7 @@ export default function ProtectionPage() {
         </div>
       </div>
 
-      {/* Bottom nav placeholder */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white backdrop-blur-xl border-t border-gray-200 h-16" />
+      <BottomNav />
     </div>
   );
 }

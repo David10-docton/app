@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeft, Shield, Check, AlertTriangle, DollarSign, Filter, Users, ShoppingBag, Package, BarChart3, ShieldCheck, Lock, CheckCircle2, Undo2 } from 'lucide-react';
+import BottomNav from '@/components/BottomNav';
 import { useAuth } from '@/lib/auth';
 
 const allTransactions = [
@@ -121,26 +122,7 @@ export default function AdminOrdersPage() {
         })}
       </div>
 
-      {/* Bottom Nav */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white backdrop-blur-xl border-t border-gray-200 z-50">
-        <div className="flex items-center justify-around h-16 max-w-lg mx-auto">
-          {[
-            { href: '/admin', label: 'Dashboard', icon: BarChart3 },
-            { href: '/admin/sellers', label: 'Vendeurs', icon: Users },
-            { href: '/admin/orders', label: 'Transactions', icon: ShoppingBag },
-            { href: '/admin/requests', label: 'Demandes', icon: Package },
-            { href: '/admin/settings', label: 'Config', icon: ShieldCheck },
-          ].map(tab => {
-            const Icon = tab.icon;
-            return (
-              <Link key={tab.href} href={tab.href} className="flex flex-col items-center">
-                <Icon className={`w-5 h-5 ${tab.href === '/admin/orders' ? 'text-emerald-400' : 'text-gray-400 dark:text-slate-500 dark:text-slate-500'}`} />
-                <span className={`text-[10px] mt-0.5 ${tab.href === '/admin/orders' ? 'text-emerald-400' : 'text-gray-400 dark:text-slate-500 dark:text-slate-500'}`}>{tab.label}</span>
-              </Link>
-            );
-          })}
-        </div>
-      </nav>
+      <BottomNav role="admin" />
     </div>
   );
 }

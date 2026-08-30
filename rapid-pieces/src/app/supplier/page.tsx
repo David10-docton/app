@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import ThemeToggle from '@/components/ThemeToggle';
 import { ArrowLeft, Package, Clock, DollarSign, Truck, CheckCircle, Globe, MapPin, Star, MessageSquare, Inbox, BarChart3, Lightbulb, Banknote, Timer, CheckCircle2, ArrowRight } from 'lucide-react';
+import BottomNav from '@/components/BottomNav';
 
 const incomingRequests = [
   { id: 'REQ-001', part: 'Alternateur Toyota Hilux 2018', origin: 'Bénin', quantity: 1, budget: '180 000 FCFA', deadline: '7 jours', quality: 'OEM', vehicle: 'Toyota Hilux 2018', description: 'Alternateur neuf ou reconditionné. Référence OEM si possible.' },
@@ -230,6 +231,8 @@ export default function SupplierPage() {
           </a>
         </div>
       </div>
+
+      <BottomNav role="seller" />
     </div>
   );
 }

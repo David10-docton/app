@@ -3,6 +3,8 @@
 import { useState, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Camera, Upload, X, Scan, Search, Car, Wrench, CheckCircle, Loader2, Lightbulb } from 'lucide-react';
+import BottomNav from '@/components/BottomNav';
+import BottomActionBar from '@/components/BottomActionBar';
 
 interface IdentifiedPart {
   name: string;
@@ -228,20 +230,24 @@ export default function PhotoSearchPage() {
                     <p className="text-lg font-bold text-red-600">{result.estimatedPrice}</p>
                   </div>
                 </div>
-
-                <div className="flex gap-3">
-                  <Link href="/requests/new" className="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-xl text-center text-sm">
-                    Demander cette pièce
-                  </Link>
-                  <Link href="/search" className="flex-1 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 text-gray-700 dark:text-slate-300 font-bold py-3 rounded-xl text-center text-sm">
-                    Rechercher
-                  </Link>
-                </div>
               </div>
+            )}
+
+            {result && !analyzing && (
+              <BottomActionBar>
+                <button onClick={reset} className="py-3 px-5 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 text-gray-700 dark:text-slate-300 font-bold rounded-xl text-center text-sm">
+                  Nouvelle photo
+                </button>
+                <Link href="/requests/new" className="flex-1 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-center text-sm">
+                  Demander cette pièce
+                </Link>
+              </BottomActionBar>
             )}
           </div>
         )}
       </div>
+
+      <BottomNav />
     </div>
   );
 }

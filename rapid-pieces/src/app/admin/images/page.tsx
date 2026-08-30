@@ -3,6 +3,7 @@
 import { useState, useRef } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Upload, Image, Save, Trash2, Eye, Edit3, Check, X, Camera, Download, RefreshCw } from 'lucide-react';
+import BottomNav from '@/components/BottomNav';
 import ThemeToggle from '@/components/ThemeToggle';
 
 interface ProductImage {
@@ -197,6 +198,8 @@ export default function AdminImagesPage() {
           </div>
         </div>
       )}
+
+      <BottomNav role="admin" />
     </div>
   );
 }

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, TrendingUp, TrendingDown, Package, Clock, Star, Users, ShoppingCart, BarChart3, Trophy, ClipboardList } from 'lucide-react';
+import BottomNav from '@/components/BottomNav';
 
 const stats = {
   revenue: { current: 4250000, previous: 3800000, currency: 'FCFA' },
@@ -158,6 +159,8 @@ export default function SellerStatsPage() {
           </div>
         </div>
       </div>
+
+      <BottomNav role="seller" />
     </div>
   );
 }

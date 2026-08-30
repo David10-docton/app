@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Building2, Truck, Wrench, Users, CreditCard, BarChart3, Shield, Star, CheckCircle, Phone } from 'lucide-react';
+import BottomNav from '@/components/BottomNav';
 
 const plans = [
   {
@@ -198,6 +199,8 @@ export default function RapidBusinessPage() {
           </a>
         </div>
       </div>
+
+      <BottomNav />
     </div>
   );
 }

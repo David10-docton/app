@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeft, Plus, Search, Edit3, Trash2, Package, TrendingUp, Eye, BarChart3, Star, Bell, Store, DollarSign, LogOut } from 'lucide-react';
+import BottomNav from '@/components/BottomNav';
 import { useAuth } from '@/lib/auth';
 import { POPULAR_BRANDS, POPULAR_CATEGORIES } from '@/lib/types';
 
@@ -159,33 +160,7 @@ export default function SellerCataloguePage() {
         )}
       </div>
 
-      {/* Bottom Nav */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white backdrop-blur-xl border-t border-gray-200 z-50">
-        <div className="flex items-center justify-around h-16 max-w-lg mx-auto">
-          {[
-            { href: '/seller', label: 'Accueil', icon: Store },
-            { href: '/seller/requests', label: 'Demandes', icon: Bell, badge: 5 },
-            { href: '/seller/catalogue', label: 'Catalogue', icon: Package, center: true },
-            { href: '/seller/orders', label: 'Ventes', icon: DollarSign },
-            { href: '/seller/profile', label: 'Profil', icon: Star },
-          ].map(tab => {
-            const Icon = tab.icon;
-            if (tab.center) return (
-              <Link key={tab.href} href={tab.href} className="flex flex-col items-center -mt-4">
-                <div className="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center shadow-lg shadow-blue-600/30"><Icon className="w-6 h-6 text-gray-900 dark:text-white" /></div>
-                <span className="text-[10px] mt-1 text-blue-400 font-medium">{tab.label}</span>
-              </Link>
-            );
-            return (
-              <Link key={tab.href} href={tab.href} className="flex flex-col items-center relative">
-                <Icon className="w-5 h-5 text-gray-400 dark:text-slate-500 dark:text-slate-500" />
-                {tab.badge && <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-600 text-white text-[9px] rounded-full flex items-center justify-center font-bold">{tab.badge}</span>}
-                <span className="text-[10px] mt-0.5 text-gray-400 dark:text-slate-500 dark:text-slate-500">{tab.label}</span>
-              </Link>
-            );
-          })}
-        </div>
-      </nav>
+      <BottomNav role="seller" />
     </div>
   );
 }
