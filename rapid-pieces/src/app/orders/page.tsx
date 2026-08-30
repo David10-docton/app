@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { CircleStop, RefreshCw, Wrench, Phone, PenLine, Shield, Star, Gift } from 'lucide-react';
+import { CircleStop, RefreshCw, Wrench, Phone, PenLine, Shield, Star, Gift, ChevronUp, ChevronDown } from 'lucide-react';
 
 const orders = [
   {
@@ -218,7 +218,10 @@ export default function OrdersPage() {
                 onClick={() => setExpandedOrder(expandedOrder === order.id ? null : order.id)}
                 className="w-full py-2 border-t border-gray-200 text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500 hover:text-gray-900 dark:text-white transition-all"
               >
-                {expandedOrder === order.id ? '▲ Masquer' : '▼ Détails'}
+                <span className="inline-flex items-center gap-1">
+                  {expandedOrder === order.id ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                  {expandedOrder === order.id ? 'Masquer' : 'Détails'}
+                </span>
               </button>
             </div>
           ))}

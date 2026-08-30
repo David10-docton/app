@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ChevronLeft, Package, Truck, Check, Clock, Shield, TrendingUp, DollarSign, Filter, BarChart3 } from 'lucide-react';
+import { ChevronLeft, Package, Truck, Check, Clock, Shield, TrendingUp, DollarSign, Filter, BarChart3, ArrowRight } from 'lucide-react';
 import BottomNav from '@/components/BottomNav';
 
 const sales = [
@@ -110,8 +110,9 @@ export default function SellerOrdersPage() {
                   {sale.deliveryType.replace('_', ' ')}
                 </span>
                 {sale.status === 'in_transit' && (
-                  <Link href={`/seller/orders/${sale.id}`} className="text-xs text-red-600 font-medium">
-                    Suivre →
+                  <Link href={`/seller/orders/${sale.id}`} className="text-xs text-red-600 font-medium inline-flex items-center gap-1">
+                    Suivre
+                    <ArrowRight className="w-3 h-3" />
                   </Link>
                 )}
                 {sale.status === 'completed' && (

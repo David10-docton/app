@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Camera, CircleStop, Settings, Lightbulb, Snowflake, Gauge, Car, CircuitBoard, Cpu, Droplets, Thermometer, MapPin, Star } from 'lucide-react';
+import { Camera, CircleStop, Settings, Lightbulb, Snowflake, Gauge, Car, CircuitBoard, Cpu, Droplets, Thermometer, MapPin, Star, ArrowUp, ArrowDown, ArrowRight } from 'lucide-react';
 import Logo from '@/components/Logo';
 
 const categories = [
@@ -92,7 +92,7 @@ export default function SearchPage() {
               <div className="text-sm font-bold text-gray-900 dark:text-white">Recherche par photo</div>
               <div className="text-xs text-purple-600 dark:text-purple-400">AI Part Finder — Photographiez une pièce, l&apos;IA identifie la référence</div>
             </div>
-            <span className="text-xs bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-2 py-1 rounded-full font-bold">Activer →</span>
+            <span className="text-xs bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 px-2 py-1 rounded-full font-bold inline-flex items-center gap-1">Activer <ArrowRight className="w-3 h-3" /></span>
           </div>
         </Link>
 
@@ -172,12 +172,12 @@ export default function SearchPage() {
         {/* Sort */}
         <div className="flex items-center gap-2">
           <span className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500">Trier par :</span>
-          {[
+          {([
             { value: 'rapid-score', label: 'Rapid Score' },
-            { value: 'price-asc', label: 'Prix ↑' },
-            { value: 'price-desc', label: 'Prix ↓' },
+            { value: 'price-asc', label: 'Prix', dir: 'asc' },
+            { value: 'price-desc', label: 'Prix', dir: 'desc' },
             { value: 'rating', label: 'Note' },
-          ].map((s) => (
+          ] as { value: string; label: string; dir?: 'asc' | 'desc' }[]).map((s) => (
             <button
               key={s.value}
               onClick={() => setSortBy(s.value)}
@@ -185,7 +185,11 @@ export default function SearchPage() {
                 sortBy === s.value ? 'bg-red-600 text-white' : 'bg-gray-50 text-gray-400 dark:text-slate-500 dark:text-slate-500'
               }`}
             >
-              {s.label}
+              <span className="inline-flex items-center gap-1">
+                {s.label}
+                {s.dir === 'asc' && <ArrowUp className="w-3 h-3" />}
+                {s.dir === 'desc' && <ArrowDown className="w-3 h-3" />}
+              </span>
             </button>
           ))}
         </div>

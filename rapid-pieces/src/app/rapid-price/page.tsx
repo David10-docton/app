@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, TrendingUp, TrendingDown, Minus, Search, Info, Lightbulb } from 'lucide-react';
+import { ArrowLeft, TrendingUp, TrendingDown, Minus, Search, Info, Lightbulb, ArrowRight } from 'lucide-react';
 
 const popularParts = [
   { name: 'Plaquettes de frein avant', brand: 'Toyota Corolla', avgPrice: 42000, min: 28000, max: 65000, trend: 'stable', samples: 23, quality: 'OEM' },
@@ -157,8 +157,9 @@ export default function RapidPricePage() {
               </p>
             </div>
 
-            <Link href="/requests/new" className="block w-full bg-red-600 text-white font-bold py-3 rounded-xl text-center text-sm">
-              Chercher cette pièce →
+            <Link href="/requests/new" className="block w-full bg-red-600 text-white font-bold py-3 rounded-xl text-center text-sm flex items-center justify-center gap-1.5">
+              Chercher cette pièce
+              <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         )}

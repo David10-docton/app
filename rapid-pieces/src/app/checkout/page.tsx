@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Shield, CreditCard, Banknote, Smartphone, Lock, CheckCircle2, Gift } from 'lucide-react';
+import { Shield, CreditCard, Banknote, Smartphone, Lock, CheckCircle2, Gift, ArrowRight } from 'lucide-react';
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -98,8 +98,9 @@ export default function CheckoutPage() {
               <p className="text-xs text-green-300/70">Votre paiement est sécurisé par Escrow. L'argent est retenu jusqu'à confirmation de réception.</p>
             </div>
 
-            <button onClick={() => setStep(2)} className="w-full bg-red-600 hover:bg-red-500 text-gray-900 dark:text-white font-bold py-3 rounded-xl transition-all">
-              Continuer →
+            <button onClick={() => setStep(2)} className="w-full bg-red-600 hover:bg-red-500 text-gray-900 dark:text-white font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-1.5">
+              Continuer
+              <ArrowRight className="w-4 h-4" />
             </button>
           </div>
         )}

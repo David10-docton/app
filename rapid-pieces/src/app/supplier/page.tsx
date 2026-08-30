@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import ThemeToggle from '@/components/ThemeToggle';
-import { ArrowLeft, Package, Clock, DollarSign, Truck, CheckCircle, Globe, MapPin, Star, MessageSquare, Inbox, BarChart3, Lightbulb, Banknote, Timer, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, Package, Clock, DollarSign, Truck, CheckCircle, Globe, MapPin, Star, MessageSquare, Inbox, BarChart3, Lightbulb, Banknote, Timer, CheckCircle2, ArrowRight } from 'lucide-react';
 
 const incomingRequests = [
   { id: 'REQ-001', part: 'Alternateur Toyota Hilux 2018', origin: 'Bénin', quantity: 1, budget: '180 000 FCFA', deadline: '7 jours', quality: 'OEM', vehicle: 'Toyota Hilux 2018', description: 'Alternateur neuf ou reconditionné. Référence OEM si possible.' },
@@ -181,7 +181,7 @@ export default function SupplierPage() {
                 <h4 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white">{ship.part}</h4>
                 <p className="text-xs text-gray-500 dark:text-slate-400 dark:text-slate-400">Acheteur: {ship.buyer}</p>
                 <div className="flex items-center gap-3 mt-2 text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">
-                  <span className="flex items-center gap-1"><MapPin className="w-3 h-3" /> {ship.departure} → {ship.arrival}</span>
+                  <span className="flex items-center gap-1"><MapPin className="w-3 h-3" /> {ship.departure} <ArrowRight className="w-3 h-3 text-gray-300 dark:text-slate-600" /> {ship.arrival}</span>
                   <span className="flex items-center gap-1"><Banknote className="w-3 h-3" /> {ship.value}</span>
                   <span className="flex items-center gap-1"><Timer className="w-3 h-3" /> {ship.eta}</span>
                 </div>

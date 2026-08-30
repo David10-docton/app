@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Trophy, Banknote, Star, BarChart3, Crown, MapPin, CheckCircle2, Gem } from 'lucide-react';
+import { Trophy, Banknote, Star, BarChart3, Crown, MapPin, CheckCircle2, Gem, ArrowRight } from 'lucide-react';
 
 const offers = [
   {
@@ -248,7 +248,8 @@ export default function OffersPage() {
                 <div className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500">{offers.find(o => o.id === selectedOffer)?.seller}</div>
               </div>
               <Link href="/checkout" className="bg-red-600 hover:bg-red-500 text-gray-900 dark:text-white font-bold px-6 py-3 rounded-xl transition-all">
-                Commander →
+                Commander
+                <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </div>

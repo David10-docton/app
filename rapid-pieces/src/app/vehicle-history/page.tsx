@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Plus, ChevronRight, Calendar, MapPin, Wrench, Shield, AlertTriangle, Car, Lightbulb, Check } from 'lucide-react';
+import { ArrowLeft, Plus, ChevronRight, Calendar, MapPin, Wrench, Shield, AlertTriangle, Car, Lightbulb, Check, ArrowRight } from 'lucide-react';
 
 const vehicles = [
   {
@@ -203,7 +203,7 @@ export default function VehicleHistoryPage() {
             <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4">
               <p className="text-xs font-bold text-blue-400 mb-1 flex items-center gap-1.5"><Lightbulb className="w-3 h-3" /> Recommandation Rapid</p>
               <p className="text-[11px] text-gray-600 dark:text-slate-300 dark:text-slate-300">Basé sur votre historique, les prochaines pièces à prévoir : plaquettes arrière (~35 000 FCFA) et filtre à carburant (~15 000 FCFA).</p>
-              <Link href="/requests/new" className="inline-block mt-2 text-xs text-blue-400 font-medium hover:underline">Demander ces pièces →</Link>
+              <Link href="/requests/new" className="inline-flex items-center gap-1 mt-2 text-xs text-blue-400 font-medium hover:underline">Demander ces pièces <ArrowRight className="w-3 h-3" /></Link>
             </div>
           </>
         )}

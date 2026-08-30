@@ -127,7 +127,7 @@ export default function WhatsAppContactPage() {
               </div>
               <div className="flex-1">
                 <div className="text-xs font-bold text-gray-900 dark:text-white">{selectedConvo.sellerMasked}</div>
-                <div className="text-[10px] text-emerald-400">● En ligne</div>
+                <div className="text-[10px] text-emerald-400"><span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1" /> En ligne</div>
               </div>
               <Shield className="w-4 h-4 text-blue-400" />
             </div>
