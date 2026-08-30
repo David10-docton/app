@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { useAuth } from '@/lib/auth';
+
 
 const vehicles = [
   { brand: 'Toyota', model: 'Corolla', year: 2018, motor: '1.8 Essence', plate: 'CA-2018-4521' },
@@ -34,7 +34,7 @@ const menu = [
 
 export default function BuyerProfilePage() {
   const router = useRouter();
-  const { user, logout } = useAuth();
+
   const [activeTab, setActiveTab] = useState<'menu' | 'vehicles' | 'history'>('menu');
 
   return (
@@ -42,13 +42,13 @@ export default function BuyerProfilePage() {
       {/* Header */}
       <header className="sticky top-0 z-40 bg-slate-900/95 backdrop-blur-xl border-b border-slate-700/50">
         <div className="max-w-4xl mx-auto px-4 h-14 flex items-center justify-between">
-          <Link href="/buyer" className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2">
             <span className="text-xl font-black text-red-500">RAPID</span>
             <span className="text-xl font-black text-white">PIÈCES</span>
           </Link>
-          <button onClick={() => logout()} className="text-xs text-red-400 hover:text-red-300">
-            Déconnexion
-          </button>
+          <Link href="/login" className="text-xs text-blue-400 hover:text-blue-300">
+            Espace Vendeur
+          </Link>
         </div>
       </header>
 
@@ -56,10 +56,10 @@ export default function BuyerProfilePage() {
         {/* Profile card */}
         <div className="bg-slate-900/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-700/50 text-center">
           <div className="w-20 h-20 bg-gradient-to-br from-red-500 to-orange-500 rounded-full flex items-center justify-center text-3xl font-bold text-white mx-auto mb-3">
-            {user?.name?.charAt(0) || 'A'}
+            {'A'}
           </div>
-          <h2 className="text-lg font-bold text-white">{user?.name || 'Acheteur'}</h2>
-          <p className="text-sm text-slate-400">{user?.email || 'acheteur@rapidpieces.com'}</p>
+          <h2 className="text-lg font-bold text-white">Mon Profil</h2>
+          <p className="text-sm text-slate-400">Acheteur Rapide Pièces</p>
           <div className="flex items-center justify-center gap-4 mt-4">
             <div className="text-center">
               <div className="text-lg font-bold text-white">12</div>

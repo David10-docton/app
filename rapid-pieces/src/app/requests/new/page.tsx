@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeft, Camera, Upload, MapPin, ChevronDown, X, Check, FileText, Car, Phone, MessageSquare, Truck } from 'lucide-react';
-import { useAuth } from '@/lib/auth';
+
 
 const brands = ['Toyota', 'Honda', 'Mercedes-Benz', 'BMW', 'Volkswagen', 'Hyundai', 'Nissan', 'Ford', 'Peugeot', 'Renault', 'Kia', 'Mitsubishi', 'Isuzu', 'Land Rover', 'Suzuki', 'Mazda'];
 
@@ -28,7 +28,7 @@ const deliveryTypes = [
 
 export default function NewRequestPage() {
   const router = useRouter();
-  const { user, isLoading } = useAuth();
+
   const [step, setStep] = useState(1);
   const [searchMode, setSearchMode] = useState<'text' | 'photo' | 'vin'>('text');
   const [submitted, setSubmitted] = useState(false);
@@ -62,7 +62,7 @@ export default function NewRequestPage() {
     setSubmitted(true);
   };
 
-  if (isLoading || !user) return <div className="min-h-screen bg-rp-bg flex items-center justify-center"><div className="w-10 h-10 border-4 border-rp-primary border-t-transparent rounded-full animate-spin" /></div>;
+
 
   if (submitted) {
     return (
@@ -80,7 +80,7 @@ export default function NewRequestPage() {
           </div>
           <div className="flex gap-3">
             <Link href="/orders" className="flex-1 py-3 bg-rp-primary text-white rounded-xl text-sm font-semibold text-center">Voir mes commandes</Link>
-            <Link href="/buyer" className="flex-1 py-3 bg-slate-700 text-white rounded-xl text-sm font-semibold text-center">Accueil</Link>
+            <Link href="/" className="flex-1 py-3 bg-slate-700 text-white rounded-xl text-sm font-semibold text-center">Accueil</Link>
           </div>
         </div>
       </div>
@@ -92,7 +92,7 @@ export default function NewRequestPage() {
       {/* Header */}
       <header className="bg-slate-900/80 backdrop-blur-xl border-b border-slate-700/50 sticky top-0 z-50">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center gap-3">
-          <Link href="/buyer" className="text-slate-400 hover:text-white"><ArrowLeft className="w-5 h-5" /></Link>
+          <Link href="/" className="text-slate-400 hover:text-white"><ArrowLeft className="w-5 h-5" /></Link>
           <div className="flex-1">
             <h1 className="text-sm font-bold text-white">Nouvelle demande</h1>
             <p className="text-[10px] text-slate-400">Étape {step}/3</p>

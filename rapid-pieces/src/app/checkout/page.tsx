@@ -197,7 +197,7 @@ export default function CheckoutPage() {
               <Link href="/orders" className="flex-1 bg-red-600 hover:bg-red-500 text-white font-bold py-3 rounded-xl text-center transition-all">
                 Suivre la commande
               </Link>
-              <Link href="/buyer" className="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 rounded-xl text-center transition-all">
+              <Link href="/" className="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 rounded-xl text-center transition-all">
                 Retour accueil
               </Link>
             </div>
