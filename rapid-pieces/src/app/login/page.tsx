@@ -127,7 +127,7 @@ export default function LoginPage() {
               {/* Role Selector */}
               <div className="mb-4">
                 <label className="text-xs font-medium text-rp-text-muted mb-2 block">Vous êtes ?</label>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-2 gap-2">
                   <button
                     type="button"
                     onClick={() => setRole(role === 'buyer' ? '' : 'buyer')}
@@ -152,16 +152,8 @@ export default function LoginPage() {
                     <Store className="w-5 h-5 mx-auto mb-1" />
                     Vendeur
                   </button>
-                  <div className="py-3 rounded-xl text-xs font-medium bg-emerald-50 text-emerald-700 border-2 border-transparent text-center flex flex-col items-center justify-center">
-                    <Lock className="w-5 h-5 mx-auto mb-1" />
-                    Admin
-                  </div>
                 </div>
-                {!role && (
-                  <p className="text-[10px] text-rp-text-muted text-center mt-2">
-                    Laissez vide et saisissez les identifiants admin pour accéder au panneau d&apos;administration
-                  </p>
-                )}
+
               </div>
 
               <form onSubmit={handleLogin} className="space-y-3">
