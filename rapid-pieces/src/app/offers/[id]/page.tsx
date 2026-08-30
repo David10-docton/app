@@ -1,236 +1,258 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ChevronLeft, Star, Shield, Clock, MapPin, Check, Info, ChevronDown, Truck, Award } from 'lucide-react';
-import BottomNav from '@/components/BottomNav';
-import { mockOffers } from '@/lib/mockData';
 
-const qualityColorMap: Record<string, string> = {
-  'OEM': 'bg-red-100 text-red-700',
-  'Genuine': 'bg-blue-100 text-blue-700',
-  'Premium Aftermarket': 'bg-purple-100 text-purple-700',
-  'Standard Aftermarket': 'bg-gray-100 text-gray-700',
-  'Used': 'bg-yellow-100 text-yellow-700',
-  'Reconditioned': 'bg-green-100 text-green-700',
-};
+const offers = [
+  {
+    id: 1,
+    seller: 'BigMoteurs',
+    badges: ['Verified', 'Premium'],
+    rating: 4.9,
+    sales: 342,
+    part: 'Plaquettes de frein avant',
+    quality: 'OEM',
+    brand: 'Toyota Genuine',
+    price: 45000,
+    delivery: 'RAPID NOW',
+    deliveryTime: '< 1h',
+    warranty: '12 mois',
+    stock: 12,
+    rapidScore: 92,
+    scoreBreakdown: { price: 28, quality: 24, availability: 18, reputation: 14, delivery: 8 },
+    distance: '2.3 km',
+  },
+  {
+    id: 2,
+    seller: 'Sotra Pièces',
+    badges: ['Verified'],
+    rating: 4.7,
+    sales: 218,
+    part: 'Plaquettes de frein avant',
+    quality: 'Genuine',
+    brand: 'Toyota',
+    price: 38000,
+    delivery: 'RAPID CITY',
+    deliveryTime: '< 2h',
+    warranty: '12 mois',
+    stock: 8,
+    rapidScore: 85,
+    scoreBreakdown: { price: 27, quality: 22, availability: 16, reputation: 12, delivery: 8 },
+    distance: '5.1 km',
+  },
+  {
+    id: 3,
+    seller: 'Diallo & Frères',
+    badges: ['Verified', 'Top Seller'],
+    rating: 4.8,
+    sales: 567,
+    part: 'Plaquettes de frein avant',
+    quality: 'Premium Aftermarket',
+    brand: 'Bosch',
+    price: 28000,
+    delivery: 'RAPID CITY',
+    deliveryTime: '< 2h',
+    warranty: '6 mois',
+    stock: 20,
+    rapidScore: 78,
+    scoreBreakdown: { price: 25, quality: 19, availability: 17, reputation: 11, delivery: 6 },
+    distance: '8.7 km',
+  },
+  {
+    id: 4,
+    seller: 'Massa Garage',
+    badges: ['Verified'],
+    rating: 4.5,
+    sales: 89,
+    part: 'Plaquettes de frein avant',
+    quality: 'Standard Aftermarket',
+    brand: 'Général',
+    price: 18000,
+    delivery: 'RAPID NIGERIA',
+    deliveryTime: '48h',
+    warranty: '3 mois',
+    stock: 35,
+    rapidScore: 62,
+    scoreBreakdown: { price: 22, quality: 14, availability: 15, reputation: 8, delivery: 3 },
+    distance: 'International',
+  },
+];
 
 export default function OffersPage() {
-  const [selectedOffer, setSelectedOffer] = useState<string | null>(null);
-  const [showDetails, setShowDetails] = useState<string | null>(null);
+  const router = useRouter();
+  const [selectedOffer, setSelectedOffer] = useState<number | null>(null);
+  const [sortBy, setSortBy] = useState('rapid-score');
 
-  // Get offers for request r2 (alternateur Hilux)
-  const offers = mockOffers.filter(o => o.requestId === 'r2');
-  const sortedOffers = [...offers].sort((a, b) => b.rapidScore - a.rapidScore);
-
-  const rapidScoreBreakdown = (score: number) => ({
-    price: Math.min(30, Math.round(score * 0.33)),
-    quality: Math.min(25, Math.round(score * 0.27)),
-    availability: Math.min(20, Math.round(score * 0.22)),
-    reputation: Math.min(15, Math.round(score * 0.16)),
-    delivery: Math.min(10, Math.round(score * 0.11)),
+  const sorted = [...offers].sort((a, b) => {
+    if (sortBy === 'price') return a.price - b.price;
+    if (sortBy === 'rating') return b.rating - a.rating;
+    return b.rapidScore - a.rapidScore;
   });
 
   return (
-    <div className="min-h-screen bg-rp-bg">
+    <div className="min-h-screen bg-slate-950 pb-24 lg:pb-8">
       {/* Header */}
-      <div className="bg-white px-4 pt-12 pb-4 border-b border-rp-border sticky top-0 z-40">
-        <div className="max-w-lg mx-auto">
-          <div className="flex items-center gap-3 mb-3">
-            <Link href="/search" className="w-8 h-8 flex items-center justify-center">
-              <ChevronLeft className="w-5 h-5 text-rp-text" />
-            </Link>
-            <div>
-              <h1 className="text-lg font-bold text-rp-text">Offres disponibles</h1>
-              <p className="text-xs text-rp-text-muted">Alternateur Toyota Hilux 2018</p>
-            </div>
-          </div>
-          <div className="bg-rp-primary/10 rounded-xl px-3 py-2 flex items-center gap-2">
-            <Info className="w-4 h-4 text-rp-primary" />
-            <p className="text-xs text-rp-primary">Classement par Rapid Score — meilleure offre globale</p>
+      <header className="sticky top-0 z-40 bg-slate-900/95 backdrop-blur-xl border-b border-slate-700/50">
+        <div className="max-w-4xl mx-auto px-4 h-14 flex items-center gap-3">
+          <button onClick={() => router.back()} className="text-slate-400 hover:text-white">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+          </button>
+          <div>
+            <h1 className="text-sm font-bold text-white">Offres reçues</h1>
+            <p className="text-[10px] text-slate-400">Plaquettes de frein avant — Toyota Corolla 2018</p>
           </div>
         </div>
-      </div>
+      </header>
 
-      <div className="max-w-lg mx-auto px-4 py-4 space-y-3 pb-20">
-        {/* Rapid Price Reference */}
-        <div className="bg-gradient-to-r from-rp-secondary to-rp-secondary-light rounded-2xl p-4 text-white">
-          <div className="flex items-center gap-2 mb-1">
-            <Award className="w-4 h-4" />
-            <span className="text-xs font-semibold">RAPID PRICE — Prix moyen du marché</span>
+      <div className="max-w-4xl mx-auto px-4 py-4 space-y-4">
+        {/* Sort tabs */}
+        <div className="flex gap-2">
+          {[
+            { value: 'rapid-score', label: '🏆 Rapid Score' },
+            { value: 'price', label: '💰 Prix' },
+            { value: 'rating', label: '⭐ Note' },
+          ].map((s) => (
+            <button
+              key={s.value}
+              onClick={() => setSortBy(s.value)}
+              className={`px-3 py-2 rounded-xl text-xs font-bold transition-all ${
+                sortBy === s.value ? 'bg-red-600 text-white' : 'bg-slate-800/50 text-slate-400'
+              }`}
+            >
+              {s.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Rapid Score explanation */}
+        <div className="bg-slate-900/50 backdrop-blur-sm rounded-xl p-3 border border-slate-700/50">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-sm">📊</span>
+            <span className="text-xs font-bold text-white">Rapid Score = Prix (30%) + Qualité (25%) + Disponibilité (20%) + Réputation (15%) + Délai (10%)</span>
           </div>
-          <p className="text-2xl font-bold">135 000 FCFA</p>
-          <p className="text-xs text-white/70 mt-1">Basé sur 12 transactions similaires</p>
         </div>
 
         {/* Offers */}
-        {sortedOffers.map((offer, index) => {
-          const breakdown = rapidScoreBreakdown(offer.rapidScore);
-          const isExpanded = showDetails === offer.id;
-          const isSelected = selectedOffer === offer.id;
-          
-          return (
+        <div className="space-y-3">
+          {sorted.map((offer, index) => (
             <div
               key={offer.id}
-              className={`bg-white rounded-2xl overflow-hidden shadow-sm transition-all ${
-                isSelected ? 'ring-2 ring-rp-primary' : ''
+              className={`bg-slate-900/50 backdrop-blur-sm rounded-2xl border transition-all ${
+                selectedOffer === offer.id ? 'border-red-500/50 ring-1 ring-red-500/20' : 'border-slate-700/50 hover:border-slate-600'
               }`}
             >
-              {/* Rank Badge */}
-              {index === 0 && (
-                <div className="bg-rp-gold/20 px-4 py-1.5 flex items-center gap-2">
-                  <span className="text-sm">🏆</span>
-                  <span className="text-xs font-bold text-yellow-700">MEILLEURE OFFRE</span>
-                </div>
-              )}
-              
-              <div className="p-4">
-                {/* Score + Price Row */}
-                <div className="flex items-start justify-between mb-3">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-rp-primary/10 rounded-xl flex items-center justify-center">
-                      <span className="text-lg font-bold text-rp-primary">{offer.rapidScore}</span>
+              {/* Seller header */}
+              <div className="p-4 pb-0">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                      {offer.seller.charAt(0)}
                     </div>
                     <div>
-                      <p className="text-sm font-semibold text-rp-text">{offer.partName}</p>
-                      <p className="text-xs text-rp-text-muted">{offer.sellerName}</p>
-                      <div className="flex items-center gap-1 mt-0.5">
-                        <Star className="w-3 h-3 fill-rp-gold text-rp-gold" />
-                        <span className="text-xs font-medium">{offer.sellerScore}</span>
-                        <span className={`text-[9px] px-1.5 py-0.5 rounded-full ml-1 ${
-                          offer.sellerBadge === 'Top Seller' ? 'bg-rp-gold/20 text-yellow-700' :
-                          offer.sellerBadge === 'Premium Seller' ? 'bg-purple-100 text-purple-700' :
-                          'bg-blue-100 text-blue-700'
-                        }`}>{offer.sellerBadge}</span>
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-sm font-bold text-white">{offer.seller}</span>
+                        {index === 0 && <span className="text-[10px] bg-yellow-500/20 text-yellow-300 px-1.5 py-0.5 rounded font-bold">👑 BEST</span>}
+                      </div>
+                      <div className="flex items-center gap-2 mt-0.5">
+                        <span className="text-xs text-yellow-400">⭐ {offer.rating}</span>
+                        <span className="text-xs text-slate-500">•</span>
+                        <span className="text-xs text-slate-400">{offer.sales} ventes</span>
+                        <span className="text-xs text-slate-500">•</span>
+                        <span className="text-xs text-slate-400">📍 {offer.distance}</span>
                       </div>
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="text-xl font-bold text-rp-primary">{offer.price.toLocaleString()}</p>
-                    <p className="text-[10px] text-rp-text-muted">FCFA</p>
+                    <div className="text-2xl font-black text-white">{offer.rapidScore}</div>
+                    <div className="text-[10px] text-slate-400">Rapid Score</div>
                   </div>
                 </div>
-
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2 mb-3">
-                  <span className={`text-[10px] px-2 py-1 rounded-full font-medium ${qualityColorMap[offer.quality] || 'bg-gray-100 text-gray-700'}`}>
-                    {offer.quality}
-                  </span>
-                  <span className="text-[10px] px-2 py-1 rounded-full bg-green-50 text-green-700 flex items-center gap-1">
-                    <Clock className="w-3 h-3" /> {offer.deliveryTime}
-                  </span>
-                  {offer.warranty && (
-                    <span className="text-[10px] px-2 py-1 rounded-full bg-blue-50 text-blue-700 flex items-center gap-1">
-                      <Shield className="w-3 h-3" /> {offer.warranty}
+                {/* Badges */}
+                <div className="flex gap-1.5 mt-2">
+                  {offer.badges.map((b) => (
+                    <span key={b} className="text-[10px] bg-green-500/20 text-green-300 px-2 py-0.5 rounded-full font-bold">
+                      {b === 'Verified' ? '✅' : b === 'Premium' ? '💎' : '🏆'} {b}
                     </span>
-                  )}
+                  ))}
+                  <span className="text-[10px] bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded-full font-bold">{offer.quality}</span>
+                </div>
+              </div>
+
+              {/* Part details */}
+              <div className="p-4">
+                <div className="bg-slate-800/50 rounded-xl p-3 mb-3">
+                  <div className="text-sm font-bold text-white">{offer.part}</div>
+                  <div className="text-xs text-slate-400 mt-0.5">Marque: {offer.brand}</div>
+                  <div className="flex items-center gap-3 mt-2">
+                    <span className="text-lg font-black text-white">{offer.price.toLocaleString()} <span className="text-xs font-normal text-slate-400">FCFA</span></span>
+                  </div>
                 </div>
 
-                {/* Rapid Score Breakdown (expandable) */}
-                <button 
-                  onClick={() => setShowDetails(isExpanded ? null : offer.id)}
-                  className="w-full bg-rp-bg rounded-xl p-3 text-left"
-                >
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-semibold text-rp-text">Détails Rapid Score</span>
-                    <ChevronDown className={`w-4 h-4 text-rp-text-muted transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                {/* Delivery & warranty */}
+                <div className="grid grid-cols-2 gap-2 mb-3">
+                  <div className="bg-slate-800/50 rounded-lg p-2 text-center">
+                    <div className="text-[10px] text-slate-400">Livraison</div>
+                    <div className="text-xs font-bold text-red-400">{offer.delivery}</div>
+                    <div className="text-[10px] text-slate-500">{offer.deliveryTime}</div>
                   </div>
-                  
-                  {/* Score bars */}
-                  <div className="space-y-1.5">
-                    {[
-                      { label: 'Prix', value: breakdown.price, max: 30, color: '#E63946' },
-                      { label: 'Qualité', value: breakdown.quality, max: 25, color: '#1D3557' },
-                      { label: 'Disponibilité', value: breakdown.availability, max: 20, color: '#457B9D' },
-                      { label: 'Réputation', value: breakdown.reputation, max: 15, color: '#2D6A4F' },
-                      { label: 'Délai', value: breakdown.delivery, max: 10, color: '#F4A261' },
-                    ].map(bar => (
-                      <div key={bar.label} className="flex items-center gap-2">
-                        <span className="text-[10px] text-rp-text-muted w-16">{bar.label}</span>
-                        <div className="flex-1 h-1.5 bg-gray-200 rounded-full overflow-hidden">
-                          <div
-                            className="h-full rounded-full score-bar"
-                            style={{ width: `${(bar.value / bar.max) * 100}%`, backgroundColor: bar.color, '--score-width': `${(bar.value / bar.max) * 100}%` } as React.CSSProperties}
-                          />
-                        </div>
-                        <span className="text-[10px] font-medium text-rp-text w-6 text-right">{bar.value}/{bar.max}</span>
-                      </div>
-                    ))}
+                  <div className="bg-slate-800/50 rounded-lg p-2 text-center">
+                    <div className="text-[10px] text-slate-400">Garantie</div>
+                    <div className="text-xs font-bold text-green-400">{offer.warranty}</div>
+                    <div className="text-[10px] text-slate-500">{offer.stock} en stock</div>
                   </div>
-                </button>
+                </div>
 
-                {/* Action Button */}
+                {/* Score breakdown */}
+                <div className="space-y-1 mb-3">
+                  {[
+                    { label: 'Prix', value: offer.scoreBreakdown.price, max: 30, color: 'bg-green-500' },
+                    { label: 'Qualité', value: offer.scoreBreakdown.quality, max: 25, color: 'bg-blue-500' },
+                    { label: 'Dispo', value: offer.scoreBreakdown.availability, max: 20, color: 'bg-purple-500' },
+                    { label: 'Rép.', value: offer.scoreBreakdown.reputation, max: 15, color: 'bg-yellow-500' },
+                    { label: 'Délai', value: offer.scoreBreakdown.delivery, max: 10, color: 'bg-red-500' },
+                  ].map((s) => (
+                    <div key={s.label} className="flex items-center gap-2">
+                      <span className="text-[10px] text-slate-400 w-8">{s.label}</span>
+                      <div className="flex-1 bg-slate-800 rounded-full h-1.5">
+                        <div className={`${s.color} h-1.5 rounded-full`} style={{ width: `${(s.value / s.max) * 100}%` }} />
+                      </div>
+                      <span className="text-[10px] text-slate-500 w-6 text-right">{s.value}/{s.max}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Action */}
                 <button
-                  onClick={() => setSelectedOffer(offer.id)}
-                  className={`w-full mt-3 py-3 rounded-xl text-sm font-semibold transition-all ${
-                    isSelected
-                      ? 'bg-rp-success text-white'
-                      : 'bg-rp-primary text-white'
+                  onClick={() => setSelectedOffer(selectedOffer === offer.id ? null : offer.id)}
+                  className={`w-full py-3 rounded-xl font-bold text-sm transition-all ${
+                    selectedOffer === offer.id
+                      ? 'bg-red-600 text-white'
+                      : 'bg-slate-800/50 text-white hover:bg-red-600/80'
                   }`}
                 >
-                  {isSelected ? (
-                    <span className="flex items-center justify-center gap-2">
-                      <Check className="w-4 h-4" /> Offre sélectionnée
-                    </span>
-                  ) : (
-                    'Choisir cette offre'
-                  )}
+                  {selectedOffer === offer.id ? 'Sélectionnée ✓' : 'Sélectionner cette offre'}
                 </button>
               </div>
             </div>
-          );
-        })}
-
-        {/* Comparison Summary */}
-        <div className="bg-white rounded-2xl p-4 shadow-sm">
-          <h3 className="font-bold text-sm text-rp-text mb-3">📊 Résumé comparatif</h3>
-          <div className="overflow-x-auto">
-            <table className="w-full text-xs">
-              <thead>
-                <tr className="text-rp-text-muted border-b border-rp-border">
-                  <th className="text-left py-2">Option</th>
-                  <th className="text-right py-2">Prix</th>
-                  <th className="text-center py-2">Qualité</th>
-                  <th className="text-center py-2">Délai</th>
-                  <th className="text-right py-2">Score</th>
-                </tr>
-              </thead>
-              <tbody>
-                {sortedOffers.map((offer, i) => (
-                  <tr key={offer.id} className={`border-b border-rp-border/50 ${selectedOffer === offer.id ? 'bg-rp-primary/5' : ''}`}>
-                    <td className="py-2 font-medium text-rp-text">{String.fromCharCode(65 + i)}</td>
-                    <td className="py-2 text-right font-semibold text-rp-primary">{(offer.price / 1000).toFixed(0)}k</td>
-                    <td className="py-2 text-center">{offer.quality.split(' ')[0]}</td>
-                    <td className="py-2 text-center">{offer.deliveryTime}</td>
-                    <td className="py-2 text-right font-bold">{offer.rapidScore}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          ))}
         </div>
 
-        {/* Rapid Protection Banner */}
+        {/* CTA */}
         {selectedOffer && (
-          <div className="bg-rp-success/10 rounded-2xl p-4 border border-rp-success/20 slide-up">
-            <div className="flex items-center gap-3">
-              <Shield className="w-6 h-6 text-rp-success flex-shrink-0" />
+          <div className="sticky bottom-20 lg:bottom-4 bg-slate-900/95 backdrop-blur-xl rounded-2xl p-4 border border-red-500/30">
+            <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-semibold text-rp-text">Rapid Protection active</p>
-                <p className="text-xs text-rp-text-muted">Garantie de conformité, retour, médiation inclus</p>
+                <div className="text-sm font-bold text-white">Offre sélectionnée</div>
+                <div className="text-xs text-slate-400">{offers.find(o => o.id === selectedOffer)?.seller}</div>
               </div>
+              <Link href="/checkout" className="bg-red-600 hover:bg-red-500 text-white font-bold px-6 py-3 rounded-xl transition-all">
+                Commander →
+              </Link>
             </div>
-            <Link
-              href="/checkout"
-              className="block w-full mt-3 py-3 bg-rp-success text-white rounded-xl text-sm font-bold text-center"
-            >
-              Procéder au paiement sécurisé
-            </Link>
           </div>
         )}
       </div>
-
-      <BottomNav role="buyer" />
     </div>
   );
 }

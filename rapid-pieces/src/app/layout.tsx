@@ -1,50 +1,33 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/lib/auth";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-  themeColor: "#E63946",
+  themeColor: "#DC2626",
 };
 
 export const metadata: Metadata = {
-  title: "Rapid Pièces — Trouvez. Comparez. Commandez. Recevez.",
-  description: "La bourse digitale des pièces automobiles. Trouvez la pièce qu'il vous faut au meilleur prix, au bon endroit.",
-  icons: {
-    icon: "/logo_rapidePiece.jpeg",
-    apple: "/logo_rapidePiece.jpeg",
-  },
+  title: "Rapide Pièces — Trouvez. Comparez. Recevez.",
+  description: "La bourse digitale des pièces automobiles au Bénin. Trouvez la pièce qu'il vous faut au meilleur prix.",
+  icons: { icon: "/logo_rapidePiece.jpeg", apple: "/logo_rapidePiece.jpeg" },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="fr"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
+    <html lang="fr" className="h-full antialiased">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-        <link rel="apple-touch-icon" href="/logo_rapidePiece.jpeg" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..800&display=swap" rel="stylesheet" />
       </head>
       <body className="min-h-screen bg-rp-bg">
         <AuthProvider>
-          <div className="app-container">
-            {children}
-          </div>
+          <div className="app-container">{children}</div>
         </AuthProvider>
       </body>
     </html>

@@ -2,266 +2,291 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
-import { Search, Filter, Star, MapPin, Clock, X, Camera, Menu } from 'lucide-react';
-import BottomNav from '@/components/BottomNav';
-import { POPULAR_BRANDS, BENIN_LOCATIONS, QUALITY_LEVELS } from '@/lib/types';
+import Logo from '@/components/Logo';
 
-const allResults = [
-  { id: '1', part: 'Plaquettes de frein avant', brand: 'Toyota', model: 'Corolla 2018', price: 62000, oldPrice: 75000, quality: 'OEM' as const, seller: 'Auto Pièces Cotonou', score: 92, delivery: '1h', rating: 4.8, location: 'Cotonou', image: '🛞' },
-  { id: '2', part: 'Alternateur', brand: 'Toyota', model: 'Hilux 2018', price: 120000, quality: 'Premium Aftermarket' as const, seller: 'Nigeria Auto Parts', score: 82, delivery: '3-5j', rating: 4.6, location: 'Nigeria', image: '⚡' },
-  { id: '3', part: 'Filtre à huile', brand: 'Honda', model: 'CR-V 2019', price: 25000, quality: 'Genuine' as const, seller: 'Auto Pièces Cotonou', score: 88, delivery: '2h', rating: 4.8, location: 'Cotonou', image: '🛢️' },
-  { id: '4', part: 'Kit d\'embrayage', brand: 'Mercedes-Benz', model: 'Classe C 2015', price: 380000, quality: 'OEM' as const, seller: 'Parts Express USA', score: 95, delivery: '7-10j', rating: 4.9, location: 'USA', image: '⚙️' },
-  { id: '5', part: 'Amortisseurs arrière', brand: 'Peugeot', model: '308 2016', price: 180000, quality: 'Premium Aftermarket' as const, seller: 'Garage Mécanique Générale', score: 76, delivery: '24h', rating: 4.5, location: 'Abomey-Calavi', image: '🔧' },
-  { id: '6', part: 'Batterie 60Ah', brand: 'Toyota', model: 'Yaris 2020', price: 85000, quality: 'Genuine' as const, seller: 'Sahel Auto', score: 72, delivery: '2h', rating: 4.2, location: 'Parakou', image: '🔋' },
+const categories = [
+  { name: 'Freinage', icon: '🛑', count: 145 },
+  { name: 'Moteur', icon: '⚙️', count: 230 },
+  { name: 'Éclairage', icon: '💡', count: 89 },
+  { name: 'Climatisation', icon: '❄️', count: 67 },
+  { name: 'Suspension', icon: '🔧', count: 112 },
+  { name: 'Carrosserie', icon: '🚗', count: 178 },
+  { name: 'Électronique', icon: '📡', count: 95 },
+  { name: 'Transmission', icon: '🔄', count: 88 },
+  { name: 'Filtration', icon: '🌀', count: 134 },
+  { name: 'Refroidissement', icon: '🌡️', count: 56 },
+];
+
+const qualities = ['OEM', 'Genuine', 'Premium Aftermarket', 'Standard Aftermarket', 'Occasion', 'Reconditionné'];
+
+const cities = ['Cotonou', 'Abomey-Calavi', 'Parakou', 'Porto-Novo', 'Bohicon'];
+
+const mockResults = [
+  { id: 1, name: 'Plaquettes de frein avant', category: 'Freinage', quality: 'OEM', price: 45000, seller: 'BigMoteurs', rating: 4.9, badges: ['Verified', 'Premium'], delivery: 'RAPID NOW', img: '🛑' },
+  { id: 2, name: 'Filtre à huile Toyota', category: 'Filtration', quality: 'Genuine', price: 12000, seller: 'Sotra Pièces', rating: 4.7, badges: ['Verified'], delivery: 'RAPID CITY', img: '🌀' },
+  { id: 3, name: 'Amortisseur arrière Honda', category: 'Suspension', quality: 'Premium Aftermarket', price: 85000, seller: 'Diallo & Frères', rating: 4.8, badges: ['Verified', 'Top Seller'], delivery: 'RAPID CITY', img: '🔧' },
+  { id: 4, name: 'Alternateur Toyota Corolla', category: 'Moteur', quality: 'Reconditionné', price: 120000, seller: 'Massa Garage', rating: 4.5, badges: ['Verified'], delivery: 'RAPID NIGERIA', img: '⚙️' },
 ];
 
 export default function SearchPage() {
   const [query, setQuery] = useState('');
-  const [showFilters, setShowFilters] = useState(false);
-  const [selectedBrand, setSelectedBrand] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedQuality, setSelectedQuality] = useState('');
-  const [selectedLocation, setSelectedLocation] = useState('');
-  const [maxPrice, setMaxPrice] = useState('');
-  const [sortBy, setSortBy] = useState<'score' | 'price' | 'delivery'>('score');
+  const [selectedCity, setSelectedCity] = useState('');
+  const [showFilters, setShowFilters] = useState(false);
+  const [sortBy, setSortBy] = useState('rapid-score');
+  const [showResults, setShowResults] = useState(false);
 
-  const filteredResults = allResults.filter(r => {
-    const matchesQuery = !query || r.part.toLowerCase().includes(query.toLowerCase()) || r.brand.toLowerCase().includes(query.toLowerCase());
-    const matchesBrand = !selectedBrand || r.brand === selectedBrand;
-    const matchesQuality = !selectedQuality || r.quality === selectedQuality;
-    const matchesLocation = !selectedLocation || r.location === selectedLocation;
-    const matchesPrice = !maxPrice || r.price <= parseInt(maxPrice);
-    return matchesQuery && matchesBrand && matchesQuality && matchesLocation && matchesPrice;
-  }).sort((a, b) => {
-    if (sortBy === 'price') return a.price - b.price;
-    if (sortBy === 'delivery') return a.delivery.localeCompare(b.delivery);
-    return b.score - a.score;
-  });
+  const handleSearch = () => {
+    setShowResults(true);
+  };
 
   return (
-    <div className="min-h-screen bg-rp-bg">
-      {/* Desktop Header */}
-      <header className="hidden lg:block bg-white border-b border-rp-border sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3">
-            <Image src="/logo_rapidePiece.jpeg" alt="Rapid Pièces" width={48} height={48} className="h-12 w-auto object-contain rounded-lg" priority />
-            <span className="text-lg font-bold text-rp-text">Rapid Pièces</span>
+    <div className="min-h-screen bg-slate-950 pb-24 lg:pb-8">
+      {/* Header */}
+      <header className="sticky top-0 z-40 bg-slate-900/95 backdrop-blur-xl border-b border-slate-700/50">
+        <div className="max-w-4xl mx-auto px-4 h-14 flex items-center gap-3">
+          <Link href="/buyer" className="flex items-center gap-2 shrink-0">
+            <Logo size="sm" />
+            <span className="text-sm font-black text-white hidden sm:inline">RAPID PIÈCES</span>
           </Link>
-          <div className="flex-1 max-w-xl mx-6">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-rp-text-muted" />
-              <input
-                type="text"
-                placeholder="Rechercher une pièce..."
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                className="w-full pl-10 pr-10 py-3 bg-rp-bg rounded-xl text-sm border-0 focus:ring-2 focus:ring-rp-primary outline-none"
-              />
-              {query && (
-                <button onClick={() => setQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2">
-                  <X className="w-4 h-4 text-rp-text-muted" />
-                </button>
-              )}
-            </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <Link href="/" className="text-sm text-rp-text-muted hover:text-rp-primary">Accueil</Link>
-            <Link href="/orders" className="text-sm text-rp-text-muted hover:text-rp-primary">Commandes</Link>
-            <Link href="/profile" className="w-8 h-8 bg-rp-primary rounded-full flex items-center justify-center text-white text-xs font-bold">JK</Link>
-          </div>
+          <h1 className="text-sm font-bold text-slate-400 ml-auto">Recherche</h1>
         </div>
       </header>
 
-      {/* Mobile Search Header */}
-      <div className="lg:hidden bg-white px-4 pt-12 pb-4 border-b border-rp-border sticky top-0 z-40">
-        <div className="max-w-lg mx-auto">
+      <div className="max-w-4xl mx-auto px-4 py-4 space-y-4">
+        {/* Search bar */}
+        <div className="flex gap-2">
+          <div className="flex-1 relative">
+            <input
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Rechercher une pièce..."
+              className="w-full bg-slate-800/50 border border-slate-700/50 rounded-xl px-4 py-3 pl-10 text-white text-sm placeholder:text-slate-500 focus:outline-none focus:border-red-500/50"
+            />
+            <svg className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+          </div>
+          <button
+            onClick={() => setShowFilters(!showFilters)}
+            className={`px-4 py-3 rounded-xl border transition-all ${showFilters ? 'bg-red-600 border-red-500 text-white' : 'bg-slate-800/50 border-slate-700/50 text-slate-400 hover:text-white'}`}
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" /></svg>
+          </button>
+          <button
+            onClick={handleSearch}
+            className="bg-red-600 hover:bg-red-500 text-white font-bold px-6 py-3 rounded-xl transition-all"
+          >
+            Chercher
+          </button>
+        </div>
+
+        {/* Photo search coming soon */}
+        <Link href="#" className="block bg-gradient-to-r from-purple-900/30 to-slate-900/50 rounded-xl p-4 border border-purple-500/20 hover:border-purple-500/40 transition-all">
           <div className="flex items-center gap-3">
-            <Link href="/" className="flex-shrink-0">
-              <Image src="/logo_rapidePiece.jpeg" alt="RP" width={36} height={36} className="h-9 w-auto object-contain rounded-lg" priority />
-            </Link>
-            <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-rp-text-muted" />
-              <input
-                type="text"
-                placeholder="Marque, modèle, pièce..."
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-rp-bg rounded-xl text-sm border-0 focus:ring-2 focus:ring-rp-primary outline-none"
-              />
-              {query && (
-                <button onClick={() => setQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2">
-                  <X className="w-4 h-4 text-rp-text-muted" />
-                </button>
-              )}
+            <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center">
+              <span className="text-2xl">📷</span>
             </div>
-            <button 
-              onClick={() => setShowFilters(!showFilters)}
-              className="w-10 h-10 bg-rp-primary rounded-xl flex items-center justify-center flex-shrink-0"
-            >
-              <Filter className="w-5 h-5 text-white" />
-            </button>
+            <div className="flex-1">
+              <div className="text-sm font-bold text-white">Recherche par photo</div>
+              <div className="text-xs text-purple-300">AI Part Finder — Photographiez une pièce, l&apos;IA identifie la référence</div>
+            </div>
+            <span className="text-xs bg-purple-500/20 text-purple-300 px-2 py-1 rounded-full">Coming Soon</span>
           </div>
+        </Link>
 
-          {/* Quick Brand Tags */}
-          <div className="flex gap-2 mt-3 overflow-x-auto pb-1">
-            {POPULAR_BRANDS.slice(0, 8).map(brand => (
-              <button
-                key={brand}
-                onClick={() => setSelectedBrand(selectedBrand === brand ? '' : brand)}
-                className={`flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
-                  selectedBrand === brand 
-                    ? 'bg-rp-primary text-white' 
-                    : 'bg-rp-bg text-rp-text-muted'
-                }`}
-              >
-                {brand}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
+        {/* Filters */}
+        {showFilters && (
+          <div className="bg-slate-900/50 backdrop-blur-sm rounded-2xl p-4 border border-slate-700/50 space-y-4">
+            <h3 className="text-sm font-semibold text-white">Filtres</h3>
 
-      {/* Filters Panel */}
-      {showFilters && (
-        <div className="bg-white border-b border-rp-border px-4 py-4 slide-up">
-          <div className="max-w-lg mx-auto space-y-4">
+            {/* Categories */}
             <div>
-              <label className="text-xs font-semibold text-rp-text-muted mb-2 block">Qualité</label>
+              <label className="text-xs text-slate-400 mb-2 block">Catégorie</label>
               <div className="flex flex-wrap gap-2">
-                {QUALITY_LEVELS.map(q => (
+                {categories.map((c) => (
                   <button
-                    key={q.value}
-                    onClick={() => setSelectedQuality(selectedQuality === q.value ? '' : q.value)}
-                    className={`px-3 py-1.5 rounded-full text-xs font-medium ${
-                      selectedQuality === q.value ? 'text-white' : 'bg-rp-bg text-rp-text-muted'
+                    key={c.name}
+                    onClick={() => setSelectedCategory(selectedCategory === c.name ? '' : c.name)}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                      selectedCategory === c.name
+                        ? 'bg-red-600 text-white'
+                        : 'bg-slate-800/50 text-slate-400 hover:text-white'
                     }`}
-                    style={selectedQuality === q.value ? { backgroundColor: q.color } : {}}
                   >
-                    {q.label}
+                    {c.icon} {c.name}
                   </button>
                 ))}
               </div>
             </div>
+
+            {/* Quality */}
             <div>
-              <label className="text-xs font-semibold text-rp-text-muted mb-2 block">Localisation</label>
+              <label className="text-xs text-slate-400 mb-2 block">Qualité</label>
               <div className="flex flex-wrap gap-2">
-                {BENIN_LOCATIONS.slice(0, 6).map(loc => (
+                {qualities.map((q) => (
                   <button
-                    key={loc}
-                    onClick={() => setSelectedLocation(selectedLocation === loc ? '' : loc)}
-                    className={`px-3 py-1.5 rounded-full text-xs font-medium ${
-                      selectedLocation === loc ? 'bg-rp-secondary text-white' : 'bg-rp-bg text-rp-text-muted'
+                    key={q}
+                    onClick={() => setSelectedQuality(selectedQuality === q ? '' : q)}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                      selectedQuality === q
+                        ? 'bg-red-600 text-white'
+                        : 'bg-slate-800/50 text-slate-400 hover:text-white'
                     }`}
                   >
-                    {loc}
+                    {q}
                   </button>
                 ))}
               </div>
             </div>
+
+            {/* City */}
             <div>
-              <label className="text-xs font-semibold text-rp-text-muted mb-2 block">Prix max (FCFA)</label>
-              <input
-                type="number"
-                placeholder="Ex: 100000"
-                value={maxPrice}
-                onChange={(e) => setMaxPrice(e.target.value)}
-                className="w-full px-4 py-2 bg-rp-bg rounded-xl text-sm border-0 outline-none focus:ring-2 focus:ring-rp-primary"
-              />
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Sort Bar */}
-      <div className="px-4 lg:px-6 py-3 max-w-7xl mx-auto">
-        <div className="flex items-center justify-between">
-          <p className="text-sm text-rp-text-muted">{filteredResults.length} résultats</p>
-          <div className="flex gap-2">
-            {[
-              { key: 'score' as const, label: 'Rapid Score' },
-              { key: 'price' as const, label: 'Prix' },
-              { key: 'delivery' as const, label: 'Délai' },
-            ].map(s => (
-              <button
-                key={s.key}
-                onClick={() => setSortBy(s.key)}
-                className={`px-3 py-1 rounded-full text-xs font-medium ${
-                  sortBy === s.key ? 'bg-rp-primary text-white' : 'bg-white text-rp-text-muted border border-rp-border'
-                }`}
-              >
-                {s.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Results - Responsive Grid */}
-      <div className="max-w-7xl mx-auto px-4 lg:px-6 pb-20 lg:pb-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4">
-          {filteredResults.map((result) => (
-            <Link key={result.id} href={`/offers/${result.id}`} className="block bg-white rounded-2xl p-4 shadow-sm card-hover">
-              <div className="flex gap-3 sm:flex-col sm:gap-2">
-                <div className="w-16 h-16 sm:w-full sm:h-32 bg-rp-bg rounded-xl flex items-center justify-center text-3xl sm:text-5xl flex-shrink-0">
-                  {result.image}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-start justify-between sm:flex-col sm:gap-1">
-                    <div>
-                      <h3 className="font-semibold text-sm text-rp-text">{result.part}</h3>
-                      <p className="text-xs text-rp-text-muted">{result.brand} {result.model}</p>
-                    </div>
-                    <div className="text-right sm:text-left flex-shrink-0">
-                      <p className="font-bold text-rp-primary">{result.price.toLocaleString()} <span className="text-xs">FCFA</span></p>
-                      {result.oldPrice && (
-                        <p className="text-xs text-rp-text-muted line-through">{result.oldPrice.toLocaleString()} FCFA</p>
-                      )}
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2 mt-2 flex-wrap">
-                    <span className="flex items-center gap-1 text-xs bg-rp-primary/10 text-rp-primary px-2 py-0.5 rounded-full font-semibold">
-                      Score {result.score}
-                    </span>
-                    <span className="text-xs bg-rp-bg text-rp-text-muted px-2 py-0.5 rounded-full">{result.quality}</span>
-                    <span className="flex items-center gap-1 text-xs text-rp-text-muted">
-                      <Clock className="w-3 h-3" /> {result.delivery}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between mt-2">
-                    <span className="text-xs text-rp-text-muted">{result.seller}</span>
-                    <span className="flex items-center gap-1 text-xs">
-                      <Star className="w-3 h-3 fill-rp-gold text-rp-gold" /> {result.rating}
-                    </span>
-                  </div>
-                </div>
+              <label className="text-xs text-slate-400 mb-2 block">Ville</label>
+              <div className="flex flex-wrap gap-2">
+                {cities.map((c) => (
+                  <button
+                    key={c}
+                    onClick={() => setSelectedCity(selectedCity === c ? '' : c)}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                      selectedCity === c
+                        ? 'bg-red-600 text-white'
+                        : 'bg-slate-800/50 text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    📍 {c}
+                  </button>
+                ))}
               </div>
-            </Link>
-          ))}
-        </div>
+            </div>
 
-        {filteredResults.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-4xl mb-3">🔍</p>
-            <p className="font-semibold text-rp-text">Aucun résultat trouvé</p>
-            <p className="text-sm text-rp-text-muted mt-1">Essayez de modifier vos filtres</p>
+            {/* Price range */}
+            <div>
+              <label className="text-xs text-slate-400 mb-2 block">Budget max</label>
+              <input type="number" placeholder="Ex: 100000 FCFA" className="w-full bg-slate-800/50 border border-slate-700/50 rounded-lg px-3 py-2 text-white text-sm" />
+            </div>
           </div>
         )}
 
-        {/* Photo Search CTA */}
-        <div className="bg-gradient-to-r from-rp-accent/20 to-rp-accent/10 rounded-2xl p-4 border border-rp-accent/30 mt-4">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-rp-accent rounded-xl flex items-center justify-center flex-shrink-0">
-              <Camera className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h3 className="font-semibold text-sm text-rp-text">Recherche par photo (coming soon)</h3>
-              <p className="text-xs text-rp-text-muted">Photographiez une pièce, l&apos;IA identifie la référence</p>
+        {/* Sort */}
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-slate-400">Trier par :</span>
+          {[
+            { value: 'rapid-score', label: 'Rapid Score' },
+            { value: 'price-asc', label: 'Prix ↑' },
+            { value: 'price-desc', label: 'Prix ↓' },
+            { value: 'rating', label: 'Note' },
+          ].map((s) => (
+            <button
+              key={s.value}
+              onClick={() => setSortBy(s.value)}
+              className={`px-2 py-1 rounded-lg text-[10px] font-bold transition-all ${
+                sortBy === s.value ? 'bg-red-600 text-white' : 'bg-slate-800/50 text-slate-500'
+              }`}
+            >
+              {s.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Categories quick access */}
+        {!showResults && (
+          <div className="space-y-3">
+            <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wide">Catégories</h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+              {categories.map((c) => (
+                <button
+                  key={c.name}
+                  onClick={() => { setSelectedCategory(c.name); handleSearch(); }}
+                  className="bg-slate-900/50 backdrop-blur-sm rounded-xl p-3 border border-slate-700/50 text-center hover:border-red-500/30 transition-all"
+                >
+                  <span className="text-2xl">{c.icon}</span>
+                  <div className="text-xs font-bold text-white mt-1">{c.name}</div>
+                  <div className="text-[10px] text-slate-500">{c.count} pièces</div>
+                </button>
+              ))}
             </div>
           </div>
-        </div>
+        )}
+
+        {/* Results */}
+        {showResults && (
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm font-semibold text-slate-400">{mockResults.length} résultats</h3>
+              <button onClick={() => setShowResults(false)} className="text-xs text-red-400 hover:text-red-300">Effacer</button>
+            </div>
+            {mockResults.map((r) => (
+              <Link key={r.id} href="/offers/1" className="block bg-slate-900/50 backdrop-blur-sm rounded-xl p-4 border border-slate-700/50 hover:border-red-500/30 transition-all">
+                <div className="flex items-start gap-3">
+                  <div className="w-14 h-14 bg-slate-800/50 rounded-xl flex items-center justify-center text-3xl shrink-0">
+                    {r.img}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <h4 className="text-sm font-bold text-white truncate">{r.name}</h4>
+                      <span className="text-[10px] bg-blue-500/20 text-blue-300 px-1.5 py-0.5 rounded">{r.quality}</span>
+                    </div>
+                    <div className="flex items-center gap-2 mt-1">
+                      <span className="text-xs text-slate-400">📍 {r.seller}</span>
+                      <span className="text-xs text-yellow-400">⭐ {r.rating}</span>
+                      <div className="flex gap-1">
+                        {r.badges.map((b) => (
+                          <span key={b} className="text-[10px] bg-green-500/20 text-green-300 px-1 py-0.5 rounded">{b}</span>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between mt-2">
+                      <span className="text-lg font-black text-white">{r.price.toLocaleString()} <span className="text-xs font-normal text-slate-400">FCFA</span></span>
+                      <span className="text-[10px] bg-red-500/20 text-red-300 px-2 py-1 rounded-full font-bold">{r.delivery}</span>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
+
+        {/* Recent searches */}
+        {!showResults && (
+          <div className="space-y-3">
+            <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wide">Recherches récentes</h3>
+            {['Plaquettes de frein Toyota Corolla', 'Filtre à huile Honda Civic', 'Amortisseur arrière'].map((s, i) => (
+              <button key={i} onClick={() => { setQuery(s); handleSearch(); }} className="w-full bg-slate-900/50 backdrop-blur-sm rounded-xl px-4 py-3 border border-slate-700/50 text-left hover:border-slate-600 transition-all">
+                <div className="flex items-center gap-3">
+                  <svg className="w-4 h-4 text-slate-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                  <span className="text-sm text-slate-300">{s}</span>
+                </div>
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
-      <BottomNav role="buyer" />
+      {/* Bottom nav */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-xl border-t border-slate-700/50">
+        <div className="flex items-center justify-around h-16">
+          <Link href="/buyer" className="flex flex-col items-center gap-1 text-slate-500">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+            <span className="text-[10px]">Accueil</span>
+          </Link>
+          <Link href="/search" className="flex flex-col items-center gap-1 text-red-500">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+            <span className="text-[10px] font-bold">Rechercher</span>
+          </Link>
+          <Link href="/requests/new" className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center -mt-4 shadow-lg shadow-red-600/30">
+            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
+          </Link>
+          <Link href="/orders" className="flex flex-col items-center gap-1 text-slate-500">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
+            <span className="text-[10px]">Commandes</span>
+          </Link>
+          <Link href="/profile" className="flex flex-col items-center gap-1 text-slate-500">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+            <span className="text-[10px]">Profil</span>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,99 +1,98 @@
 'use client';
 
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ChevronLeft, ChevronRight, Shield, Percent, Truck, Globe, Bell, Users, Database, AlertTriangle } from 'lucide-react';
-import BottomNav from '@/components/BottomNav';
+import Image from 'next/image';
+import { ArrowLeft, Shield, Percent, Truck, Globe, Bell, Users, Database, AlertTriangle, ChevronRight, BarChart3, ShoppingBag, Package, ShieldCheck } from 'lucide-react';
+import { useAuth } from '@/lib/auth';
 
 const settingsGroups = [
   {
     title: 'Commission & Paiement',
     items: [
-      { icon: Percent, label: 'Taux de commission', value: '5-7%', desc: 'Commission marketplace par catégorie' },
-      { icon: Percent, label: 'Frais de sourcing', value: '5-15%', desc: 'Frais pour le sourcing international' },
-      { icon: Shield, label: 'Escrow', value: 'Activé', desc: 'Paiement sécurisé pour toutes les transactions' },
+      { icon: Percent, label: 'Taux de commission', value: '5-7%', desc: 'Par catégorie' },
+      { icon: Percent, label: 'Frais de sourcing', value: '5-15%', desc: 'Sourcing international' },
+      { icon: Shield, label: 'Escrow', value: 'Activé', desc: 'Paiement sécurisé' },
     ]
   },
   {
     title: 'Livraison',
     items: [
-      { icon: Truck, label: 'RAPID NOW', value: '< 1h', desc: 'Livraison locale express' },
-      { icon: Truck, label: 'RAPID CITY', value: '< 2h', desc: 'Livraison intra-ville' },
-      { icon: Globe, label: 'RAPID NIGERIA', value: '48h', desc: 'Sourcing depuis le Nigeria' },
-      { icon: Globe, label: 'RAPID USA', value: '7 jours', desc: 'Sourcing depuis les États-Unis' },
+      { icon: Truck, label: 'RAPID NOW', value: '< 1h', desc: 'Locale express' },
+      { icon: Truck, label: 'RAPID CITY', value: '< 2h', desc: 'Intra-ville' },
+      { icon: Globe, label: 'RAPID NIGERIA', value: '48h', desc: 'Sourcing Nigeria' },
+      { icon: Globe, label: 'RAPID USA', value: '7 jours', desc: 'Sourcing USA' },
     ]
   },
   {
-    title: 'Système de confiance',
+    title: 'Confiance',
     items: [
-      { icon: Shield, label: 'Rapid Protection', value: 'Activé', desc: 'Garantie et retour pour les acheteurs' },
-      { icon: Users, label: 'Vérification KYC', value: 'Obligatoire', desc: 'Vérification identitaire des vendeurs' },
-      { icon: AlertTriangle, label: 'Détection fraude', value: 'Activée', desc: 'Détection auto des coordonnées masquées' },
+      { icon: Shield, label: 'Rapide Protection', value: 'Activé', desc: 'Garantie et retour' },
+      { icon: Users, label: 'KYC Vendeurs', value: 'Obligatoire', desc: 'Vérification identité' },
+      { icon: AlertTriangle, label: 'Détection fraude', value: 'Activée', desc: 'Coordonnées masquées' },
     ]
   },
   {
     title: 'Système',
     items: [
-      { icon: Database, label: 'Base de données', value: '127 vendeurs', desc: 'Réseau de vendeurs actifs' },
-      { icon: Bell, label: 'Notifications', value: 'Temps réel', desc: 'Alertes push pour les nouvelles demandes' },
+      { icon: Database, label: 'Base de données', value: '127 vendeurs', desc: 'Réseau actif' },
+      { icon: Bell, label: 'Notifications', value: 'Temps réel', desc: 'Alertes push' },
     ]
   },
 ];
 
 export default function AdminSettingsPage() {
+  const router = useRouter();
+  const { user, isLoading } = useAuth();
+
+  useEffect(() => {
+    if (!isLoading && (!user || user.role !== 'admin')) router.replace('/login');
+  }, [user, isLoading, router]);
+
+  if (isLoading || !user) return <div className="min-h-screen bg-rp-bg flex items-center justify-center"><div className="w-10 h-10 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin" /></div>;
+
   return (
     <div className="min-h-screen bg-rp-bg">
-      <div className="bg-white px-4 pt-12 pb-4 border-b border-rp-border sticky top-0 z-40">
-        <div className="max-w-lg mx-auto">
-          <div className="flex items-center gap-3">
-            <Link href="/admin" className="w-8 h-8 flex items-center justify-center">
-              <ChevronLeft className="w-5 h-5 text-rp-text" />
-            </Link>
-            <h1 className="text-lg font-bold text-rp-text">Configuration</h1>
-          </div>
+      <header className="bg-slate-900/80 backdrop-blur-xl border-b border-slate-700/50 sticky top-0 z-50">
+        <div className="max-w-2xl mx-auto px-4 py-3 flex items-center gap-3">
+          <Link href="/admin" className="text-slate-400 hover:text-white"><ArrowLeft className="w-5 h-5" /></Link>
+          <h1 className="text-sm font-bold text-white">Configuration</h1>
         </div>
-      </div>
+      </header>
 
-      <div className="max-w-lg mx-auto px-4 py-4 space-y-6 pb-20">
-        {/* Platform Status */}
-        <div className="bg-gradient-to-r from-rp-success to-emerald-600 rounded-2xl p-4 text-white">
-          <div className="flex items-center gap-2 mb-2">
-            <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
-            <span className="text-sm font-semibold">Plateforme active</span>
+      <div className="max-w-2xl mx-auto px-4 py-6 space-y-6 pb-24 lg:pb-6">
+        {/* Status */}
+        <div className="bg-gradient-to-r from-emerald-600/20 to-emerald-500/10 border border-emerald-500/30 rounded-2xl p-5">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
+            <span className="text-sm font-semibold text-emerald-400">Plateforme active</span>
           </div>
           <div className="grid grid-cols-3 gap-3 text-center">
-            <div>
-              <p className="text-lg font-bold">127</p>
-              <p className="text-[10px] text-white/70">Vendeurs</p>
-            </div>
-            <div>
-              <p className="text-lg font-bold">342</p>
-              <p className="text-[10px] text-white/70">Acheteurs</p>
-            </div>
-            <div>
-              <p className="text-lg font-bold">99.9%</p>
-              <p className="text-[10px] text-white/70">Uptime</p>
-            </div>
+            <div><p className="text-lg font-bold text-white">127</p><p className="text-[10px] text-emerald-400/70">Vendeurs</p></div>
+            <div><p className="text-lg font-bold text-white">342</p><p className="text-[10px] text-emerald-400/70">Acheteurs</p></div>
+            <div><p className="text-lg font-bold text-white">99.9%</p><p className="text-[10px] text-emerald-400/70">Uptime</p></div>
           </div>
         </div>
 
-        {settingsGroups.map((group) => (
+        {settingsGroups.map(group => (
           <div key={group.title}>
-            <h2 className="font-bold text-sm text-rp-text mb-3">{group.title}</h2>
-            <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+            <h2 className="text-xs font-bold text-slate-400 mb-3 uppercase tracking-wider">{group.title}</h2>
+            <div className="bg-slate-800/50 border border-slate-700/50 rounded-2xl overflow-hidden">
               {group.items.map((item, i) => {
                 const Icon = item.icon;
                 return (
-                  <button key={item.label} className={`w-full px-4 py-3.5 flex items-center gap-3 ${i < group.items.length - 1 ? 'border-b border-rp-border/50' : ''}`}>
-                    <div className="w-9 h-9 bg-rp-bg rounded-xl flex items-center justify-center">
-                      <Icon className="w-4 h-4 text-rp-text-muted" />
+                  <button key={item.label} className={`w-full px-4 py-3.5 flex items-center gap-3 ${i < group.items.length - 1 ? 'border-b border-slate-700/50' : ''}`}>
+                    <div className="w-8 h-8 bg-slate-700/50 rounded-lg flex items-center justify-center">
+                      <Icon className="w-4 h-4 text-slate-400" />
                     </div>
                     <div className="flex-1 text-left">
-                      <p className="text-sm font-medium text-rp-text">{item.label}</p>
-                      <p className="text-[10px] text-rp-text-muted">{item.desc}</p>
+                      <p className="text-xs font-medium text-white">{item.label}</p>
+                      <p className="text-[10px] text-slate-400">{item.desc}</p>
                     </div>
                     <div className="flex items-center gap-1">
-                      <span className="text-sm font-semibold text-rp-secondary">{item.value}</span>
-                      <ChevronRight className="w-4 h-4 text-rp-text-muted" />
+                      <span className="text-xs font-semibold text-emerald-400">{item.value}</span>
+                      <ChevronRight className="w-4 h-4 text-slate-500" />
                     </div>
                   </button>
                 );
@@ -103,20 +102,34 @@ export default function AdminSettingsPage() {
         ))}
 
         {/* Danger Zone */}
-        <div className="bg-red-50 rounded-2xl p-4 border border-red-200">
-          <h3 className="font-bold text-sm text-red-700 mb-2">⚠️ Zone dangereuse</h3>
+        <div className="bg-red-500/5 border border-red-500/20 rounded-2xl p-5">
+          <h3 className="text-sm font-bold text-red-400 mb-3">⚠️ Zone dangereuse</h3>
           <div className="space-y-2">
-            <button className="w-full py-2.5 bg-white border border-red-200 text-red-700 rounded-xl text-xs font-medium">
-              Suspendre la plateforme
-            </button>
-            <button className="w-full py-2.5 bg-white border border-red-200 text-red-700 rounded-xl text-xs font-medium">
-              Exporter toutes les données
-            </button>
+            <button className="w-full py-2.5 bg-slate-800/50 border border-red-500/20 text-red-400 rounded-lg text-xs font-medium hover:bg-red-500/10 transition-colors">Suspendre la plateforme</button>
+            <button className="w-full py-2.5 bg-slate-800/50 border border-red-500/20 text-red-400 rounded-lg text-xs font-medium hover:bg-red-500/10 transition-colors">Exporter toutes les données</button>
           </div>
         </div>
       </div>
 
-      <BottomNav role="admin" />
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-xl border-t border-slate-700/50 z-50">
+        <div className="flex items-center justify-around h-16 max-w-lg mx-auto">
+          {[
+            { href: '/admin', label: 'Dashboard', icon: BarChart3 },
+            { href: '/admin/sellers', label: 'Vendeurs', icon: Users },
+            { href: '/admin/orders', label: 'Transactions', icon: ShoppingBag },
+            { href: '/admin/requests', label: 'Demandes', icon: Package },
+            { href: '/admin/settings', label: 'Config', icon: ShieldCheck },
+          ].map(tab => {
+            const Icon = tab.icon;
+            return (
+              <Link key={tab.href} href={tab.href} className="flex flex-col items-center">
+                <Icon className={`w-5 h-5 ${tab.href === '/admin/settings' ? 'text-emerald-400' : 'text-slate-400'}`} />
+                <span className={`text-[10px] mt-0.5 ${tab.href === '/admin/settings' ? 'text-emerald-400' : 'text-slate-400'}`}>{tab.label}</span>
+              </Link>
+            );
+          })}
+        </div>
+      </nav>
     </div>
   );
 }

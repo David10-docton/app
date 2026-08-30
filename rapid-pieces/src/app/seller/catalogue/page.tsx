@@ -1,191 +1,119 @@
 'use client';
 
-import { useState } from 'react';
-import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Plus, Search, Edit3, Trash2, Package, TrendingUp, Eye } from 'lucide-react';
-import BottomNav from '@/components/BottomNav';
+import Image from 'next/image';
+import { ArrowLeft, Plus, Search, Edit3, Trash2, Package, TrendingUp, Eye, BarChart3, Star, Bell, Store, DollarSign, LogOut } from 'lucide-react';
+import { useAuth } from '@/lib/auth';
 import { POPULAR_BRANDS, POPULAR_CATEGORIES } from '@/lib/types';
 
 const myCatalogue = [
-  { id: '1', name: 'Plaquettes de frein avant OEM', brand: 'Toyota', category: 'Freins', stock: 12, price: 62000, views: 234, inquiries: 18, status: 'active' },
-  { id: '2', name: 'Filtre à huile', brand: 'Toyota', category: 'Filtration', stock: 45, price: 8000, views: 567, inquiries: 42, status: 'active' },
-  { id: '3', name: 'Huile moteur 5W30 4L', brand: 'Multi', category: 'Moteur', stock: 30, price: 15000, views: 890, inquiries: 67, status: 'active' },
-  { id: '4', name: 'Batterie 60Ah', brand: 'Toyota', category: 'Électrique', stock: 8, price: 85000, views: 123, inquiries: 9, status: 'active' },
-  { id: '5', name: 'Ampoule phare H7', brand: 'Multi', category: 'Éclairage', stock: 0, price: 5000, views: 45, inquiries: 3, status: 'out_of_stock' },
+  { id: '1', name: 'Plaquettes de frein avant OEM', brand: 'Toyota', category: 'Freinage', stock: 12, price: 62000, views: 234, inquiries: 18 },
+  { id: '2', name: 'Filtre à huile', brand: 'Toyota', category: 'Filtration', stock: 45, price: 8000, views: 567, inquiries: 42 },
+  { id: '3', name: 'Huile moteur 5W30 4L', brand: 'Multi', category: 'Moteur', stock: 30, price: 15000, views: 890, inquiries: 67 },
+  { id: '4', name: 'Batterie 60Ah', brand: 'Toyota', category: 'Électrique', stock: 8, price: 85000, views: 123, inquiries: 9 },
+  { id: '5', name: 'Ampoule phare H7', brand: 'Multi', category: 'Éclairage', stock: 0, price: 5000, views: 45, inquiries: 3 },
 ];
 
 export default function SellerCataloguePage() {
+  const router = useRouter();
+  const { user, isLoading, logout } = useAuth();
   const [search, setSearch] = useState('');
-  const [showAddForm, setShowAddForm] = useState(false);
-  const [selectedTab, setSelectedTab] = useState<'catalogue' | 'stats'>('catalogue');
-  const [newProduct, setNewProduct] = useState({ name: '', brand: '', category: '', stock: '', price: '', description: '' });
+  const [showAdd, setShowAdd] = useState(false);
+  const [tab, setTab] = useState<'catalogue' | 'stats'>('catalogue');
+  const [newProduct, setNewProduct] = useState({ name: '', brand: '', category: '', stock: '', price: '' });
 
-  const filtered = myCatalogue.filter(p => 
-    !search || p.name.toLowerCase().includes(search.toLowerCase()) || p.brand.toLowerCase().includes(search.toLowerCase())
-  );
+  useEffect(() => {
+    if (!isLoading && (!user || user.role !== 'seller')) router.replace('/login');
+  }, [user, isLoading, router]);
+
+  if (isLoading || !user) return <div className="min-h-screen bg-rp-bg flex items-center justify-center"><div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" /></div>;
+
+  const filtered = myCatalogue.filter(p => !search || p.name.toLowerCase().includes(search.toLowerCase()) || p.brand.toLowerCase().includes(search.toLowerCase()));
 
   return (
     <div className="min-h-screen bg-rp-bg">
-      {/* Desktop Header */}
-      <header className="hidden lg:block bg-white border-b border-rp-border sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
-          <Link href="/seller" className="flex items-center gap-3">
-            <Image src="/logo_rapidePiece.jpeg" alt="Rapid Pièces" width={48} height={48} className="h-12 w-auto object-contain rounded-lg" priority />
-            <span className="text-lg font-bold text-rp-text">Espace Vendeur</span>
-          </Link>
-          <div className="flex items-center gap-3">
-            <Link href="/seller" className="text-sm text-rp-text-muted hover:text-rp-primary">Dashboard</Link>
-            <Link href="/seller/requests" className="text-sm text-rp-text-muted hover:text-rp-primary">Demandes</Link>
-            <Link href="/seller/catalogue" className="text-sm font-semibold text-rp-primary">Catalogue</Link>
-            <Link href="/seller/orders" className="text-sm text-rp-text-muted hover:text-rp-primary">Ventes</Link>
-          </div>
+      {/* Header */}
+      <header className="bg-slate-900/80 backdrop-blur-xl border-b border-slate-700/50 sticky top-0 z-50">
+        <div className="max-w-2xl mx-auto px-4 py-3 flex items-center gap-3">
+          <Link href="/seller" className="text-slate-400 hover:text-white"><ArrowLeft className="w-5 h-5" /></Link>
+          <h1 className="text-sm font-bold text-white flex-1">Mon catalogue</h1>
+          <span className="text-[10px] text-slate-400">{myCatalogue.length} produits</span>
+          <button onClick={() => setShowAdd(!showAdd)} className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center"><Plus className="w-4 h-4 text-white" /></button>
+        </div>
+        <div className="max-w-2xl mx-auto px-4 pb-3 flex gap-2">
+          <button onClick={() => setTab('catalogue')} className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all ${tab === 'catalogue' ? 'bg-blue-600 text-white' : 'bg-slate-700/50 text-slate-400 border border-slate-600/50'}`}>📦 Catalogue</button>
+          <button onClick={() => setTab('stats')} className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all ${tab === 'stats' ? 'bg-blue-600 text-white' : 'bg-slate-700/50 text-slate-400 border border-slate-600/50'}`}>📊 Stats</button>
         </div>
       </header>
 
-      {/* Mobile Header */}
-      <div className="lg:hidden bg-gradient-to-r from-rp-secondary to-rp-secondary-light text-white px-4 pt-12 pb-6">
-        <div className="max-w-lg mx-auto">
-          <div className="flex items-center gap-3 mb-3">
-            <Image src="/logo_rapidePiece.jpeg" alt="RP" width={40} height={40} className="h-10 w-auto object-contain rounded-lg bg-white" priority />
-            <h1 className="text-xl font-bold">Mon catalogue</h1>
-          </div>
-          <p className="text-white/70 text-xs">{myCatalogue.length} produits • {myCatalogue.filter(p => p.stock > 0).length} en stock</p>
-          
-          {/* Tabs */}
-          <div className="flex gap-2 mt-4">
-            <button
-              onClick={() => setSelectedTab('catalogue')}
-              className={`px-4 py-2 rounded-full text-xs font-medium ${
-                selectedTab === 'catalogue' ? 'bg-white text-rp-secondary' : 'bg-white/20 text-white'
-              }`}
-            >
-              📦 Catalogue
-            </button>
-            <button
-              onClick={() => setSelectedTab('stats')}
-              className={`px-4 py-2 rounded-full text-xs font-medium ${
-                selectedTab === 'stats' ? 'bg-white text-rp-secondary' : 'bg-white/20 text-white'
-              }`}
-            >
-              📊 Statistiques
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 lg:px-6 py-4 pb-20 lg:pb-6">
-        {selectedTab === 'catalogue' && (
+      <div className="max-w-2xl mx-auto px-4 py-4 space-y-3 pb-24 lg:pb-6">
+        {tab === 'catalogue' && (
           <>
-            {/* Search + Add */}
-            <div className="flex gap-2 mb-4">
-              <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-rp-text-muted" />
-                <input
-                  type="text"
-                  placeholder="Rechercher..."
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2.5 bg-white rounded-xl text-sm border-0 outline-none focus:ring-2 focus:ring-rp-primary"
-                />
-              </div>
-              <button
-                onClick={() => setShowAddForm(!showAddForm)}
-                className="w-10 h-10 bg-rp-primary rounded-xl flex items-center justify-center"
-              >
-                <Plus className="w-5 h-5 text-white" />
-              </button>
+            {/* Search */}
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+              <input type="text" placeholder="Rechercher..." value={search} onChange={(e) => setSearch(e.target.value)}
+                className="w-full pl-10 pr-4 py-2.5 bg-slate-800/50 border border-slate-700/50 rounded-xl text-sm text-white placeholder-slate-500 outline-none focus:ring-2 focus:ring-blue-500" />
             </div>
 
-            {/* Add Product Form */}
-            {showAddForm && (
-              <div className="bg-white rounded-2xl p-4 shadow-sm mb-4 slide-up">
-                <h3 className="font-bold text-sm text-rp-text mb-3">Ajouter un produit</h3>
-                <div className="space-y-3">
-                  <input
-                    type="text"
-                    placeholder="Nom du produit"
-                    value={newProduct.name}
-                    onChange={(e) => setNewProduct(prev => ({ ...prev, name: e.target.value }))}
-                    className="w-full px-3 py-2.5 bg-rp-bg rounded-xl text-sm border-0 outline-none focus:ring-2 focus:ring-rp-primary"
-                  />
+            {/* Add Form */}
+            {showAdd && (
+              <div className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-4 slide-up">
+                <h3 className="text-sm font-bold text-white mb-3">Ajouter un produit</h3>
+                <div className="space-y-2">
+                  <input type="text" placeholder="Nom du produit" value={newProduct.name} onChange={(e) => setNewProduct(p => ({ ...p, name: e.target.value }))}
+                    className="w-full px-3 py-2.5 bg-slate-700/50 border border-slate-600/50 rounded-lg text-sm text-white placeholder-slate-500 outline-none" />
                   <div className="grid grid-cols-2 gap-2">
-                    <select
-                      value={newProduct.brand}
-                      onChange={(e) => setNewProduct(prev => ({ ...prev, brand: e.target.value }))}
-                      className="w-full px-3 py-2.5 bg-rp-bg rounded-xl text-sm border-0 outline-none"
-                    >
+                    <select value={newProduct.brand} onChange={(e) => setNewProduct(p => ({ ...p, brand: e.target.value }))}
+                      className="w-full px-3 py-2.5 bg-slate-700/50 border border-slate-600/50 rounded-lg text-sm text-white outline-none">
                       <option value="">Marque</option>
                       {POPULAR_BRANDS.map(b => <option key={b} value={b}>{b}</option>)}
                     </select>
-                    <select
-                      value={newProduct.category}
-                      onChange={(e) => setNewProduct(prev => ({ ...prev, category: e.target.value }))}
-                      className="w-full px-3 py-2.5 bg-rp-bg rounded-xl text-sm border-0 outline-none"
-                    >
+                    <select value={newProduct.category} onChange={(e) => setNewProduct(p => ({ ...p, category: e.target.value }))}
+                      className="w-full px-3 py-2.5 bg-slate-700/50 border border-slate-600/50 rounded-lg text-sm text-white outline-none">
                       <option value="">Catégorie</option>
                       {POPULAR_CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
                     </select>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
-                    <input
-                      type="number"
-                      placeholder="Stock"
-                      value={newProduct.stock}
-                      onChange={(e) => setNewProduct(prev => ({ ...prev, stock: e.target.value }))}
-                      className="w-full px-3 py-2.5 bg-rp-bg rounded-xl text-sm border-0 outline-none"
-                    />
-                    <input
-                      type="number"
-                      placeholder="Prix (FCFA)"
-                      value={newProduct.price}
-                      onChange={(e) => setNewProduct(prev => ({ ...prev, price: e.target.value }))}
-                      className="w-full px-3 py-2.5 bg-rp-bg rounded-xl text-sm border-0 outline-none"
-                    />
+                    <input type="number" placeholder="Stock" value={newProduct.stock} onChange={(e) => setNewProduct(p => ({ ...p, stock: e.target.value }))}
+                      className="w-full px-3 py-2.5 bg-slate-700/50 border border-slate-600/50 rounded-lg text-sm text-white placeholder-slate-500 outline-none" />
+                    <input type="number" placeholder="Prix (FCFA)" value={newProduct.price} onChange={(e) => setNewProduct(p => ({ ...p, price: e.target.value }))}
+                      className="w-full px-3 py-2.5 bg-slate-700/50 border border-slate-600/50 rounded-lg text-sm text-white placeholder-slate-500 outline-none" />
                   </div>
                   <div className="flex gap-2">
-                    <button onClick={() => setShowAddForm(false)} className="flex-1 py-2.5 bg-rp-bg text-rp-text rounded-xl text-sm font-medium">Annuler</button>
-                    <button className="flex-1 py-2.5 bg-rp-primary text-white rounded-xl text-sm font-semibold">Ajouter</button>
+                    <button onClick={() => setShowAdd(false)} className="flex-1 py-2 bg-slate-700 text-white rounded-lg text-xs font-medium">Annuler</button>
+                    <button className="flex-1 py-2 bg-blue-600 text-white rounded-lg text-xs font-semibold">Ajouter</button>
                   </div>
                 </div>
               </div>
             )}
 
             {/* Product List */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-              {filtered.map((product) => (
-                <div key={product.id} className="bg-white rounded-xl p-4 shadow-sm">
+            <div className="space-y-2">
+              {filtered.map(product => (
+                <div key={product.id} className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-3">
                   <div className="flex items-start justify-between mb-2">
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
-                        <h3 className="font-semibold text-sm text-rp-text">{product.name}</h3>
-                        {product.stock === 0 && (
-                          <span className="text-[9px] bg-red-100 text-red-600 px-1.5 py-0.5 rounded-full font-medium">Rupture</span>
-                        )}
+                        <h3 className="text-xs font-semibold text-white">{product.name}</h3>
+                        {product.stock === 0 && <span className="text-[8px] bg-red-500/10 text-red-400 border border-red-500/30 px-1.5 py-0.5 rounded-full">Rupture</span>}
                       </div>
-                      <p className="text-xs text-rp-text-muted">{product.brand} • {product.category}</p>
+                      <p className="text-[10px] text-slate-400">{product.brand} • {product.category}</p>
                     </div>
-                    <p className="font-bold text-rp-primary text-sm">{product.price.toLocaleString()} <span className="text-[10px]">FCFA</span></p>
+                    <p className="text-sm font-bold text-rp-primary">{product.price.toLocaleString()} <span className="text-[9px] text-slate-400">FCFA</span></p>
                   </div>
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4 text-xs text-rp-text-muted">
-                      <span className="flex items-center gap-1">
-                        <Package className="w-3 h-3" /> Stock: <strong className={product.stock === 0 ? 'text-rp-danger' : 'text-rp-text'}>{product.stock}</strong>
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Eye className="w-3 h-3" /> {product.views}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <TrendingUp className="w-3 h-3" /> {product.inquiries}
-                      </span>
+                    <div className="flex items-center gap-3 text-[10px] text-slate-400">
+                      <span className="flex items-center gap-1"><Package className="w-3 h-3" /> Stock: <strong className={product.stock === 0 ? 'text-red-400' : 'text-white'}>{product.stock}</strong></span>
+                      <span className="flex items-center gap-1"><Eye className="w-3 h-3" /> {product.views}</span>
+                      <span className="flex items-center gap-1"><TrendingUp className="w-3 h-3" /> {product.inquiries}</span>
                     </div>
                     <div className="flex gap-1">
-                      <button className="w-7 h-7 bg-rp-bg rounded-lg flex items-center justify-center">
-                        <Edit3 className="w-3.5 h-3.5 text-rp-text-muted" />
-                      </button>
-                      <button className="w-7 h-7 bg-red-50 rounded-lg flex items-center justify-center">
-                        <Trash2 className="w-3.5 h-3.5 text-rp-danger" />
-                      </button>
+                      <button className="w-7 h-7 bg-slate-700/50 rounded-lg flex items-center justify-center hover:bg-slate-600"><Edit3 className="w-3 h-3 text-slate-400" /></button>
+                      <button className="w-7 h-7 bg-red-500/10 rounded-lg flex items-center justify-center hover:bg-red-500/20"><Trash2 className="w-3 h-3 text-red-400" /></button>
                     </div>
                   </div>
                 </div>
@@ -194,55 +122,36 @@ export default function SellerCataloguePage() {
           </>
         )}
 
-        {selectedTab === 'stats' && (
+        {tab === 'stats' && (
           <div className="space-y-4">
-            <div className="bg-white rounded-2xl p-4 shadow-sm">
-              <h3 className="font-bold text-sm text-rp-text mb-3">Vue d&apos;ensemble</h3>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="bg-rp-bg rounded-xl p-3 text-center">
-                  <p className="text-2xl font-bold text-rp-text">1 859</p>
-                  <p className="text-xs text-rp-text-muted">Vues totales</p>
-                </div>
-                <div className="bg-rp-bg rounded-xl p-3 text-center">
-                  <p className="text-2xl font-bold text-rp-primary">139</p>
-                  <p className="text-xs text-rp-text-muted">Demandes reçues</p>
-                </div>
-                <div className="bg-rp-bg rounded-xl p-3 text-center">
-                  <p className="text-2xl font-bold text-rp-success">7.5%</p>
-                  <p className="text-xs text-rp-text-muted">Taux conversion</p>
-                </div>
-                <div className="bg-rp-bg rounded-xl p-3 text-center">
-                  <p className="text-2xl font-bold text-rp-accent">12.4M</p>
-                  <p className="text-xs text-rp-text-muted">CA mensuel FCFA</p>
-                </div>
-              </div>
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { label: 'Vues totales', value: '1 859', icon: Eye },
+                { label: 'Demandes reçues', value: '139', icon: TrendingUp },
+                { label: 'Taux conversion', value: '7.5%', icon: BarChart3 },
+                { label: 'CA mensuel', value: '12.4M', icon: DollarSign },
+              ].map(stat => {
+                const Icon = stat.icon;
+                return (
+                  <div key={stat.label} className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-3 text-center">
+                    <Icon className="w-4 h-4 text-blue-400 mx-auto mb-1" />
+                    <p className="text-lg font-bold text-white">{stat.value}</p>
+                    <p className="text-[10px] text-slate-400">{stat.label}</p>
+                  </div>
+                );
+              })}
             </div>
 
-            <div className="bg-white rounded-2xl p-4 shadow-sm">
-              <h3 className="font-bold text-sm text-rp-text mb-3">Produits les plus demandés</h3>
+            <div className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-4">
+              <h3 className="text-sm font-bold text-white mb-3">Produits les plus demandés</h3>
               {myCatalogue.sort((a, b) => b.inquiries - a.inquiries).slice(0, 5).map((p, i) => (
-                <div key={p.id} className={`flex items-center gap-3 py-2 ${i < 4 ? 'border-b border-rp-border/50' : ''}`}>
-                  <span className="text-xs font-bold text-rp-text-muted w-4">{i + 1}</span>
+                <div key={p.id} className={`flex items-center gap-3 py-2 ${i < 4 ? 'border-b border-slate-700/50' : ''}`}>
+                  <span className="text-xs font-bold text-slate-500 w-4">{i + 1}</span>
                   <div className="flex-1">
-                    <p className="text-sm font-medium text-rp-text">{p.name}</p>
-                    <p className="text-xs text-rp-text-muted">{p.inquiries} demandes • {p.views} vues</p>
+                    <p className="text-xs font-medium text-white">{p.name}</p>
+                    <p className="text-[10px] text-slate-400">{p.inquiries} demandes • {p.views} vues</p>
                   </div>
-                  <span className="text-sm font-bold text-rp-primary">{p.price.toLocaleString()}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="bg-gradient-to-r from-rp-secondary to-rp-secondary-light rounded-2xl p-4 text-white">
-              <h3 className="font-bold mb-1">💡 Rapid Price</h3>
-              <p className="text-xs text-white/80 mb-3">Prix moyen du marché pour vos produits</p>
-              {myCatalogue.slice(0, 3).map(p => (
-                <div key={p.id} className="flex items-center justify-between py-2 border-b border-white/20 last:border-0">
-                  <span className="text-xs">{p.name}</span>
-                  <div className="flex items-center gap-2 text-xs">
-                    <span className="text-white/60">Marché: {Math.round(p.price * 1.1).toLocaleString()}</span>
-                    <span className="font-bold">Vous: {p.price.toLocaleString()}</span>
-                    {p.price < p.price * 1.1 && <span className="text-rp-gold">✓ Compétitif</span>}
-                  </div>
+                  <span className="text-xs font-bold text-rp-primary">{p.price.toLocaleString()}</span>
                 </div>
               ))}
             </div>
@@ -250,7 +159,33 @@ export default function SellerCataloguePage() {
         )}
       </div>
 
-      <BottomNav role="seller" />
+      {/* Bottom Nav */}
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-xl border-t border-slate-700/50 z-50">
+        <div className="flex items-center justify-around h-16 max-w-lg mx-auto">
+          {[
+            { href: '/seller', label: 'Accueil', icon: Store },
+            { href: '/seller/requests', label: 'Demandes', icon: Bell, badge: 5 },
+            { href: '/seller/catalogue', label: 'Catalogue', icon: Package, center: true },
+            { href: '/seller/orders', label: 'Ventes', icon: DollarSign },
+            { href: '/seller/profile', label: 'Profil', icon: Star },
+          ].map(tab => {
+            const Icon = tab.icon;
+            if (tab.center) return (
+              <Link key={tab.href} href={tab.href} className="flex flex-col items-center -mt-4">
+                <div className="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center shadow-lg shadow-blue-600/30"><Icon className="w-6 h-6 text-white" /></div>
+                <span className="text-[10px] mt-1 text-blue-400 font-medium">{tab.label}</span>
+              </Link>
+            );
+            return (
+              <Link key={tab.href} href={tab.href} className="flex flex-col items-center relative">
+                <Icon className="w-5 h-5 text-slate-400" />
+                {tab.badge && <span className="absolute -top-1 -right-1 w-4 h-4 bg-rp-primary text-white text-[9px] rounded-full flex items-center justify-center font-bold">{tab.badge}</span>}
+                <span className="text-[10px] mt-0.5 text-slate-400">{tab.label}</span>
+              </Link>
+            );
+          })}
+        </div>
+      </nav>
     </div>
   );
 }

@@ -1,164 +1,189 @@
 'use client';
 
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ChevronLeft, ChevronRight, User, Star, Shield, Settings, Bell, HelpCircle, LogOut, MapPin, Phone, Award, TrendingUp, CheckCircle, Clock, AlertTriangle, BarChart3 } from 'lucide-react';
-import BottomNav from '@/components/BottomNav';
+import Image from 'next/image';
+import { ArrowLeft, Star, Shield, Bell, TrendingUp, Award, MapPin, Phone, LogOut, Store, Package, DollarSign, ChevronRight, Settings, HelpCircle } from 'lucide-react';
+import { useAuth } from '@/lib/auth';
 
 export default function SellerProfilePage() {
+  const router = useRouter();
+  const { user, isLoading, logout } = useAuth();
+
+  useEffect(() => {
+    if (!isLoading && (!user || user.role !== 'seller')) router.replace('/login');
+  }, [user, isLoading, router]);
+
+  if (isLoading || !user) return <div className="min-h-screen bg-rp-bg flex items-center justify-center"><div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" /></div>;
+
   return (
     <div className="min-h-screen bg-rp-bg">
       {/* Header */}
-      <div className="bg-gradient-to-r from-rp-secondary to-rp-secondary-light text-white px-4 pt-12 pb-6">
-        <div className="max-w-lg mx-auto">
+      <header className="bg-gradient-to-b from-blue-600/20 to-transparent">
+        <div className="max-w-2xl mx-auto px-4 pt-8 pb-6">
+          <div className="flex items-center gap-3 mb-6">
+            <Link href="/seller" className="text-slate-400 hover:text-white"><ArrowLeft className="w-5 h-5" /></Link>
+            <h1 className="text-sm font-bold text-white flex-1">Mon profil</h1>
+            <button onClick={logout} className="text-slate-400 hover:text-red-400"><LogOut className="w-4 h-4" /></button>
+          </div>
+
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
-              <span className="text-2xl font-bold">AP</span>
-            </div>
+            <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl flex items-center justify-center text-white text-2xl font-bold shadow-lg shadow-blue-600/30">AP</div>
             <div>
-              <h1 className="text-xl font-bold">Auto Pièces Cotonou</h1>
-              <p className="text-white/70 text-sm">Marché Dantokpa, Cotonou</p>
+              <h2 className="text-lg font-bold text-white">Auto Pièces Cotonou</h2>
+              <p className="text-xs text-slate-400">Marché Dantokpa, Cotonou</p>
               <div className="flex items-center gap-2 mt-1">
-                <span className="text-[10px] bg-rp-gold/30 text-rp-gold px-2 py-0.5 rounded-full font-medium flex items-center gap-1">
+                <span className="text-[10px] px-2 py-0.5 bg-blue-500/10 text-blue-400 border border-blue-500/30 rounded-full font-medium flex items-center gap-1">
                   <Shield className="w-3 h-3" /> Verified Seller
                 </span>
-                <span className="text-[10px] bg-white/20 px-2 py-0.5 rounded-full">Depuis Juin 2024</span>
+                <span className="text-[10px] text-slate-500">Depuis Juin 2024</span>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </header>
 
-      <div className="max-w-lg mx-auto px-4 -mt-3">
+      <div className="max-w-2xl mx-auto px-4 space-y-4 pb-24 lg:pb-6">
         {/* Rapid Seller Score */}
-        <div className="bg-white rounded-2xl p-5 shadow-sm mb-4">
-          <div className="flex items-center gap-2 mb-3">
-            <Award className="w-5 h-5 text-rp-gold" />
-            <h2 className="font-bold text-rp-text">Rapid Seller Score</h2>
+        <section className="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-5">
+          <div className="flex items-center gap-2 mb-4">
+            <Award className="w-5 h-5 text-amber-400" />
+            <h3 className="text-sm font-bold text-white">Rapid Seller Score</h3>
           </div>
-          
+
           <div className="flex items-center gap-4 mb-4">
-            <div className="w-20 h-20 bg-rp-primary/10 rounded-full flex items-center justify-center">
-              <span className="text-3xl font-bold text-rp-primary">4.8</span>
+            <div className="w-20 h-20 bg-gradient-to-br from-amber-400/20 to-amber-500/10 border border-amber-500/30 rounded-full flex items-center justify-center">
+              <span className="text-3xl font-extrabold text-white">4.8</span>
             </div>
             <div className="flex-1">
               <div className="flex items-center gap-1 mb-1">
-                {[1,2,3,4,5].map(i => (
-                  <Star key={i} className={`w-4 h-4 ${i <= 4 ? 'fill-rp-gold text-rp-gold' : 'fill-rp-gold/30 text-rp-gold/30'}`} />
-                ))}
+                {[1,2,3,4,5].map(i => <Star key={i} className={`w-4 h-4 ${i <= 4 ? 'fill-amber-400 text-amber-400' : 'fill-amber-400/30 text-amber-400/30'}`} />)}
               </div>
-              <p className="text-sm text-rp-text-muted">Basé sur 342 transactions</p>
-              <div className="flex items-center gap-1 mt-1">
-                <span className="text-[10px] bg-rp-gold/20 text-yellow-700 px-2 py-0.5 rounded-full font-medium">🏆 TOP 5% vendeurs</span>
-              </div>
+              <p className="text-[10px] text-slate-400">Basé sur 342 transactions</p>
+              <span className="text-[9px] px-2 py-0.5 bg-amber-500/10 text-amber-400 border border-amber-500/30 rounded-full font-medium">🏆 TOP 5% vendeurs</span>
             </div>
           </div>
 
-          {/* Score Breakdown */}
           <div className="space-y-2.5">
             {[
-              { label: 'Taux de conformité', value: '97%', target: '95%', good: true, icon: CheckCircle },
-              { label: 'Taux de réponse', value: '98%', target: '90%', good: true, icon: Clock },
-              { label: 'Taux de retour', value: '2%', target: '<5%', good: true, icon: AlertTriangle },
-              { label: 'Temps moyen réponse', value: '12 min', target: '<30 min', good: true, icon: Clock },
-              { label: 'Transactions totales', value: '342', target: '100+', good: true, icon: BarChart3 },
-            ].map((metric) => {
-              const Icon = metric.icon;
-              return (
-                <div key={metric.label} className="flex items-center gap-3">
-                  <Icon className={`w-4 h-4 ${metric.good ? 'text-rp-success' : 'text-rp-danger'}`} />
-                  <div className="flex-1">
-                    <div className="flex justify-between">
-                      <span className="text-xs text-rp-text-muted">{metric.label}</span>
-                      <span className="text-xs font-semibold text-rp-text">{metric.value}</span>
-                    </div>
-                  </div>
-                  <span className="text-[9px] text-rp-text-muted">Objectif: {metric.target}</span>
+              { label: 'Conformité', value: '97%', pct: 97 },
+              { label: 'Réponse', value: '98%', pct: 98 },
+              { label: 'Retours', value: '2%', pct: 40 },
+              { label: 'Temps rép.', value: '12 min', pct: 85 },
+              { label: 'Transactions', value: '342', pct: 100 },
+            ].map(m => (
+              <div key={m.label}>
+                <div className="flex justify-between items-center mb-1">
+                  <span className="text-[11px] text-slate-400">{m.label}</span>
+                  <span className="text-[11px] font-semibold text-white">{m.value}</span>
                 </div>
-              );
-            })}
+                <div className="h-1 bg-slate-700 rounded-full overflow-hidden">
+                  <div className="h-full bg-blue-500 rounded-full" style={{ width: `${m.pct}%` }} />
+                </div>
+              </div>
+            ))}
           </div>
 
           {/* Badge Progression */}
-          <div className="mt-4 pt-4 border-t border-rp-border">
-            <p className="text-xs font-semibold text-rp-text-muted mb-2">Progression des badges</p>
+          <div className="mt-4 pt-4 border-t border-slate-700/50">
+            <p className="text-[10px] text-slate-400 mb-2">Progression des badges</p>
             <div className="flex items-center gap-1">
-              {['New Seller', 'Rapid Seller', 'Verified Seller', 'Premium Seller', 'Top Seller'].map((badge, i) => (
-                <div key={badge} className="flex items-center gap-1 flex-1">
-                  <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold ${
-                    i <= 2 ? 'bg-rp-gold text-white' : 'bg-rp-bg text-rp-text-muted'
-                  }`}>
-                    {i + 1}
-                  </div>
-                  {i < 4 && <div className={`flex-1 h-0.5 ${i < 2 ? 'bg-rp-gold' : 'bg-rp-bg'}`} />}
+              {['New', 'Rapid', 'Verified', 'Premium', 'Top'].map((b, i) => (
+                <div key={b} className="flex items-center gap-1 flex-1">
+                  <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[9px] font-bold ${i <= 2 ? 'bg-amber-400 text-slate-900' : 'bg-slate-700 text-slate-500'}`}>{i + 1}</div>
+                  {i < 4 && <div className={`flex-1 h-0.5 ${i < 2 ? 'bg-amber-400' : 'bg-slate-700'}`} />}
                 </div>
               ))}
             </div>
-            <p className="text-[10px] text-rp-text-muted mt-2 text-center">Badge actuel: <strong className="text-rp-gold">Verified Seller</strong></p>
+            <p className="text-[9px] text-slate-500 text-center mt-2">Badge: <strong className="text-amber-400">Verified Seller</strong></p>
+          </div>
+        </section>
+
+        {/* Stats */}
+        <div className="grid grid-cols-3 gap-3">
+          <div className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-3 text-center">
+            <p className="text-lg font-bold text-blue-400">342</p>
+            <p className="text-[10px] text-slate-400">Transactions</p>
+          </div>
+          <div className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-3 text-center">
+            <p className="text-lg font-bold text-emerald-400">42M</p>
+            <p className="text-[10px] text-slate-400">CA Total</p>
+          </div>
+          <div className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-3 text-center">
+            <p className="text-lg font-bold text-amber-400">97%</p>
+            <p className="text-[10px] text-slate-400">Conformité</p>
           </div>
         </div>
 
-        {/* Quick Stats */}
-        <div className="grid grid-cols-3 gap-3 mb-4">
-          <div className="bg-white rounded-xl p-3 text-center shadow-sm">
-            <p className="text-lg font-bold text-rp-primary">342</p>
-            <p className="text-[10px] text-rp-text-muted">Transactions</p>
-          </div>
-          <div className="bg-white rounded-xl p-3 text-center shadow-sm">
-            <p className="text-lg font-bold text-rp-success">42M</p>
-            <p className="text-[10px] text-rp-text-muted">CA Total (FCFA)</p>
-          </div>
-          <div className="bg-white rounded-xl p-3 text-center shadow-sm">
-            <p className="text-lg font-bold text-rp-accent">97%</p>
-            <p className="text-[10px] text-rp-text-muted">Conformité</p>
-          </div>
-        </div>
-
-        {/* Marques & Spécialités */}
-        <div className="bg-white rounded-2xl p-4 shadow-sm mb-4">
-          <h3 className="font-bold text-sm text-rp-text mb-2">Spécialités</h3>
-          <div className="flex flex-wrap gap-2 mb-3">
+        {/* Spécialités */}
+        <section className="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-4">
+          <h3 className="text-xs font-bold text-white mb-2">Spécialités</h3>
+          <div className="flex flex-wrap gap-1.5 mb-3">
             {['Moteurs diesels', 'Systèmes de freinage', 'Importation'].map(s => (
-              <span key={s} className="text-xs bg-rp-primary/10 text-rp-primary px-2 py-1 rounded-full">{s}</span>
+              <span key={s} className="text-[10px] px-2 py-0.5 bg-blue-500/10 text-blue-400 border border-blue-500/30 rounded-full">{s}</span>
             ))}
           </div>
-          <h3 className="font-bold text-sm text-rp-text mb-2">Marques</h3>
-          <div className="flex flex-wrap gap-2">
+          <h3 className="text-xs font-bold text-white mb-2">Marques</h3>
+          <div className="flex flex-wrap gap-1.5">
             {['Toyota', 'Honda', 'Mercedes-Benz'].map(b => (
-              <span key={b} className="text-xs bg-rp-bg text-rp-text px-2 py-1 rounded-full">{b}</span>
+              <span key={b} className="text-[10px] px-2 py-0.5 bg-slate-700 text-slate-300 rounded-full">{b}</span>
             ))}
           </div>
-        </div>
+        </section>
 
-        {/* Settings */}
-        <div className="bg-white rounded-2xl shadow-sm mb-20 overflow-hidden">
+        {/* Menu */}
+        <section className="bg-slate-800/50 border border-slate-700/50 rounded-2xl overflow-hidden">
           {[
-            { icon: Bell, label: 'Notifications', desc: 'Alertes de nouvelles demandes' },
+            { icon: Bell, label: 'Notifications', desc: 'Alertes nouvelles demandes' },
             { icon: TrendingUp, label: 'Statistiques', desc: 'Rapports et analyses' },
             { icon: MapPin, label: 'Magasin', desc: 'Informations et localisation' },
             { icon: Phone, label: 'Support vendeur', desc: 'Assistance dédiée' },
-            { icon: HelpCircle, label: 'Guide vendeur', desc: 'Comment maximiser vos ventes' },
+            { icon: HelpCircle, label: 'Guide vendeur', desc: 'Maximiser vos ventes' },
             { icon: Settings, label: 'Paramètres', desc: 'Compte et préférences' },
           ].map((item, i) => {
             const Icon = item.icon;
             return (
-              <button key={item.label} className="w-full px-4 py-3.5 flex items-center gap-3 border-b border-rp-border/50 last:border-0">
-                <Icon className="w-5 h-5 text-rp-text-muted" />
+              <button key={item.label} className={`w-full px-4 py-3.5 flex items-center gap-3 ${i < 5 ? 'border-b border-slate-700/50' : ''}`}>
+                <Icon className="w-4 h-4 text-slate-400" />
                 <div className="flex-1 text-left">
-                  <p className="text-sm font-medium text-rp-text">{item.label}</p>
-                  <p className="text-xs text-rp-text-muted">{item.desc}</p>
+                  <p className="text-xs font-medium text-white">{item.label}</p>
+                  <p className="text-[10px] text-slate-400">{item.desc}</p>
                 </div>
-                <ChevronRight className="w-4 h-4 text-rp-text-muted" />
+                <ChevronRight className="w-4 h-4 text-slate-500" />
               </button>
             );
           })}
-          <button className="w-full px-4 py-3.5 flex items-center gap-3 text-rp-danger">
-            <LogOut className="w-5 h-5" />
-            <span className="text-sm font-medium">Déconnexion</span>
-          </button>
-        </div>
+        </section>
       </div>
 
-      <BottomNav role="seller" />
+      {/* Bottom Nav */}
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-xl border-t border-slate-700/50 z-50">
+        <div className="flex items-center justify-around h-16 max-w-lg mx-auto">
+          {[
+            { href: '/seller', label: 'Accueil', icon: Store },
+            { href: '/seller/requests', label: 'Demandes', icon: Bell, badge: 5 },
+            { href: '/seller/catalogue', label: 'Catalogue', icon: Package, center: true },
+            { href: '/seller/orders', label: 'Ventes', icon: DollarSign },
+            { href: '/seller/profile', label: 'Profil', icon: Star },
+          ].map(tab => {
+            const Icon = tab.icon;
+            if (tab.center) return (
+              <Link key={tab.href} href={tab.href} className="flex flex-col items-center -mt-4">
+                <div className="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center shadow-lg shadow-blue-600/30"><Icon className="w-6 h-6 text-white" /></div>
+                <span className="text-[10px] mt-1 text-blue-400 font-medium">{tab.label}</span>
+              </Link>
+            );
+            return (
+              <Link key={tab.href} href={tab.href} className="flex flex-col items-center relative">
+                <Icon className={`w-5 h-5 ${tab.href === '/seller/profile' ? 'text-blue-400' : 'text-slate-400'}`} />
+                {tab.badge && <span className="absolute -top-1 -right-1 w-4 h-4 bg-rp-primary text-white text-[9px] rounded-full flex items-center justify-center font-bold">{tab.badge}</span>}
+                <span className={`text-[10px] mt-0.5 ${tab.href === '/seller/profile' ? 'text-blue-400' : 'text-slate-400'}`}>{tab.label}</span>
+              </Link>
+            );
+          })}
+        </div>
+      </nav>
     </div>
   );
 }

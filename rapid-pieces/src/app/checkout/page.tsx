@@ -1,170 +1,208 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ChevronLeft, Shield, CreditCard, Smartphone, Check, Lock, Clock, Truck } from 'lucide-react';
 
 export default function CheckoutPage() {
-  const [paymentMethod, setPaymentMethod] = useState<'momo' | 'card' | 'cash'>('momo');
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [isComplete, setIsComplete] = useState(false);
+  const router = useRouter();
+  const [paymentMethod, setPaymentMethod] = useState('momo');
+  const [step, setStep] = useState(1);
 
-  const order = {
-    part: 'Alternateur Toyota Hilux 2018',
-    seller: 'Nigeria Auto Parts',
-    quality: 'Premium Aftermarket',
-    price: 120000,
-    delivery: 'RAPID NIGERIA',
-    deliveryTime: '3-5 jours',
-    rapidProtection: 2000,
-    deliveryFee: 5000,
+  const orderSummary = {
+    part: 'Plaquettes de frein avant',
+    quality: 'OEM',
+    seller: 'BigMoteurs',
+    price: 45000,
+    delivery: 'RAPID CITY',
+    deliveryFee: 3000,
+    total: 48000,
   };
-
-  const total = order.price + order.rapidProtection + order.deliveryFee;
-
-  const handlePay = () => {
-    setIsProcessing(true);
-    setTimeout(() => {
-      setIsProcessing(false);
-      setIsComplete(true);
-    }, 3000);
-  };
-
-  if (isComplete) {
-    return (
-      <div className="min-h-screen bg-rp-bg flex items-center justify-center px-4">
-        <div className="bg-white rounded-2xl p-8 text-center max-w-sm w-full shadow-lg">
-          <div className="w-16 h-16 bg-rp-success/10 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Check className="w-8 h-8 text-rp-success" />
-          </div>
-          <h2 className="text-xl font-bold text-rp-text mb-2">Paiement confirmé !</h2>
-          <p className="text-sm text-rp-text-muted mb-6">
-            Votre paiement de {total.toLocaleString()} FCFA est sécurisé en escrow. Le vendeur sera notifié.
-          </p>
-          <div className="bg-rp-bg rounded-xl p-4 mb-4 text-left">
-            <div className="space-y-2 text-xs">
-              <div className="flex justify-between"><span className="text-rp-text-muted">Pièce</span><span className="font-medium text-rp-text">{order.part}</span></div>
-              <div className="flex justify-between"><span className="text-rp-text-muted">Vendeur</span><span className="font-medium text-rp-text">{order.seller}</span></div>
-              <div className="flex justify-between"><span className="text-rp-text-muted">Livraison</span><span className="font-medium text-rp-text">{order.delivery}</span></div>
-              <div className="flex justify-between"><span className="text-rp-text-muted">Délai estimé</span><span className="font-medium text-rp-text">{order.deliveryTime}</span></div>
-            </div>
-          </div>
-          <div className="bg-purple-50 rounded-xl p-3 mb-6 flex items-center gap-2">
-            <Shield className="w-4 h-4 text-purple-600 flex-shrink-0" />
-            <p className="text-xs text-purple-700">Rapid Protection active — votre paiement est sécurisé jusqu&apos;à réception</p>
-          </div>
-          <Link href="/orders" className="block w-full py-3 bg-rp-primary text-white rounded-xl text-sm font-bold text-center">
-            Suivre ma commande
-          </Link>
-        </div>
-      </div>
-    );
-  }
 
   return (
-    <div className="min-h-screen bg-rp-bg">
-      <div className="bg-white px-4 pt-12 pb-4 border-b border-rp-border">
-        <div className="max-w-lg mx-auto">
-          <div className="flex items-center gap-3">
-            <Link href="/search" className="w-8 h-8 flex items-center justify-center">
-              <ChevronLeft className="w-5 h-5 text-rp-text" />
-            </Link>
-            <h1 className="text-lg font-bold text-rp-text">Paiement sécurisé</h1>
-          </div>
+    <div className="min-h-screen bg-slate-950 pb-24 lg:pb-8">
+      {/* Header */}
+      <header className="sticky top-0 z-40 bg-slate-900/95 backdrop-blur-xl border-b border-slate-700/50">
+        <div className="max-w-4xl mx-auto px-4 h-14 flex items-center gap-3">
+          <button onClick={() => step > 1 ? setStep(step - 1) : router.back()} className="text-slate-400 hover:text-white">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+          </button>
+          <h1 className="text-lg font-bold text-white">Paiement</h1>
         </div>
-      </div>
+      </header>
 
-      <div className="max-w-lg mx-auto px-4 py-4 space-y-4">
-        {/* Order Summary */}
-        <div className="bg-white rounded-2xl p-4 shadow-sm">
-          <h3 className="font-bold text-sm text-rp-text mb-3">📦 Résumé de la commande</h3>
-          <div className="space-y-2 text-sm">
-            <div className="flex justify-between"><span className="text-rp-text-muted">Pièce</span><span className="font-medium text-rp-text">{order.part}</span></div>
-            <div className="flex justify-between"><span className="text-rp-text-muted">Qualité</span><span className="font-medium text-rp-text">{order.quality}</span></div>
-            <div className="flex justify-between"><span className="text-rp-text-muted">Vendeur</span><span className="font-medium text-rp-text">{order.seller}</span></div>
-            <div className="flex justify-between"><span className="text-rp-text-muted">Livraison</span><span className="font-medium text-rp-text">{order.delivery} ({order.deliveryTime})</span></div>
-          </div>
+      <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
+        {/* Progress */}
+        <div className="flex items-center gap-2">
+          {[1, 2, 3].map((s) => (
+            <div key={s} className="flex items-center flex-1">
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${step >= s ? 'bg-red-600 text-white' : 'bg-slate-800 text-slate-500'}`}>
+                {s}
+              </div>
+              {s < 3 && <div className={`flex-1 h-0.5 mx-2 ${step > s ? 'bg-red-600' : 'bg-slate-800'}`} />}
+            </div>
+          ))}
         </div>
-
-        {/* Escrow Info */}
-        <div className="bg-purple-50 rounded-2xl p-4 border border-purple-200">
-          <div className="flex items-center gap-2 mb-2">
-            <Lock className="w-5 h-5 text-purple-600" />
-            <h3 className="font-bold text-sm text-purple-700">Paiement Escrow</h3>
-          </div>
-          <div className="space-y-2 text-xs text-purple-700">
-            <div className="flex items-center gap-2"><Check className="w-3 h-3" /> Votre paiement est sécurisé</div>
-            <div className="flex items-center gap-2"><Check className="w-3 h-3" /> Le vendeur est payé après livraison confirmée</div>
-            <div className="flex items-center gap-2"><Check className="w-3 h-3" /> Remboursement possible en cas de problème</div>
-          </div>
+        <div className="flex justify-between text-[10px] text-slate-400">
+          <span>Résumé</span>
+          <span>Paiement</span>
+          <span>Confirmation</span>
         </div>
 
-        {/* Price Breakdown */}
-        <div className="bg-white rounded-2xl p-4 shadow-sm">
-          <h3 className="font-bold text-sm text-rp-text mb-3">💰 Détail du prix</h3>
-          <div className="space-y-2 text-sm">
-            <div className="flex justify-between"><span className="text-rp-text-muted">Pièce</span><span className="text-rp-text">{order.price.toLocaleString()} FCFA</span></div>
-            <div className="flex justify-between"><span className="text-rp-text-muted">Livraison {order.delivery}</span><span className="text-rp-text">{order.deliveryFee.toLocaleString()} FCFA</span></div>
-            <div className="flex justify-between"><span className="text-rp-text-muted">Rapid Protection</span><span className="text-rp-text">{order.rapidProtection.toLocaleString()} FCFA</span></div>
-            <div className="border-t border-rp-border pt-2 flex justify-between">
-              <span className="font-bold text-rp-text">Total</span>
-              <span className="font-bold text-rp-primary text-lg">{total.toLocaleString()} FCFA</span>
+        {/* Step 1: Summary */}
+        {step === 1 && (
+          <div className="space-y-4">
+            <div className="bg-slate-900/50 backdrop-blur-sm rounded-2xl p-5 border border-slate-700/50 space-y-3">
+              <h3 className="text-sm font-semibold text-white">Résumé de la commande</h3>
+              <div className="space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span className="text-slate-400">Pièce</span>
+                  <span className="text-white font-bold">{orderSummary.part}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-slate-400">Qualité</span>
+                  <span className="text-blue-400">{orderSummary.quality}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-slate-400">Vendeur</span>
+                  <span className="text-white">{orderSummary.seller}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-slate-400">Livraison</span>
+                  <span className="text-red-400 font-bold">{orderSummary.delivery}</span>
+                </div>
+                <hr className="border-slate-700/50" />
+                <div className="flex justify-between text-sm">
+                  <span className="text-slate-400">Pièce</span>
+                  <span className="text-white">{orderSummary.price.toLocaleString()} FCFA</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-slate-400">Livraison</span>
+                  <span className="text-white">{orderSummary.deliveryFee.toLocaleString()} FCFA</span>
+                </div>
+                <hr className="border-slate-700/50" />
+                <div className="flex justify-between text-lg">
+                  <span className="text-white font-bold">Total</span>
+                  <span className="text-white font-black">{orderSummary.total.toLocaleString()} FCFA</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Rapid Protection */}
+            <div className="bg-green-900/20 rounded-xl p-4 border border-green-500/20">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-lg">🛡️</span>
+                <span className="text-sm font-bold text-green-400">Rapid Protection active</span>
+              </div>
+              <p className="text-xs text-green-300/70">Votre paiement est sécurisé par Escrow. L'argent est retenu jusqu'à confirmation de réception.</p>
+            </div>
+
+            <button onClick={() => setStep(2)} className="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-3 rounded-xl transition-all">
+              Continuer →
+            </button>
+          </div>
+        )}
+
+        {/* Step 2: Payment */}
+        {step === 2 && (
+          <div className="space-y-4">
+            <h3 className="text-sm font-semibold text-white">Méthode de paiement</h3>
+            
+            {[
+              { id: 'momo', icon: '📱', name: 'Mobile Money', desc: 'MTN MoMo, Moov Money' },
+              { id: 'card', icon: '💳', name: 'Carte bancaire', desc: 'Visa, Mastercard' },
+              { id: 'cod', icon: '💵', name: 'Paiement à la livraison', desc: 'Payez quand vous recevez' },
+            ].map((m) => (
+              <button
+                key={m.id}
+                onClick={() => setPaymentMethod(m.id)}
+                className={`w-full rounded-xl p-4 border text-left transition-all ${
+                  paymentMethod === m.id
+                    ? 'bg-red-600/10 border-red-500/50'
+                    : 'bg-slate-900/50 border-slate-700/50 hover:border-slate-600'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">{m.icon}</span>
+                  <div>
+                    <div className="text-sm font-bold text-white">{m.name}</div>
+                    <div className="text-xs text-slate-400">{m.desc}</div>
+                  </div>
+                  <div className={`w-5 h-5 rounded-full border-2 ml-auto flex items-center justify-center ${paymentMethod === m.id ? 'border-red-500 bg-red-500' : 'border-slate-600'}`}>
+                    {paymentMethod === m.id && <div className="w-2 h-2 bg-white rounded-full" />}
+                  </div>
+                </div>
+              </button>
+            ))}
+
+            {paymentMethod === 'momo' && (
+              <div className="bg-slate-900/50 backdrop-blur-sm rounded-xl p-4 border border-slate-700/50 space-y-3">
+                <div>
+                  <label className="text-xs text-slate-400 mb-1 block">Numéro Mobile Money</label>
+                  <input type="tel" placeholder="+229 XX XX XX XX" className="w-full bg-slate-800/50 border border-slate-600 rounded-lg px-3 py-2.5 text-white text-sm" />
+                </div>
+                <div>
+                  <label className="text-xs text-slate-400 mb-1 block">Nom du titulaire</label>
+                  <input type="text" placeholder="Nom complet" className="w-full bg-slate-800/50 border border-slate-600 rounded-lg px-3 py-2.5 text-white text-sm" />
+                </div>
+              </div>
+            )}
+
+            <button onClick={() => setStep(3)} className="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-3 rounded-xl transition-all">
+              Payer {orderSummary.total.toLocaleString()} FCFA 🔒
+            </button>
+          </div>
+        )}
+
+        {/* Step 3: Confirmation */}
+        {step === 3 && (
+          <div className="space-y-4 text-center">
+            <div className="bg-green-900/20 rounded-2xl p-8 border border-green-500/20">
+              <div className="text-5xl mb-4">✅</div>
+              <h2 className="text-xl font-bold text-white mb-2">Paiement confirmé !</h2>
+              <p className="text-sm text-slate-400">Votre commande est en cours de traitement</p>
+            </div>
+
+            <div className="bg-slate-900/50 backdrop-blur-sm rounded-xl p-4 border border-slate-700/50 space-y-2">
+              <div className="flex justify-between text-sm">
+                <span className="text-slate-400">N° Commande</span>
+                <span className="text-white font-mono font-bold">RP-2025-00847</span>
+              </div>
+              <div className="flex justify-between text-sm">
+                <span className="text-slate-400">Montant</span>
+                <span className="text-white font-bold">{orderSummary.total.toLocaleString()} FCFA</span>
+              </div>
+              <div className="flex justify-between text-sm">
+                <span className="text-slate-400">Escrow</span>
+                <span className="text-yellow-400 font-bold">🔒 Sécurisé</span>
+              </div>
+              <div className="flex justify-between text-sm">
+                <span className="text-slate-400">Livraison estimée</span>
+                <span className="text-green-400 font-bold">Aujourd'hui - 2h</span>
+              </div>
+            </div>
+
+            <div className="bg-slate-900/50 backdrop-blur-sm rounded-xl p-4 border border-slate-700/50">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-lg">🎁</span>
+                <span className="text-sm font-bold text-yellow-400">+480 Rapid Points gagnés !</span>
+              </div>
+              <div className="w-full bg-slate-800 rounded-full h-2">
+                <div className="bg-gradient-to-r from-yellow-500 to-orange-500 h-2 rounded-full" style={{ width: '65%' }} />
+              </div>
+              <p className="text-[10px] text-slate-400 mt-1">2,930 / 4,500 points — Prochain palier : Silver</p>
+            </div>
+
+            <div className="flex gap-3">
+              <Link href="/orders" className="flex-1 bg-red-600 hover:bg-red-500 text-white font-bold py-3 rounded-xl text-center transition-all">
+                Suivre la commande
+              </Link>
+              <Link href="/buyer" className="flex-1 bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 rounded-xl text-center transition-all">
+                Retour accueil
+              </Link>
             </div>
           </div>
-        </div>
-
-        {/* Payment Method */}
-        <div className="bg-white rounded-2xl p-4 shadow-sm">
-          <h3 className="font-bold text-sm text-rp-text mb-3">💳 Mode de paiement</h3>
-          <div className="space-y-2">
-            {[
-              { key: 'momo' as const, icon: Smartphone, label: 'Mobile Money', desc: 'Moov Money, MTN Mobile Money', color: 'text-yellow-600' },
-              { key: 'card' as const, icon: CreditCard, label: 'Carte bancaire', desc: 'Visa, Mastercard', color: 'text-blue-600' },
-              { key: 'cash' as const, icon: Truck, label: 'Paiement à la livraison', desc: 'Payez quand vous recevez', color: 'text-green-600' },
-            ].map(method => {
-              const Icon = method.icon;
-              return (
-                <button
-                  key={method.key}
-                  onClick={() => setPaymentMethod(method.key)}
-                  className={`w-full p-3 rounded-xl flex items-center gap-3 text-left ${
-                    paymentMethod === method.key ? 'bg-rp-primary/10 border-2 border-rp-primary' : 'bg-rp-bg border-2 border-transparent'
-                  }`}
-                >
-                  <Icon className={`w-5 h-5 ${method.color}`} />
-                  <div className="flex-1">
-                    <p className="text-sm font-medium text-rp-text">{method.label}</p>
-                    <p className="text-xs text-rp-text-muted">{method.desc}</p>
-                  </div>
-                  {paymentMethod === method.key && <Check className="w-5 h-5 text-rp-primary" />}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Pay Button */}
-        <button
-          onClick={handlePay}
-          disabled={isProcessing}
-          className="w-full py-4 bg-rp-primary text-white rounded-2xl text-base font-bold shadow-lg disabled:opacity-70 flex items-center justify-center gap-2"
-        >
-          {isProcessing ? (
-            <>
-              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-              Traitement en cours...
-            </>
-          ) : (
-            <>
-              <Lock className="w-4 h-4" />
-              Payer {total.toLocaleString()} FCFA
-            </>
-          )}
-        </button>
-
-        <p className="text-center text-[10px] text-rp-text-muted pb-10">
-          🔒 Paiement sécurisé par Rapid Pièces • Rapid Protection incluse
-        </p>
+        )}
       </div>
     </div>
   );

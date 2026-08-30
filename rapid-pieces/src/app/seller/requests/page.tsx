@@ -1,28 +1,39 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ChevronLeft, Clock, MapPin, Star, AlertCircle, Check, X, Send, Filter } from 'lucide-react';
-import BottomNav from '@/components/BottomNav';
-import { QUALITY_LEVELS } from '@/lib/types';
+import Image from 'next/image';
+import { ArrowLeft, Bell, Package, MapPin, Clock, AlertCircle, Check, Send, Star, Store, DollarSign, ChevronRight } from 'lucide-react';
+import { useAuth } from '@/lib/auth';
 
 const incomingRequests = [
-  { id: '1', part: 'Plaquettes de frein avant', vehicle: 'Toyota Corolla 2018 • 1.8 essence', location: 'Cotonou', time: 'Il y a 15 min', urgent: true, budget: '65 000 FCFA', quality: 'OEM', buyerName: 'Jean K.', buyerRating: 4.7, responsesCount: 2 },
-  { id: '2', part: 'Filtre à huile', vehicle: 'Honda CR-V 2019 • 1.5 Turbo', location: 'Abomey-Calavi', time: 'Il y a 32 min', urgent: false, budget: '30 000 FCFA', quality: '', buyerName: 'Garage Méca+', buyerRating: 4.9, responsesCount: 4 },
-  { id: '3', part: 'Courroie alternateur', vehicle: 'Peugeot 308 2016 • 1.6 HDi', location: 'Porto-Novo', time: 'Il y a 1h', urgent: false, budget: '25 000 FCFA', quality: 'Premium', buyerName: 'Amadou D.', buyerRating: 4.5, responsesCount: 1 },
-  { id: '4', part: 'Ampoule phare gauche H7', vehicle: 'Mercedes Classe C 2015 • 220d', location: 'Cotonou', time: 'Il y a 2h', urgent: false, budget: '', quality: '', buyerName: 'Fulbert M.', buyerRating: 4.3, responsesCount: 0 },
-  { id: '5', part: 'Disque de frein arrière (x2)', vehicle: 'Toyota RAV4 2017 • 2.0', location: 'Cotonou', time: 'Il y a 3h', urgent: true, budget: '120 000 FCFA', quality: 'OEM', buyerName: 'Transport GTA', buyerRating: 4.8, responsesCount: 3 },
+  { id: '1', part: 'Plaquettes de frein avant Toyota Corolla 2018', buyer: 'Koffi Germain', type: 'Mécanicien', location: 'Marcory', time: 'Il y a 15 min', urgent: true, budget: '65 000 FCFA', responses: 2 },
+  { id: '2', part: 'Filtre à huile Honda CR-V 2019 1.5T', buyer: 'Massa Garage', type: 'Garage', location: 'Marcory', time: 'Il y a 32 min', urgent: false, budget: '30 000 FCFA', responses: 4 },
+  { id: '3', part: 'Courroie alternateur Peugeot 308 2016', buyer: 'Amadou D.', type: 'Pro', location: 'Adjamé', time: 'Il y a 1h', urgent: false, budget: '25 000 FCFA', responses: 1 },
+  { id: '4', part: 'Ampoule phare gauche H7 Mercedes Classe C 2015', buyer: 'Fulbert M.', type: 'Particulier', location: 'Cotonou', time: 'Il y a 2h', urgent: false, responses: 0 },
+  { id: '5', part: 'Disque de frein arrière Toyota RAV4 2017', buyer: 'Transport GTA', type: 'Flotte', location: 'Cotonou', time: 'Il y a 3h', urgent: true, budget: '120 000 FCFA', responses: 3 },
 ];
 
+const qualityOptions = ['OEM', 'Genuine', 'Premium', 'Standard', 'Occasion', 'Reconditionné'];
+
 export default function SellerRequestsPage() {
+  const router = useRouter();
+  const { user, isLoading, logout } = useAuth();
   const [filter, setFilter] = useState<'all' | 'urgent' | 'new'>('all');
   const [respondingTo, setRespondingTo] = useState<string | null>(null);
-  const [offerForm, setOfferForm] = useState({ price: '', quality: 'OEM', availability: 'immediate', warranty: '3 mois', delivery: 'RAPID_NOW', notes: '' });
   const [submittedId, setSubmittedId] = useState<string | null>(null);
+  const [offerForm, setOfferForm] = useState({ price: '', quality: 'OEM', availability: 'immédiate', warranty: '3 mois', notes: '' });
+
+  useEffect(() => {
+    if (!isLoading && (!user || user.role !== 'seller')) router.replace('/login');
+  }, [user, isLoading, router]);
+
+  if (isLoading || !user) return <div className="min-h-screen bg-rp-bg flex items-center justify-center"><div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" /></div>;
 
   const filtered = incomingRequests.filter(r => {
     if (filter === 'urgent') return r.urgent;
-    if (filter === 'new') return r.responsesCount === 0;
+    if (filter === 'new') return r.responses === 0;
     return true;
   });
 
@@ -31,171 +42,116 @@ export default function SellerRequestsPage() {
     setTimeout(() => {
       setRespondingTo(null);
       setSubmittedId(null);
-      setOfferForm({ price: '', quality: 'OEM', availability: 'immediate', warranty: '3 mois', delivery: 'RAPID_NOW', notes: '' });
+      setOfferForm({ price: '', quality: 'OEM', availability: 'immédiate', warranty: '3 mois', notes: '' });
     }, 2000);
   };
 
   return (
     <div className="min-h-screen bg-rp-bg">
       {/* Header */}
-      <div className="bg-white px-4 pt-12 pb-4 border-b border-rp-border sticky top-0 z-40">
-        <div className="max-w-lg mx-auto">
-          <div className="flex items-center gap-3 mb-3">
-            <Link href="/seller" className="w-8 h-8 flex items-center justify-center">
-              <ChevronLeft className="w-5 h-5 text-rp-text" />
-            </Link>
-            <h1 className="text-lg font-bold text-rp-text">Demandes reçues</h1>
-            <span className="ml-auto bg-rp-primary text-white text-xs px-2 py-1 rounded-full font-bold">5</span>
-          </div>
-          <div className="flex gap-2">
-            {[
-              { key: 'all' as const, label: 'Toutes' },
-              { key: 'urgent' as const, label: '🔴 Urgentes' },
-              { key: 'new' as const, label: '✨ Nouvelles' },
-            ].map(f => (
-              <button
-                key={f.key}
-                onClick={() => setFilter(f.key)}
-                className={`px-3 py-1.5 rounded-full text-xs font-medium ${
-                  filter === f.key ? 'bg-rp-primary text-white' : 'bg-rp-bg text-rp-text-muted'
-                }`}
-              >
-                {f.label}
-              </button>
-            ))}
-          </div>
+      <header className="bg-slate-900/80 backdrop-blur-xl border-b border-slate-700/50 sticky top-0 z-50">
+        <div className="max-w-2xl mx-auto px-4 py-3 flex items-center gap-3">
+          <Link href="/seller" className="text-slate-400 hover:text-white"><ArrowLeft className="w-5 h-5" /></Link>
+          <h1 className="text-sm font-bold text-white flex-1">Demandes reçues</h1>
+          <span className="w-6 h-6 bg-rp-primary text-white text-[10px] rounded-full flex items-center justify-center font-bold">5</span>
         </div>
-      </div>
+        <div className="max-w-2xl mx-auto px-4 pb-3 flex gap-2">
+          {[
+            { key: 'all' as const, label: 'Toutes' },
+            { key: 'urgent' as const, label: '🔴 Urgentes' },
+            { key: 'new' as const, label: '✨ Nouvelles' },
+          ].map(f => (
+            <button key={f.key} onClick={() => setFilter(f.key)}
+              className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all ${
+                filter === f.key ? 'bg-rp-primary text-white' : 'bg-slate-700/50 text-slate-400 border border-slate-600/50'
+              }`}>{f.label}</button>
+          ))}
+        </div>
+      </header>
 
-      <div className="max-w-lg mx-auto px-4 py-4 space-y-3 pb-20">
-        {filtered.map((req) => {
+      <div className="max-w-2xl mx-auto px-4 py-4 space-y-3 pb-24 lg:pb-6">
+        {filtered.map(req => {
           const isResponding = respondingTo === req.id;
           const isSubmitted = submittedId === req.id;
-          
+
           return (
-            <div key={req.id} className="bg-white rounded-2xl shadow-sm overflow-hidden">
+            <div key={req.id} className="bg-slate-800/50 border border-slate-700/50 rounded-2xl overflow-hidden">
               <div className="p-4">
                 <div className="flex items-start justify-between mb-2">
                   <div className="flex items-center gap-2">
                     {req.urgent && <AlertCircle className="w-4 h-4 text-rp-primary" />}
-                    <h3 className="font-semibold text-sm text-rp-text">{req.part}</h3>
+                    <h3 className="text-xs font-semibold text-white">{req.part}</h3>
                   </div>
-                  {req.responsesCount === 0 && (
-                    <span className="text-[9px] bg-rp-success/10 text-rp-success px-2 py-0.5 rounded-full font-medium">PAS D&apos;OFFRE</span>
-                  )}
+                  {req.responses === 0 && <span className="text-[8px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-1.5 py-0.5 rounded-full">PAS D&apos;OFFRE</span>}
                 </div>
-                <p className="text-xs text-rp-text-muted">{req.vehicle}</p>
-                
-                <div className="flex items-center gap-3 mt-2 text-xs text-rp-text-muted">
+
+                <div className="flex items-center gap-3 text-[10px] text-slate-400 mb-2">
                   <span className="flex items-center gap-1"><MapPin className="w-3 h-3" /> {req.location}</span>
                   <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {req.time}</span>
-                  {req.budget && <span className="font-medium text-rp-secondary">{req.budget}</span>}
+                  {req.budget && <span className="text-rp-primary font-medium">{req.budget}</span>}
                 </div>
 
-                <div className="flex items-center justify-between mt-3">
+                <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 bg-rp-bg rounded-full flex items-center justify-center">
-                      <span className="text-[10px] font-bold text-rp-text">{req.buyerName.charAt(0)}</span>
-                    </div>
-                    <span className="text-xs text-rp-text-muted">{req.buyerName}</span>
-                    <span className="flex items-center gap-0.5 text-xs">
-                      <Star className="w-3 h-3 fill-rp-gold text-rp-gold" /> {req.buyerRating}
-                    </span>
+                    <div className="w-6 h-6 bg-slate-700 rounded-full flex items-center justify-center"><span className="text-[9px] font-bold text-white">{req.buyer.charAt(0)}</span></div>
+                    <span className="text-[10px] text-slate-400">{req.buyer}</span>
+                    <span className="text-[10px] text-slate-500">• {req.type}</span>
                   </div>
-                  <span className="text-xs text-rp-text-muted">{req.responsesCount} offre{req.responsesCount > 1 ? 's' : ''}</span>
+                  <span className="text-[10px] text-slate-500">{req.responses} offre{req.responses > 1 ? 's' : ''}</span>
                 </div>
 
-                {/* Respond Button */}
                 {!isResponding && !isSubmitted && (
-                  <button
-                    onClick={() => setRespondingTo(req.id)}
-                    className="w-full mt-3 py-2.5 bg-rp-primary text-white rounded-xl text-sm font-semibold flex items-center justify-center gap-2"
-                  >
-                    <Send className="w-4 h-4" /> Proposer une offre
+                  <button onClick={() => setRespondingTo(req.id)}
+                    className="w-full mt-3 py-2.5 bg-rp-primary text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 shadow-lg shadow-red-600/20 hover:bg-rp-primary-dark transition-colors">
+                    <Send className="w-3.5 h-3.5" /> Proposer une offre
                   </button>
                 )}
               </div>
 
               {/* Offer Form */}
               {isResponding && (
-                <div className="bg-rp-bg p-4 border-t border-rp-border slide-up">
-                  <h4 className="text-sm font-bold text-rp-text mb-3">Votre offre</h4>
+                <div className="bg-slate-700/30 p-4 border-t border-slate-600/50 slide-up">
+                  <h4 className="text-xs font-bold text-white mb-3">Votre offre</h4>
                   <div className="space-y-3">
                     <div>
-                      <label className="text-xs font-medium text-rp-text-muted mb-1 block">Prix (FCFA) *</label>
-                      <input
-                        type="number"
-                        placeholder="Ex: 62000"
-                        value={offerForm.price}
-                        onChange={(e) => setOfferForm(prev => ({ ...prev, price: e.target.value }))}
-                        className="w-full px-3 py-2.5 bg-white rounded-xl text-sm border border-rp-border focus:ring-2 focus:ring-rp-primary outline-none"
-                      />
+                      <label className="text-[10px] text-slate-400 mb-1 block">Prix (FCFA) *</label>
+                      <input type="number" placeholder="Ex: 62000" value={offerForm.price} onChange={(e) => setOfferForm(p => ({ ...p, price: e.target.value }))}
+                        className="w-full px-3 py-2.5 bg-slate-700/50 border border-slate-600/50 rounded-lg text-sm text-white placeholder-slate-500 outline-none focus:ring-2 focus:ring-blue-500" />
                     </div>
                     <div>
-                      <label className="text-xs font-medium text-rp-text-muted mb-1 block">Qualité</label>
-                      <div className="flex flex-wrap gap-2">
-                        {QUALITY_LEVELS.map(q => (
-                          <button
-                            key={q.value}
-                            onClick={() => setOfferForm(prev => ({ ...prev, quality: q.value }))}
-                            className={`px-2 py-1 rounded-full text-[10px] font-medium ${
-                              offerForm.quality === q.value ? 'text-white' : 'bg-white text-rp-text-muted border border-rp-border'
-                            }`}
-                            style={offerForm.quality === q.value ? { backgroundColor: q.color } : {}}
-                          >
-                            {q.label}
-                          </button>
+                      <label className="text-[10px] text-slate-400 mb-1 block">Qualité</label>
+                      <div className="flex flex-wrap gap-1.5">
+                        {qualityOptions.map(q => (
+                          <button key={q} type="button" onClick={() => setOfferForm(p => ({ ...p, quality: q }))}
+                            className={`px-2 py-1 rounded-full text-[10px] font-medium transition-all ${
+                              offerForm.quality === q ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-400 border border-slate-600/50'
+                            }`}>{q}</button>
                         ))}
                       </div>
                     </div>
                     <div className="grid grid-cols-2 gap-2">
                       <div>
-                        <label className="text-xs font-medium text-rp-text-muted mb-1 block">Disponibilité</label>
-                        <select
-                          value={offerForm.availability}
-                          onChange={(e) => setOfferForm(prev => ({ ...prev, availability: e.target.value }))}
-                          className="w-full px-3 py-2.5 bg-white rounded-xl text-sm border border-rp-border outline-none"
-                        >
-                          <option value="immediate">Immédiate</option>
-                          <option value="24h">24 heures</option>
-                          <option value="48h">48 heures</option>
-                          <option value="3-5days">3-5 jours</option>
+                        <label className="text-[10px] text-slate-400 mb-1 block">Disponibilité</label>
+                        <select value={offerForm.availability} onChange={(e) => setOfferForm(p => ({ ...p, availability: e.target.value }))}
+                          className="w-full px-3 py-2.5 bg-slate-700/50 border border-slate-600/50 rounded-lg text-sm text-white outline-none">
+                          <option>Immédiate</option><option>24 heures</option><option>48 heures</option><option>3-5 jours</option>
                         </select>
                       </div>
                       <div>
-                        <label className="text-xs font-medium text-rp-text-muted mb-1 block">Garantie</label>
-                        <select
-                          value={offerForm.warranty}
-                          onChange={(e) => setOfferForm(prev => ({ ...prev, warranty: e.target.value }))}
-                          className="w-full px-3 py-2.5 bg-white rounded-xl text-sm border border-rp-border outline-none"
-                        >
-                          <option value="1 mois">1 mois</option>
-                          <option value="3 mois">3 mois</option>
-                          <option value="6 mois">6 mois</option>
-                          <option value="12 mois">12 mois</option>
+                        <label className="text-[10px] text-slate-400 mb-1 block">Garantie</label>
+                        <select value={offerForm.warranty} onChange={(e) => setOfferForm(p => ({ ...p, warranty: e.target.value }))}
+                          className="w-full px-3 py-2.5 bg-slate-700/50 border border-slate-600/50 rounded-lg text-sm text-white outline-none">
+                          <option>1 mois</option><option>3 mois</option><option>6 mois</option><option>12 mois</option>
                         </select>
                       </div>
                     </div>
-                    <textarea
-                      placeholder="Notes additionnelles..."
-                      value={offerForm.notes}
-                      onChange={(e) => setOfferForm(prev => ({ ...prev, notes: e.target.value }))}
-                      rows={2}
-                      className="w-full px-3 py-2.5 bg-white rounded-xl text-sm border border-rp-border outline-none resize-none"
-                    />
+                    <textarea placeholder="Notes..." value={offerForm.notes} onChange={(e) => setOfferForm(p => ({ ...p, notes: e.target.value }))} rows={2}
+                      className="w-full px-3 py-2.5 bg-slate-700/50 border border-slate-600/50 rounded-lg text-sm text-white placeholder-slate-500 outline-none resize-none" />
                     <div className="flex gap-2">
-                      <button
-                        onClick={() => setRespondingTo(null)}
-                        className="flex-1 py-2.5 bg-white border border-rp-border text-rp-text rounded-xl text-sm font-medium"
-                      >
-                        Annuler
-                      </button>
-                      <button
-                        onClick={() => handleSubmit(req.id)}
-                        disabled={!offerForm.price}
-                        className="flex-1 py-2.5 bg-rp-primary text-white rounded-xl text-sm font-semibold disabled:opacity-40 flex items-center justify-center gap-2"
-                      >
-                        <Check className="w-4 h-4" /> Envoyer l&apos;offre
+                      <button onClick={() => setRespondingTo(null)} className="flex-1 py-2.5 bg-slate-700 text-white rounded-lg text-xs font-medium">Annuler</button>
+                      <button onClick={() => handleSubmit(req.id)} disabled={!offerForm.price}
+                        className="flex-1 py-2.5 bg-blue-600 text-white rounded-lg text-xs font-semibold disabled:opacity-40 flex items-center justify-center gap-2">
+                        <Check className="w-3.5 h-3.5" /> Envoyer
                       </button>
                     </div>
                   </div>
@@ -203,11 +159,11 @@ export default function SellerRequestsPage() {
               )}
 
               {isSubmitted && (
-                <div className="bg-rp-success/10 p-4 flex items-center gap-3 slide-up">
-                  <Check className="w-6 h-6 text-rp-success" />
+                <div className="bg-emerald-500/10 border-t border-emerald-500/30 p-4 flex items-center gap-3 slide-up">
+                  <Check className="w-5 h-5 text-emerald-400" />
                   <div>
-                    <p className="text-sm font-semibold text-rp-success">Offre envoyée !</p>
-                    <p className="text-xs text-rp-text-muted">L&apos;acheteur sera notifié</p>
+                    <p className="text-xs font-semibold text-emerald-400">Offre envoyée !</p>
+                    <p className="text-[10px] text-slate-400">L&apos;acheteur sera notifié</p>
                   </div>
                 </div>
               )}
@@ -216,7 +172,33 @@ export default function SellerRequestsPage() {
         })}
       </div>
 
-      <BottomNav role="seller" />
+      {/* Bottom Nav */}
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-xl border-t border-slate-700/50 z-50">
+        <div className="flex items-center justify-around h-16 max-w-lg mx-auto">
+          {[
+            { href: '/seller', label: 'Accueil', icon: Store },
+            { href: '/seller/requests', label: 'Demandes', icon: Bell, badge: 5 },
+            { href: '/seller/catalogue', label: 'Catalogue', icon: Package, center: true },
+            { href: '/seller/orders', label: 'Ventes', icon: DollarSign },
+            { href: '/seller/profile', label: 'Profil', icon: Star },
+          ].map(tab => {
+            const Icon = tab.icon;
+            if (tab.center) return (
+              <Link key={tab.href} href={tab.href} className="flex flex-col items-center -mt-4">
+                <div className="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center shadow-lg shadow-blue-600/30"><Icon className="w-6 h-6 text-white" /></div>
+                <span className="text-[10px] mt-1 text-blue-400 font-medium">{tab.label}</span>
+              </Link>
+            );
+            return (
+              <Link key={tab.href} href={tab.href} className="flex flex-col items-center relative">
+                <Icon className="w-5 h-5 text-slate-400" />
+                {tab.badge && <span className="absolute -top-1 -right-1 w-4 h-4 bg-rp-primary text-white text-[9px] rounded-full flex items-center justify-center font-bold">{tab.badge}</span>}
+                <span className="text-[10px] mt-0.5 text-slate-400">{tab.label}</span>
+              </Link>
+            );
+          })}
+        </div>
+      </nav>
     </div>
   );
 }

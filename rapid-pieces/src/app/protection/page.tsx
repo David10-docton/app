@@ -1,159 +1,182 @@
 'use client';
 
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ChevronLeft, Shield, CheckCircle, ArrowLeft, MessageSquare, RotateCcw, Lock, Eye } from 'lucide-react';
-import BottomNav from '@/components/BottomNav';
 
 const protections = [
   {
-    icon: Shield,
-    title: 'Garantie de conformité',
-    description: 'La pièce reçue correspond à la description. Sinon, retour ou remboursement possible.',
-    color: 'text-rp-success',
-    bgColor: 'bg-rp-success/10'
+    icon: '🔒',
+    title: 'Escrow Sécurisé',
+    desc: "Votre paiement est retenu par Rapid Pièces jusqu'à confirmation de réception. Le vendeur ne reçoit l'argent qu'après validation.",
+    color: 'bg-blue-500/10 border-blue-500/30',
   },
   {
-    icon: RotateCcw,
-    title: 'Retour possible',
-    description: 'Si la pièce ne convient pas, vous pouvez la retourner selon les conditions du vendeur.',
-    color: 'text-blue-600',
-    bgColor: 'bg-blue-100'
+    icon: '🔄',
+    title: 'Retour Garanti',
+    desc: "Retour gratuit sous 7 jours si la pièce ne correspond pas à la description ou n'est pas conforme.",
+    color: 'bg-purple-500/10 border-purple-500/30',
   },
   {
-    icon: Lock,
-    title: 'Paiement sécurisé (Escrow)',
-    description: 'Votre argent est conservé en sécurité. Le vendeur est payé uniquement après confirmation de réception.',
-    color: 'text-purple-600',
-    bgColor: 'bg-purple-100'
-  },
-  {
-    icon: MessageSquare,
+    icon: '⚖️',
     title: 'Médiation',
-    description: 'En cas de litige, l\'équipe Rapid Pièces intervient pour trouver une solution équitable.',
-    color: 'text-orange-600',
-    bgColor: 'bg-orange-100'
+    desc: "En cas de litige, l'équipe Rapid Pièces intervient comme médiateur pour trouver une solution équitable.",
+    color: 'bg-yellow-500/10 border-yellow-500/30',
   },
   {
-    icon: Eye,
-    title: 'Inspection avant livraison',
-    description: 'Pour les pièces sensibles, Rapid Pièces peut effectuer un contrôle avant acheminement.',
-    color: 'text-rp-primary',
-    bgColor: 'bg-rp-primary/10'
+    icon: '🛡️',
+    title: 'Garantie Pièce',
+    desc: "Chaque pièce achetée bénéficie d'une garantie selon sa classification (OEM : 12 mois, Premium : 6 mois, Standard : 3 mois).",
+    color: 'bg-green-500/10 border-green-500/30',
   },
   {
-    icon: CheckCircle,
-    title: 'Preuve de transaction',
-    description: 'Chaque transaction est enregistrée. Vous avez une trace officielle de votre achat.',
-    color: 'text-rp-secondary',
-    bgColor: 'bg-rp-secondary/10'
-  }
+    icon: '✅',
+    title: 'Vendeurs Vérifiés',
+    desc: "Tous nos vendeurs passent par un processus de vérification KYC. Les badges garantissent leur fiabilité.",
+    color: 'bg-emerald-500/10 border-emerald-500/30',
+  },
+  {
+    icon: '📝',
+    title: 'Preuve de Livraison',
+    desc: "Signature numérique à la livraison. Photo de la pièce installée si souhaité. Traçabilité complète.",
+    color: 'bg-orange-500/10 border-orange-500/30',
+  },
 ];
 
-const steps = [
-  { step: 1, title: 'Commande', desc: 'Vous sélectionnez une offre et payez via Rapid Pièces' },
-  { step: 2, title: 'Escrow', desc: 'Votre paiement est sécurisé en escrow' },
-  { step: 3, title: 'Expédition', desc: 'Le vendeur prépare et expédie la pièce' },
-  { step: 4, title: 'Livraison', desc: 'Vous recevez la pièce' },
-  { step: 5, title: 'Confirmation', desc: 'Vous confirmez la conformité' },
-  { step: 6, title: 'Paiement vendeur', desc: 'Le vendeur reçoit son paiement' },
+const guarantees = [
+  { quality: 'OEM', period: '12 mois', color: 'text-blue-400' },
+  { quality: 'Genuine', period: '12 mois', color: 'text-blue-400' },
+  { quality: 'Premium Aftermarket', period: '6 mois', color: 'text-purple-400' },
+  { quality: 'Standard Aftermarket', period: '3 mois', color: 'text-yellow-400' },
+  { quality: 'Reconditionné', period: '3 mois', color: 'text-orange-400' },
+  { quality: 'Occasion', period: '1 mois', color: 'text-slate-400' },
 ];
 
 export default function ProtectionPage() {
+  const router = useRouter();
+  const [showReport, setShowReport] = useState(false);
+
   return (
-    <div className="min-h-screen bg-rp-bg">
-      <div className="bg-gradient-to-r from-rp-success to-emerald-600 text-white px-4 pt-12 pb-8">
-        <div className="max-w-lg mx-auto">
-          <div className="flex items-center gap-3 mb-4">
-            <Link href="/" className="w-8 h-8 flex items-center justify-center">
-              <ChevronLeft className="w-5 h-5 text-white" />
-            </Link>
-            <h1 className="text-xl font-bold">Rapid Protection</h1>
-          </div>
-          <div className="flex items-center gap-3">
-            <Shield className="w-10 h-10" />
-            <div>
-              <p className="text-sm text-white/90 leading-relaxed">
-                Chaque transaction via Rapid Pièces est protégée. Vous achetez en toute confiance.
-              </p>
-            </div>
-          </div>
+    <div className="min-h-screen bg-slate-950 pb-24 lg:pb-8">
+      {/* Header */}
+      <header className="sticky top-0 z-40 bg-slate-900/95 backdrop-blur-xl border-b border-slate-700/50">
+        <div className="max-w-4xl mx-auto px-4 h-14 flex items-center gap-3">
+          <button onClick={() => router.back()} className="text-slate-400 hover:text-white">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+          </button>
+          <h1 className="text-lg font-bold text-white">Rapid Protection</h1>
         </div>
-      </div>
+      </header>
 
-      <div className="max-w-lg mx-auto px-4 py-6 space-y-4 pb-20">
+      <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
+        {/* Hero */}
+        <div className="bg-gradient-to-br from-green-900/40 to-slate-900 rounded-2xl p-6 border border-green-500/20 text-center">
+          <div className="text-4xl mb-3">🛡️</div>
+          <h2 className="text-xl font-bold text-white mb-2">Rapid Protection</h2>
+          <p className="text-sm text-slate-300">Chaque transaction est protégée de bout en bout</p>
+        </div>
+
         {/* Protections */}
-        {protections.map((p) => {
-          const Icon = p.icon;
-          return (
-            <div key={p.title} className="bg-white rounded-2xl p-4 shadow-sm flex gap-3">
-              <div className={`w-10 h-10 ${p.bgColor} rounded-xl flex items-center justify-center flex-shrink-0`}>
-                <Icon className={`w-5 h-5 ${p.color}`} />
-              </div>
-              <div>
-                <h3 className="font-semibold text-sm text-rp-text">{p.title}</h3>
-                <p className="text-xs text-rp-text-muted mt-0.5 leading-relaxed">{p.description}</p>
+        <div className="space-y-3">
+          <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wide">Ce qui est inclus</h3>
+          {protections.map((p, i) => (
+            <div key={i} className={`rounded-xl p-4 border ${p.color}`}>
+              <div className="flex items-start gap-3">
+                <span className="text-2xl">{p.icon}</span>
+                <div>
+                  <h4 className="font-bold text-white text-sm">{p.title}</h4>
+                  <p className="text-xs text-slate-300 mt-1 leading-relaxed">{p.desc}</p>
+                </div>
               </div>
             </div>
-          );
-        })}
+          ))}
+        </div>
 
-        {/* Process Flow */}
-        <div className="bg-white rounded-2xl p-4 shadow-sm">
-          <h3 className="font-bold text-sm text-rp-text mb-4">🔄 Processus de paiement sécurisé</h3>
-          <div className="space-y-3">
-            {steps.map((s, i) => (
-              <div key={s.step} className="flex items-start gap-3">
-                <div className="flex flex-col items-center">
-                  <div className="w-7 h-7 bg-rp-success rounded-full flex items-center justify-center text-white text-xs font-bold">
-                    {s.step}
-                  </div>
-                  {i < steps.length - 1 && <div className="w-0.5 h-6 bg-rp-success/20 mt-1" />}
-                </div>
-                <div className="pt-0.5">
-                  <p className="text-sm font-medium text-rp-text">{s.title}</p>
-                  <p className="text-xs text-rp-text-muted">{s.desc}</p>
-                </div>
+        {/* Guarantees by quality */}
+        <div className="bg-slate-900/50 backdrop-blur-sm rounded-2xl p-5 border border-slate-700/50">
+          <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wide mb-4">Garantie par qualité</h3>
+          <div className="space-y-2">
+            {guarantees.map((g, i) => (
+              <div key={i} className="flex items-center justify-between py-2 border-b border-slate-800 last:border-0">
+                <span className={`text-sm font-medium ${g.color}`}>{g.quality}</span>
+                <span className="text-sm text-white font-bold">{g.period}</span>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Anti-counterfeiting */}
-        <div className="bg-rp-primary/5 rounded-2xl p-4 border border-rp-primary/20">
-          <h3 className="font-bold text-sm text-rp-text mb-2">🛡️ Protection contre les faux produits</h3>
-          <div className="space-y-2 text-xs text-rp-text-muted">
-            <div className="flex items-center gap-2"><CheckCircle className="w-3 h-3 text-rp-success" /> Photo obligatoire pour certaines pièces</div>
-            <div className="flex items-center gap-2"><CheckCircle className="w-3 h-3 text-rp-success" /> Référence et marque obligatoires</div>
-            <div className="flex items-center gap-2"><CheckCircle className="w-3 h-3 text-rp-success" /> Classification qualité standardisée (OEM, Genuine, Premium...)</div>
-            <div className="flex items-center gap-2"><CheckCircle className="w-3 h-3 text-rp-success" /> Vendeurs vérifiés uniquement pour les pièces sensibles</div>
-            <div className="flex items-center gap-2"><CheckCircle className="w-3 h-3 text-rp-success" /> Inspection possible avant livraison</div>
+        {/* Report a problem */}
+        <button
+          onClick={() => setShowReport(!showReport)}
+          className="w-full bg-slate-900/50 backdrop-blur-sm rounded-xl p-4 border border-slate-700/50 text-left hover:border-red-500/30 transition-all"
+        >
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <span className="text-xl">🚨</span>
+              <div>
+                <h4 className="font-bold text-white text-sm">Signaler un problème</h4>
+                <p className="text-xs text-slate-400">Livrée, non conforme, litige</p>
+              </div>
+            </div>
+            <svg className={`w-5 h-5 text-slate-400 transition-transform ${showReport ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
           </div>
-        </div>
+        </button>
 
-        {/* Rapid Seller Score */}
-        <div className="bg-white rounded-2xl p-4 shadow-sm">
-          <h3 className="font-bold text-sm text-rp-text mb-2">⭐ Rapid Seller Score</h3>
-          <p className="text-xs text-rp-text-muted mb-3">
-            Chaque vendeur est noté selon son historique de transactions. Plus le score est élevé, plus la confiance est grande.
-          </p>
-          <div className="space-y-2">
+        {showReport && (
+          <div className="bg-slate-900/50 backdrop-blur-sm rounded-xl p-5 border border-slate-700/50 space-y-4">
+            <div>
+              <label className="text-xs text-slate-400 mb-1 block">Type de problème</label>
+              <select className="w-full bg-slate-800 border border-slate-600 rounded-lg px-3 py-2.5 text-white text-sm">
+                <option>Pièce non reçue</option>
+                <option>Pièce non conforme</option>
+                <option>Pièce défectueuse</option>
+                <option>Retard de livraison</option>
+                <option>Vendeur non réactif</option>
+              </select>
+            </div>
+            <div>
+              <label className="text-xs text-slate-400 mb-1 block">Numéro de commande</label>
+              <input type="text" placeholder="RP-XXXXX" className="w-full bg-slate-800 border border-slate-600 rounded-lg px-3 py-2.5 text-white text-sm" />
+            </div>
+            <div>
+              <label className="text-xs text-slate-400 mb-1 block">Description</label>
+              <textarea rows={3} className="w-full bg-slate-800 border border-slate-600 rounded-lg px-3 py-2.5 text-white text-sm resize-none" placeholder="Décrivez le problème..." />
+            </div>
+            <button className="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-3 rounded-xl transition-all">
+              Envoyer le signalement
+            </button>
+          </div>
+        )}
+
+        {/* Escrow explanation */}
+        <div className="bg-slate-900/50 backdrop-blur-sm rounded-2xl p-5 border border-slate-700/50">
+          <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wide mb-4">Comment fonctionne l'Escrow</h3>
+          <div className="space-y-4">
             {[
-              { badge: 'New Seller', level: 1, color: 'bg-gray-100 text-gray-600' },
-              { badge: 'Rapid Seller', level: 2, color: 'bg-blue-100 text-blue-700' },
-              { badge: 'Verified Seller', level: 3, color: 'bg-rp-gold/20 text-yellow-700' },
-              { badge: 'Premium Seller', level: 4, color: 'bg-purple-100 text-purple-700' },
-              { badge: 'Top Seller', level: 5, color: 'bg-rp-primary/10 text-rp-primary' },
-            ].map((b) => (
-              <div key={b.badge} className="flex items-center gap-3">
-                <span className="text-xs font-bold text-rp-text-muted w-4">{b.level}</span>
-                <span className={`text-[10px] px-2 py-1 rounded-full font-medium ${b.color}`}>{b.badge}</span>
+              { step: '1', icon: '💳', title: 'Vous payez', desc: "L'argent est sécurisé par Rapid Pièces" },
+              { step: '2', icon: '📦', title: 'Le vendeur expédie', desc: "Confirmation de la livraison par le livreur" },
+              { step: '3', icon: '✍️', title: 'Vous confirmez', desc: 'Signature ou validation de réception' },
+              { step: '4', icon: '💰', title: 'Le vendeur reçoit', desc: "Libération de l'escrow au vendeur" },
+            ].map((s) => (
+              <div key={s.step} className="flex items-start gap-3">
+                <div className="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center text-green-400 font-bold text-sm shrink-0">
+                  {s.step}
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-lg">{s.icon}</span>
+                    <h4 className="font-bold text-white text-sm">{s.title}</h4>
+                  </div>
+                  <p className="text-xs text-slate-400 mt-0.5">{s.desc}</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      <BottomNav role="buyer" />
+      {/* Bottom nav placeholder */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-xl border-t border-slate-700/50 h-16" />
     </div>
   );
 }

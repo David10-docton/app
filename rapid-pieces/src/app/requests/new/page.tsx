@@ -1,51 +1,86 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ChevronLeft, Camera, MapPin, DollarSign, FileText, Check, Upload } from 'lucide-react';
-import BottomNav from '@/components/BottomNav';
-import { POPULAR_BRANDS, POPULAR_CATEGORIES, BENIN_LOCATIONS, DELIVERY_OPTIONS } from '@/lib/types';
+import Image from 'next/image';
+import { ArrowLeft, Camera, Upload, MapPin, ChevronDown, X, Check, FileText, Car, Phone, MessageSquare, Truck } from 'lucide-react';
+import { useAuth } from '@/lib/auth';
+
+const brands = ['Toyota', 'Honda', 'Mercedes-Benz', 'BMW', 'Volkswagen', 'Hyundai', 'Nissan', 'Ford', 'Peugeot', 'Renault', 'Kia', 'Mitsubishi', 'Isuzu', 'Land Rover', 'Suzuki', 'Mazda'];
+
+const categories = ['Freinage', 'Moteur', 'Éclairage', 'Climatisation', 'Filtration', 'Suspension', 'Électrique', 'Carrosserie', 'Direction', 'Échappement', 'Transmission'];
+
+const cities = ['Cotonou', 'Abomey-Calavi', 'Porto-Novo', 'Parakou', 'Bohicon', 'Ouidah', 'Kandi', 'Natitingou'];
+
+const searchModes = [
+  { id: 'text', label: 'Décrire la pièce', icon: FileText, desc: 'Décrivez la pièce dont vous avez besoin' },
+  { id: 'photo', label: 'Pièce selon photo', icon: Camera, desc: 'Photographiez la pièce pour identification' },
+  { id: 'vin', label: 'Commande externe (VIN)', icon: Car, desc: 'Via numéro VIN du véhicule' },
+];
+
+const deliveryTypes = [
+  { id: 'RAPID_NOW', label: 'RAPID NOW', time: '< 1h', icon: '⚡', desc: 'Vendeur local' },
+  { id: 'RAPID_CITY', label: 'RAPID CITY', time: '< 2h', icon: '🏙️', desc: 'Intra-ville' },
+  { id: 'RAPID_NIGERIA', label: 'RAPID NIGERIA', time: '48h', icon: '🇳🇬', desc: 'Sourcing Nigeria' },
+  { id: 'RAPID_USA', label: 'RAPID USA', time: '7j', icon: '🇺🇸', desc: 'Sourcing USA' },
+];
 
 export default function NewRequestPage() {
+  const router = useRouter();
+  const { user, isLoading } = useAuth();
   const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState({
-    brand: '', model: '', year: '', engine: '', vin: '',
-    partName: '', oemReference: '', description: '', quantity: '1',
-    quality: '', location: '', budgetMin: '', budgetMax: '',
-    deliveryPreference: '', photo: null as File | null
-  });
+  const [searchMode, setSearchMode] = useState<'text' | 'photo' | 'vin'>('text');
   const [submitted, setSubmitted] = useState(false);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
 
-  const updateField = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+  const [form, setForm] = useState({
+    brand: '', model: '', year: '', engine: '', vin: '',
+    partName: '', description: '', quantity: '1',
+    location: '', city: '', address: '',
+    deliveryType: 'RAPID_NOW',
+    contactMethod: 'whatsapp',
+    photo: null as File | null,
+    carteGrise: null as File | null,
+  });
+
+  const update = (field: string, value: string) => setForm(p => ({ ...p, [field]: value }));
+
+  const handlePhoto = (e: React.ChangeEvent<HTMLInputElement>, type: 'photo' | 'carteGrise') => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (type === 'photo') setPhotoPreview(reader.result as string);
+        setForm(p => ({ ...p, [type]: file }));
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
-  const totalSteps = 4;
-  const progress = (step / totalSteps) * 100;
+  const handleSubmit = () => {
+    setSubmitted(true);
+  };
+
+  if (isLoading || !user) return <div className="min-h-screen bg-rp-bg flex items-center justify-center"><div className="w-10 h-10 border-4 border-rp-primary border-t-transparent rounded-full animate-spin" /></div>;
 
   if (submitted) {
     return (
       <div className="min-h-screen bg-rp-bg flex items-center justify-center px-4">
-        <div className="bg-white rounded-2xl p-8 text-center max-w-sm w-full shadow-lg">
-          <div className="w-16 h-16 bg-rp-success/10 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Check className="w-8 h-8 text-rp-success" />
+        <div className="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-8 text-center max-w-sm w-full">
+          <div className="w-16 h-16 bg-emerald-500/10 border border-emerald-500/30 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Check className="w-8 h-8 text-emerald-400" />
           </div>
-          <h2 className="text-xl font-bold text-rp-text mb-2">Demande envoyée !</h2>
-          <p className="text-sm text-rp-text-muted mb-6">
-            Votre demande a été diffusée aux vendeurs pertinents. Vous recevrez des offres sous peu.
-          </p>
-          <div className="bg-rp-bg rounded-xl p-4 mb-6 text-left">
-            <p className="text-xs text-rp-text-muted mb-1">Pièce recherchée</p>
-            <p className="font-semibold text-sm text-rp-text">{formData.partName || 'Plaquettes de frein'}</p>
-            <p className="text-xs text-rp-text-muted mt-1">{formData.brand || 'Toyota'} {formData.model || 'Corolla'} {formData.year || '2018'}</p>
+          <h2 className="text-xl font-bold text-white mb-2">Demande envoyée !</h2>
+          <p className="text-sm text-slate-400 mb-6">Votre demande a été diffusée aux vendeurs. Vous recevrez des offres sous peu.</p>
+          <div className="bg-slate-700/30 rounded-xl p-4 mb-6 text-left">
+            <p className="text-xs text-slate-400 mb-1">Pièce recherchée</p>
+            <p className="font-semibold text-sm text-white">{form.partName || 'Pièce auto'}</p>
+            <p className="text-xs text-slate-400 mt-1">{form.brand} {form.model} {form.year}</p>
           </div>
           <div className="flex gap-3">
-            <Link href="/requests" className="flex-1 py-3 bg-rp-primary text-white rounded-xl text-sm font-semibold text-center">
-              Voir mes demandes
-            </Link>
-            <Link href="/" className="flex-1 py-3 bg-rp-bg text-rp-text rounded-xl text-sm font-semibold text-center">
-              Accueil
-            </Link>
+            <Link href="/orders" className="flex-1 py-3 bg-rp-primary text-white rounded-xl text-sm font-semibold text-center">Voir mes commandes</Link>
+            <Link href="/buyer" className="flex-1 py-3 bg-slate-700 text-white rounded-xl text-sm font-semibold text-center">Accueil</Link>
           </div>
         </div>
       </div>
@@ -55,306 +90,270 @@ export default function NewRequestPage() {
   return (
     <div className="min-h-screen bg-rp-bg">
       {/* Header */}
-      <div className="bg-white px-4 pt-12 pb-4 border-b border-rp-border">
-        <div className="max-w-lg mx-auto">
-          <div className="flex items-center gap-3 mb-4">
-            <Link href="/" className="w-8 h-8 flex items-center justify-center">
-              <ChevronLeft className="w-5 h-5 text-rp-text" />
-            </Link>
-            <h1 className="text-lg font-bold text-rp-text">Nouvelle demande</h1>
+      <header className="bg-slate-900/80 backdrop-blur-xl border-b border-slate-700/50 sticky top-0 z-50">
+        <div className="max-w-2xl mx-auto px-4 py-3 flex items-center gap-3">
+          <Link href="/buyer" className="text-slate-400 hover:text-white"><ArrowLeft className="w-5 h-5" /></Link>
+          <div className="flex-1">
+            <h1 className="text-sm font-bold text-white">Nouvelle demande</h1>
+            <p className="text-[10px] text-slate-400">Étape {step}/3</p>
           </div>
-          {/* Progress Bar */}
-          <div className="h-1.5 bg-rp-bg rounded-full overflow-hidden">
-            <div className="h-full bg-rp-primary rounded-full transition-all duration-300" style={{ width: `${progress}%` }} />
-          </div>
-          <div className="flex justify-between mt-2">
-            {['Véhicule', 'Pièce', 'Détails', 'Confirmer'].map((label, i) => (
-              <span key={label} className={`text-[10px] ${step > i ? 'text-rp-primary font-semibold' : step === i + 1 ? 'text-rp-text font-semibold' : 'text-rp-text-muted'}`}>{label}</span>
-            ))}
+          <Image src="/logo_rapidePiece.jpeg" alt="RP" width={32} height={32} className="h-8 w-auto object-contain rounded-lg" />
+        </div>
+        {/* Progress */}
+        <div className="max-w-2xl mx-auto px-4 pb-3">
+          <div className="h-1 bg-slate-700 rounded-full overflow-hidden">
+            <div className="h-full bg-rp-primary rounded-full transition-all duration-300" style={{ width: `${(step / 3) * 100}%` }} />
           </div>
         </div>
-      </div>
+      </header>
 
-      <div className="max-w-lg mx-auto px-4 py-6">
-        {/* Step 1: Vehicle */}
+      <div className="max-w-2xl mx-auto px-4 py-6 pb-24">
+
+        {/* ===== ÉTAPE 1 : Mode de recherche + Véhicule ===== */}
         {step === 1 && (
-          <div className="space-y-4">
-            <h2 className="font-bold text-rp-text text-lg">Informations du véhicule</h2>
+          <div className="space-y-6">
+            {/* Search Mode */}
             <div>
-              <label className="text-sm font-medium text-rp-text mb-2 block">Marque *</label>
-              <div className="grid grid-cols-4 gap-2">
-                {POPULAR_BRANDS.slice(0, 8).map(brand => (
-                  <button
-                    key={brand}
-                    onClick={() => updateField('brand', brand)}
-                    className={`py-2 px-1 rounded-xl text-xs font-medium text-center ${
-                      formData.brand === brand ? 'bg-rp-primary text-white' : 'bg-white border border-rp-border text-rp-text'
-                    }`}
-                  >
-                    {brand}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-rp-text mb-1 block">Modèle *</label>
-              <input
-                type="text"
-                placeholder="Ex: Corolla, Hilux..."
-                value={formData.model}
-                onChange={(e) => updateField('model', e.target.value)}
-                className="w-full px-4 py-3 bg-white rounded-xl text-sm border border-rp-border focus:ring-2 focus:ring-rp-primary outline-none"
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="text-sm font-medium text-rp-text mb-1 block">Année *</label>
-                <select
-                  value={formData.year}
-                  onChange={(e) => updateField('year', e.target.value)}
-                  className="w-full px-4 py-3 bg-white rounded-xl text-sm border border-rp-border focus:ring-2 focus:ring-rp-primary outline-none"
-                >
-                  <option value="">Année</option>
-                  {Array.from({ length: 20 }, (_, i) => 2025 - i).map(y => (
-                    <option key={y} value={y}>{y}</option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label className="text-sm font-medium text-rp-text mb-1 block">Motorisation</label>
-                <input
-                  type="text"
-                  placeholder="Ex: 1.8 essence"
-                  value={formData.engine}
-                  onChange={(e) => updateField('engine', e.target.value)}
-                  className="w-full px-4 py-3 bg-white rounded-xl text-sm border border-rp-border focus:ring-2 focus:ring-rp-primary outline-none"
-                />
-              </div>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-rp-text mb-1 block">Numéro VIN / Châssis</label>
-              <input
-                type="text"
-                placeholder="Optionnel - aide à identifier la pièce exacte"
-                value={formData.vin}
-                onChange={(e) => updateField('vin', e.target.value)}
-                className="w-full px-4 py-3 bg-white rounded-xl text-sm border border-rp-border focus:ring-2 focus:ring-rp-primary outline-none"
-              />
-            </div>
-            <button
-              onClick={() => setStep(2)}
-              disabled={!formData.brand || !formData.model || !formData.year}
-              className="w-full py-3 bg-rp-primary text-white rounded-xl text-sm font-semibold disabled:opacity-40 disabled:cursor-not-allowed"
-            >
-              Continuer
-            </button>
-          </div>
-        )}
-
-        {/* Step 2: Part */}
-        {step === 2 && (
-          <div className="space-y-4">
-            <h2 className="font-bold text-rp-text text-lg">Pièce recherchée</h2>
-            <div>
-              <label className="text-sm font-medium text-rp-text mb-2 block">Catégorie</label>
-              <div className="grid grid-cols-3 gap-2">
-                {POPULAR_CATEGORIES.slice(0, 9).map(cat => (
-                  <button
-                    key={cat}
-                    onClick={() => updateField('partName', cat)}
-                    className={`py-2 px-2 rounded-xl text-xs font-medium ${
-                      formData.partName === cat ? 'bg-rp-primary text-white' : 'bg-white border border-rp-border text-rp-text'
-                    }`}
-                  >
-                    {cat}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-rp-text mb-1 block">Nom de la pièce *</label>
-              <input
-                type="text"
-                placeholder="Ex: Plaquettes de frein avant"
-                value={formData.partName}
-                onChange={(e) => updateField('partName', e.target.value)}
-                className="w-full px-4 py-3 bg-white rounded-xl text-sm border border-rp-border focus:ring-2 focus:ring-rp-primary outline-none"
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="text-sm font-medium text-rp-text mb-1 block">Référence OEM</label>
-                <input
-                  type="text"
-                  placeholder="Ex: 04465-02200"
-                  value={formData.oemReference}
-                  onChange={(e) => updateField('oemReference', e.target.value)}
-                  className="w-full px-4 py-3 bg-white rounded-xl text-sm border border-rp-border focus:ring-2 focus:ring-rp-primary outline-none"
-                />
-              </div>
-              <div>
-                <label className="text-sm font-medium text-rp-text mb-1 block">Quantité</label>
-                <input
-                  type="number"
-                  min="1"
-                  value={formData.quantity}
-                  onChange={(e) => updateField('quantity', e.target.value)}
-                  className="w-full px-4 py-3 bg-white rounded-xl text-sm border border-rp-border focus:ring-2 focus:ring-rp-primary outline-none"
-                />
-              </div>
-            </div>
-            {/* Photo Upload */}
-            <button className="w-full border-2 border-dashed border-rp-border rounded-xl py-6 flex flex-col items-center gap-2 hover:border-rp-primary transition-colors">
-              <Camera className="w-8 h-8 text-rp-text-muted" />
-              <span className="text-sm text-rp-text-muted">Ajouter une photo de la pièce</span>
-              <span className="text-xs text-rp-text-muted/70">Aide les vendeurs à identifier la pièce</span>
-            </button>
-            <button
-              onClick={() => setStep(3)}
-              disabled={!formData.partName}
-              className="w-full py-3 bg-rp-primary text-white rounded-xl text-sm font-semibold disabled:opacity-40"
-            >
-              Continuer
-            </button>
-          </div>
-        )}
-
-        {/* Step 3: Details */}
-        {step === 3 && (
-          <div className="space-y-4">
-            <h2 className="font-bold text-rp-text text-lg">Détails supplémentaires</h2>
-            <div>
-              <label className="text-sm font-medium text-rp-text mb-2 block">Qualité souhaitée</label>
-              <div className="grid grid-cols-3 gap-2">
-                {['OEM', 'Genuine', 'Premium', 'Standard', 'Occasion', 'Reconditionné'].map(q => (
-                  <button
-                    key={q}
-                    onClick={() => updateField('quality', q)}
-                    className={`py-2 px-2 rounded-xl text-xs font-medium ${
-                      formData.quality === q ? 'bg-rp-primary text-white' : 'bg-white border border-rp-border text-rp-text'
-                    }`}
-                  >
-                    {q}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-rp-text mb-1 block">Localisation *</label>
-              <select
-                value={formData.location}
-                onChange={(e) => updateField('location', e.target.value)}
-                className="w-full px-4 py-3 bg-white rounded-xl text-sm border border-rp-border focus:ring-2 focus:ring-rp-primary outline-none"
-              >
-                <option value="">Sélectionner</option>
-                {BENIN_LOCATIONS.map(loc => (
-                  <option key={loc} value={loc}>{loc}</option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-rp-text mb-1 block">Description / Notes</label>
-              <textarea
-                placeholder="Décrivez votre besoin en détail..."
-                value={formData.description}
-                onChange={(e) => updateField('description', e.target.value)}
-                rows={3}
-                className="w-full px-4 py-3 bg-white rounded-xl text-sm border border-rp-border focus:ring-2 focus:ring-rp-primary outline-none resize-none"
-              />
-            </div>
-            <div>
-              <label className="text-sm font-medium text-rp-text mb-2 block">Budget indicatif (FCFA)</label>
-              <div className="grid grid-cols-2 gap-3">
-                <input
-                  type="number"
-                  placeholder="Min"
-                  value={formData.budgetMin}
-                  onChange={(e) => updateField('budgetMin', e.target.value)}
-                  className="w-full px-4 py-3 bg-white rounded-xl text-sm border border-rp-border focus:ring-2 focus:ring-rp-primary outline-none"
-                />
-                <input
-                  type="number"
-                  placeholder="Max"
-                  value={formData.budgetMax}
-                  onChange={(e) => updateField('budgetMax', e.target.value)}
-                  className="w-full px-4 py-3 bg-white rounded-xl text-sm border border-rp-border focus:ring-2 focus:ring-rp-primary outline-none"
-                />
-              </div>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-rp-text mb-2 block">Mode de livraison préféré</label>
+              <h2 className="text-base font-bold text-white mb-3">Comment souhaitez-vous rechercher ?</h2>
               <div className="space-y-2">
-                {DELIVERY_OPTIONS.map(opt => (
-                  <button
-                    key={opt.type}
-                    onClick={() => updateField('deliveryPreference', opt.type)}
-                    className={`w-full p-3 rounded-xl flex items-center gap-3 text-left ${
-                      formData.deliveryPreference === opt.type ? 'bg-rp-primary/10 border-2 border-rp-primary' : 'bg-white border border-rp-border'
-                    }`}
-                  >
-                    <span className="text-xl">{opt.icon}</span>
-                    <div className="flex-1">
-                      <p className="text-xs font-semibold text-rp-text">{opt.label}</p>
-                      <p className="text-[10px] text-rp-text-muted">{opt.timeframe}</p>
-                    </div>
-                  </button>
-                ))}
+                {searchModes.map(mode => {
+                  const Icon = mode.icon;
+                  return (
+                    <button key={mode.id} onClick={() => setSearchMode(mode.id as typeof searchMode)}
+                      className={`w-full flex items-center gap-3 p-4 rounded-xl border transition-all ${
+                        searchMode === mode.id
+                          ? 'bg-rp-primary/10 border-rp-primary/50 shadow-lg shadow-red-600/10'
+                          : 'bg-slate-800/50 border-slate-700/50 hover:border-slate-600'
+                      }`}>
+                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                        searchMode === mode.id ? 'bg-rp-primary text-white' : 'bg-slate-700 text-slate-400'
+                      }`}><Icon className="w-5 h-5" /></div>
+                      <div className="text-left">
+                        <p className="text-sm font-semibold text-white">{mode.label}</p>
+                        <p className="text-[11px] text-slate-400">{mode.desc}</p>
+                      </div>
+                      {searchMode === mode.id && <Check className="w-5 h-5 text-rp-primary ml-auto" />}
+                    </button>
+                  );
+                })}
               </div>
             </div>
-            <button
-              onClick={() => setStep(4)}
-              disabled={!formData.location}
-              className="w-full py-3 bg-rp-primary text-white rounded-xl text-sm font-semibold disabled:opacity-40"
-            >
+
+            {/* Photo Upload (if photo mode) */}
+            {searchMode === 'photo' && (
+              <div>
+                <label className="text-xs font-medium text-slate-400 mb-2 block">Photo de la pièce *</label>
+                <label className="block border-2 border-dashed border-slate-600 rounded-xl p-8 text-center cursor-pointer hover:border-rp-primary/50 transition-colors">
+                  <input type="file" accept="image/*" className="hidden" onChange={(e) => handlePhoto(e, 'photo')} />
+                  {photoPreview ? (
+                    <img src={photoPreview} alt="Pièce" className="max-h-40 mx-auto rounded-lg object-contain" />
+                  ) : (
+                    <>
+                      <Camera className="w-10 h-10 text-slate-500 mx-auto mb-2" />
+                      <p className="text-sm text-slate-400">Appuyez pour ajouter une photo</p>
+                      <p className="text-[10px] text-slate-500 mt-1">Aide l&apos;expert à identifier la pièce précisément</p>
+                    </>
+                  )}
+                </label>
+              </div>
+            )}
+
+            {/* Vehicle Info */}
+            <div>
+              <h2 className="text-base font-bold text-white mb-3">Informations du véhicule</h2>
+              <div className="space-y-3">
+                <div>
+                  <label className="text-xs font-medium text-slate-400 mb-1 block">Marque *</label>
+                  <div className="grid grid-cols-4 gap-1.5">
+                    {brands.slice(0, 8).map(b => (
+                      <button key={b} type="button" onClick={() => update('brand', b)}
+                        className={`py-2 px-1 rounded-lg text-[10px] font-medium text-center transition-all ${
+                          form.brand === b ? 'bg-rp-primary text-white' : 'bg-slate-700/50 text-slate-300 border border-slate-600/50 hover:border-slate-500'
+                        }`}>{b}</button>
+                    ))}
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="text-xs font-medium text-slate-400 mb-1 block">Modèle *</label>
+                    <input type="text" placeholder="Ex: Corolla" value={form.model} onChange={(e) => update('model', e.target.value)}
+                      className="w-full px-3 py-2.5 bg-slate-700/50 border border-slate-600/50 rounded-xl text-sm text-white placeholder-slate-500 outline-none focus:ring-2 focus:ring-rp-primary" />
+                  </div>
+                  <div>
+                    <label className="text-xs font-medium text-slate-400 mb-1 block">Année *</label>
+                    <select value={form.year} onChange={(e) => update('year', e.target.value)}
+                      className="w-full px-3 py-2.5 bg-slate-700/50 border border-slate-600/50 rounded-xl text-sm text-white outline-none focus:ring-2 focus:ring-rp-primary">
+                      <option value="">Année</option>
+                      {Array.from({ length: 20 }, (_, i) => 2025 - i).map(y => <option key={y} value={y}>{y}</option>)}
+                    </select>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="text-xs font-medium text-slate-400 mb-1 block">Motorisation</label>
+                    <input type="text" placeholder="Ex: 1.8 essence" value={form.engine} onChange={(e) => update('engine', e.target.value)}
+                      className="w-full px-3 py-2.5 bg-slate-700/50 border border-slate-600/50 rounded-xl text-sm text-white placeholder-slate-500 outline-none focus:ring-2 focus:ring-rp-primary" />
+                  </div>
+                  <div>
+                    <label className="text-xs font-medium text-slate-400 mb-1 block">VIN / Châssis</label>
+                    <input type="text" placeholder={searchMode === 'vin' ? 'Requis *' : 'Optionnel'} value={form.vin} onChange={(e) => update('vin', e.target.value)}
+                      className="w-full px-3 py-2.5 bg-slate-700/50 border border-slate-600/50 rounded-xl text-sm text-white placeholder-slate-500 outline-none focus:ring-2 focus:ring-rp-primary" />
+                  </div>
+                </div>
+                {searchMode === 'vin' && !form.vin && (
+                  <p className="text-[10px] text-amber-400 bg-amber-500/10 border border-amber-500/30 p-2 rounded-lg">
+                    ⚠️ VIN manquant (requis pour commande externe)
+                  </p>
+                )}
+              </div>
+            </div>
+
+            <button onClick={() => setStep(2)} disabled={!form.brand || !form.model || !form.year || (searchMode === 'vin' && !form.vin)}
+              className="w-full py-3.5 bg-rp-primary text-white rounded-xl text-sm font-bold shadow-lg shadow-red-600/30 hover:bg-rp-primary-dark transition-colors disabled:opacity-40">
               Continuer
             </button>
           </div>
         )}
 
-        {/* Step 4: Confirm */}
-        {step === 4 && (
-          <div className="space-y-4">
-            <h2 className="font-bold text-rp-text text-lg">Confirmer la demande</h2>
-            <div className="bg-white rounded-2xl p-5 shadow-sm">
-              <div className="flex items-center gap-3 mb-4">
-                <span className="text-3xl">🔧</span>
+        {/* ===== ÉTAPE 2 : Pièce + Description ===== */}
+        {step === 2 && (
+          <div className="space-y-6">
+            <div>
+              <h2 className="text-base font-bold text-white mb-3">Pièce recherchée</h2>
+              <div className="space-y-3">
                 <div>
-                  <h3 className="font-bold text-rp-text">{formData.partName}</h3>
-                  <p className="text-sm text-rp-text-muted">{formData.brand} {formData.model} {formData.year}</p>
+                  <label className="text-xs font-medium text-slate-400 mb-1 block">Nom de la pièce *</label>
+                  <input type="text" placeholder="Ex: Plaquettes de frein avant" value={form.partName} onChange={(e) => update('partName', e.target.value)}
+                    className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600/50 rounded-xl text-sm text-white placeholder-slate-500 outline-none focus:ring-2 focus:ring-rp-primary" />
+                </div>
+                <div>
+                  <label className="text-xs font-medium text-slate-400 mb-1 block">Catégorie</label>
+                  <div className="flex flex-wrap gap-1.5">
+                    {categories.map(c => (
+                      <button key={c} type="button" onClick={() => update('partName', c)}
+                        className={`px-2.5 py-1 rounded-full text-[10px] font-medium transition-colors ${
+                          form.partName === c ? 'bg-rp-primary text-white' : 'bg-slate-700 text-slate-400 hover:bg-slate-600'
+                        }`}>{c}</button>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <label className="text-xs font-medium text-slate-400 mb-1 block">Description détaillée *</label>
+                  <textarea placeholder="Décrivez votre besoin en détail. Plus c&apos;est précis, plus les vendeurs pourront vous aider." value={form.description}
+                    onChange={(e) => update('description', e.target.value)} rows={4}
+                    className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600/50 rounded-xl text-sm text-white placeholder-slate-500 outline-none focus:ring-2 focus:ring-rp-primary resize-none" />
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="text-xs font-medium text-slate-400 mb-1 block">Quantité</label>
+                    <input type="number" min="1" value={form.quantity} onChange={(e) => update('quantity', e.target.value)}
+                      className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600/50 rounded-xl text-sm text-white outline-none focus:ring-2 focus:ring-rp-primary" />
+                  </div>
+                  <div>
+                    <label className="text-xs font-medium text-slate-400 mb-1 block">Photo (optionnel)</label>
+                    <label className="block py-3 px-4 bg-slate-700/50 border border-slate-600/50 rounded-xl text-sm text-slate-400 cursor-pointer hover:border-slate-500 transition-colors text-center">
+                      <input type="file" accept="image/*" className="hidden" onChange={(e) => handlePhoto(e, 'photo')} />
+                      {photoPreview ? '✅ Photo ajoutée' : '📷 Ajouter photo'}
+                    </label>
+                  </div>
                 </div>
               </div>
-              <div className="space-y-2 text-sm">
-                {formData.engine && <div className="flex justify-between"><span className="text-rp-text-muted">Motorisation</span><span className="text-rp-text font-medium">{formData.engine}</span></div>}
-                {formData.oemReference && <div className="flex justify-between"><span className="text-rp-text-muted">Réf. OEM</span><span className="text-rp-text font-medium">{formData.oemReference}</span></div>}
-                <div className="flex justify-between"><span className="text-rp-text-muted">Quantité</span><span className="text-rp-text font-medium">{formData.quantity}</span></div>
-                {formData.quality && <div className="flex justify-between"><span className="text-rp-text-muted">Qualité</span><span className="text-rp-text font-medium">{formData.quality}</span></div>}
-                <div className="flex justify-between"><span className="text-rp-text-muted">Localisation</span><span className="text-rp-text font-medium">{formData.location || 'Cotonou'}</span></div>
-                {formData.budgetMax && <div className="flex justify-between"><span className="text-rp-text-muted">Budget max</span><span className="text-rp-text font-medium">{parseInt(formData.budgetMax).toLocaleString()} FCFA</span></div>}
-              </div>
             </div>
-            <div className="bg-blue-50 rounded-xl p-4">
-              <p className="text-xs text-blue-700">
-                💡 Votre demande sera envoyée aux vendeurs pertinents dans votre zone. Vous recevrez les offres en temps réel.
-              </p>
+
+            <div className="flex gap-3">
+              <button onClick={() => setStep(1)} className="flex-1 py-3 bg-slate-700 text-white rounded-xl text-sm font-medium">Retour</button>
+              <button onClick={() => setStep(3)} disabled={!form.partName}
+                className="flex-1 py-3 bg-rp-primary text-white rounded-xl text-sm font-bold shadow-lg shadow-red-600/30 disabled:opacity-40">
+                Continuer
+              </button>
             </div>
-            <button
-              onClick={() => setSubmitted(true)}
-              className="w-full py-4 bg-rp-primary text-white rounded-xl text-base font-bold shadow-lg"
-            >
-              Publier la demande 🚀
-            </button>
           </div>
         )}
 
-        {/* Back button */}
-        {step > 1 && (
-          <button onClick={() => setStep(step - 1)} className="w-full py-3 mt-4 bg-white border border-rp-border text-rp-text rounded-xl text-sm font-medium">
-            Retour
-          </button>
+        {/* ===== ÉTAPE 3 : Livraison + Contact ===== */}
+        {step === 3 && (
+          <div className="space-y-6">
+            <div>
+              <h2 className="text-base font-bold text-white mb-3">Mode de livraison</h2>
+              <div className="grid grid-cols-2 gap-2">
+                {deliveryTypes.map(dt => (
+                  <button key={dt.id} onClick={() => update('deliveryType', dt.id)}
+                    className={`p-3 rounded-xl border text-left transition-all ${
+                      form.deliveryType === dt.id
+                        ? 'bg-rp-primary/10 border-rp-primary/50 shadow-lg shadow-red-600/10'
+                        : 'bg-slate-800/50 border-slate-700/50 hover:border-slate-600'
+                    }`}>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-lg">{dt.icon}</span>
+                      <span className="text-xs font-bold text-white">{dt.label}</span>
+                    </div>
+                    <p className="text-[10px] text-slate-400">{dt.desc}</p>
+                    <span className="text-[10px] text-rp-primary font-medium">{dt.time}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h2 className="text-base font-bold text-white mb-3">Localisation</h2>
+              <div className="space-y-3">
+                <div>
+                  <label className="text-xs font-medium text-slate-400 mb-1 block">Ville *</label>
+                  <select value={form.city} onChange={(e) => update('city', e.target.value)}
+                    className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600/50 rounded-xl text-sm text-white outline-none focus:ring-2 focus:ring-rp-primary">
+                    <option value="">Sélectionner</option>
+                    {cities.map(c => <option key={c} value={c}>{c}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className="text-xs font-medium text-slate-400 mb-1 block">Adresse / Quartier</label>
+                  <input type="text" placeholder="Ex: Marché Dantokpa, face à..." value={form.address} onChange={(e) => update('address', e.target.value)}
+                    className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600/50 rounded-xl text-sm text-white placeholder-slate-500 outline-none focus:ring-2 focus:ring-rp-primary" />
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h2 className="text-base font-bold text-white mb-3">Contact</h2>
+              <div className="grid grid-cols-2 gap-2">
+                <button onClick={() => update('contactMethod', 'whatsapp')}
+                  className={`p-3 rounded-xl border flex items-center gap-2 transition-all ${
+                    form.contactMethod === 'whatsapp' ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-slate-800/50 border-slate-700/50'
+                  }`}>
+                  <MessageSquare className="w-4 h-4 text-emerald-400" />
+                  <span className="text-xs font-medium text-white">WhatsApp</span>
+                </button>
+                <button onClick={() => update('contactMethod', 'call')}
+                  className={`p-3 rounded-xl border flex items-center gap-2 transition-all ${
+                    form.contactMethod === 'call' ? 'bg-blue-500/10 border-blue-500/30' : 'bg-slate-800/50 border-slate-700/50'
+                  }`}>
+                  <Phone className="w-4 h-4 text-blue-400" />
+                  <span className="text-xs font-medium text-white">Appel direct</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Summary */}
+            <div className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-4">
+              <h3 className="text-sm font-bold text-white mb-2">Résumé</h3>
+              <div className="space-y-1.5 text-xs">
+                <div className="flex justify-between"><span className="text-slate-400">Véhicule</span><span className="text-white font-medium">{form.brand} {form.model} {form.year}</span></div>
+                <div className="flex justify-between"><span className="text-slate-400">Pièce</span><span className="text-white font-medium">{form.partName}</span></div>
+                <div className="flex justify-between"><span className="text-slate-400">Livraison</span><span className="text-white font-medium">{deliveryTypes.find(d => d.id === form.deliveryType)?.label}</span></div>
+                <div className="flex justify-between"><span className="text-slate-400">Ville</span><span className="text-white font-medium">{form.city || '—'}</span></div>
+              </div>
+            </div>
+
+            <div className="flex gap-3">
+              <button onClick={() => setStep(2)} className="flex-1 py-3 bg-slate-700 text-white rounded-xl text-sm font-medium">Retour</button>
+              <button onClick={handleSubmit} disabled={!form.city}
+                className="flex-1 py-3.5 bg-rp-primary text-white rounded-xl text-sm font-bold shadow-lg shadow-red-600/30 disabled:opacity-40 flex items-center justify-center gap-2">
+                🚀 Publier la demande
+              </button>
+            </div>
+          </div>
         )}
       </div>
-
-      <BottomNav role="buyer" />
     </div>
   );
 }

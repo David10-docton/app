@@ -4,25 +4,24 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Users, ShoppingBag, DollarSign, Globe, Shield, Package, Bell, Menu, X, LogOut } from 'lucide-react';
-import BottomNav from '@/components/BottomNav';
+import { Users, ShoppingBag, DollarSign, Globe, Shield, Package, Bell, Menu, X, LogOut, TrendingUp, Clock, AlertTriangle, BarChart3, ChevronRight, Eye, Truck, Star } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { dashboardKPIs } from '@/lib/mockData';
 
 const kpiCards = [
-  { label: 'GMV Mensuel', value: `${(dashboardKPIs.gmvThisMonth / 1000000).toFixed(1)}M`, unit: 'FCFA', icon: DollarSign, color: 'bg-rp-success', change: '+18%' },
-  { label: 'Vendeurs actifs', value: dashboardKPIs.activeSellers.toString(), unit: `/ ${dashboardKPIs.totalSellers}`, icon: Users, color: 'bg-blue-500', change: '+5' },
-  { label: 'Acheteurs actifs', value: dashboardKPIs.activeBuyers.toString(), unit: `/ ${dashboardKPIs.totalBuyers}`, icon: ShoppingBag, color: 'bg-purple-500', change: '+12' },
-  { label: 'Demandes/mois', value: dashboardKPIs.requestsThisMonth.toString(), unit: 'total', icon: Package, color: 'bg-rp-primary', change: '+23' },
+  { label: 'GMV Mensuel', value: `${(dashboardKPIs.gmvThisMonth / 1000000).toFixed(1)}M`, unit: 'FCFA', icon: DollarSign, color: 'text-emerald-400', bg: 'bg-emerald-500/10', change: '+18%' },
+  { label: 'Vendeurs actifs', value: dashboardKPIs.activeSellers.toString(), unit: `/ ${dashboardKPIs.totalSellers}`, icon: Users, color: 'text-blue-400', bg: 'bg-blue-500/10', change: '+5' },
+  { label: 'Acheteurs actifs', value: dashboardKPIs.activeBuyers.toString(), unit: `/ ${dashboardKPIs.totalBuyers}`, icon: ShoppingBag, color: 'text-purple-400', bg: 'bg-purple-500/10', change: '+12' },
+  { label: 'Demandes/mois', value: dashboardKPIs.requestsThisMonth.toString(), unit: 'total', icon: Package, color: 'text-rp-primary', bg: 'bg-red-500/10', change: '+23' },
 ];
 
 const operationalKPIs = [
-  { label: 'Taux de conversion', value: `${dashboardKPIs.conversionRate}%`, good: true },
-  { label: 'Temps moyen 1ère offre', value: dashboardKPIs.avgTimeToFirstOffer, good: true },
-  { label: 'Taux de disponibilité', value: `${dashboardKPIs.availabilityRate}%`, good: true },
-  { label: 'Taux d\'annulation', value: `${dashboardKPIs.cancellationRate}%`, good: true },
-  { label: 'Taux de retour', value: `${dashboardKPIs.returnRate}%`, good: true },
-  { label: 'Panier moyen', value: `${(dashboardKPIs.avgBasket / 1000).toFixed(0)}k FCFA`, good: true },
+  { label: 'Taux de conversion', value: `${dashboardKPIs.conversionRate}%` },
+  { label: 'Temps 1ère offre', value: dashboardKPIs.avgTimeToFirstOffer },
+  { label: 'Disponibilité', value: `${dashboardKPIs.availabilityRate}%` },
+  { label: 'Annulations', value: `${dashboardKPIs.cancellationRate}%` },
+  { label: 'Retours', value: `${dashboardKPIs.returnRate}%` },
+  { label: 'Panier moyen', value: `${(dashboardKPIs.avgBasket / 1000).toFixed(0)}k` },
 ];
 
 const sourcingKPIs = [
@@ -34,9 +33,9 @@ const sourcingKPIs = [
 const recentActivity = [
   { id: '1', text: 'Nouveau vendeur: Sahel Auto (Parakou)', time: 'Il y a 30 min', icon: '🏪' },
   { id: '2', text: 'Grosse commande: 380 000 FCFA — Kit embrayage Mercedes', time: 'Il y a 1h', icon: '💰' },
-  { id: '3', text: 'Litige en cours: Commande #ord5 — qualité discutée', time: 'Il y a 2h', icon: '⚠️' },
+  { id: '3', text: 'Litige en cours: Commande #ord5 — qualité', time: 'Il y a 2h', icon: '⚠️' },
   { id: '4', text: 'Sourcing Nigeria: 3 commandes en transit', time: 'Il y a 3h', icon: '🇳🇬' },
-  { id: '5', text: 'Palier atteint: 100ème vendeur vérifié!', time: 'Hier', icon: '🎉' },
+  { id: '5', text: 'Palier: 100ème vendeur vérifié!', time: 'Hier', icon: '🎉' },
 ];
 
 const navLinks = [
@@ -50,190 +49,170 @@ const navLinks = [
 export default function AdminDashboard() {
   const router = useRouter();
   const { user, isLoading, logout } = useAuth();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileMenu, setMobileMenu] = useState(false);
 
   useEffect(() => {
-    if (!isLoading && (!user || user.role !== 'admin')) {
-      router.replace('/login');
-    }
+    if (!isLoading && (!user || user.role !== 'admin')) router.replace('/login');
   }, [user, isLoading, router]);
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-rp-bg flex items-center justify-center">
-        <div className="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
-  }
-
-  if (!user || user.role !== 'admin') return null;
+  if (isLoading || !user) return <div className="min-h-screen bg-rp-bg flex items-center justify-center"><div className="w-10 h-10 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin" /></div>;
 
   return (
     <div className="min-h-screen bg-rp-bg">
-      {/* Desktop Header */}
-      <header className="hidden lg:block bg-white border-b border-rp-border sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
-          <Link href="/admin" className="flex items-center gap-3">
-            <Image src="/logo_rapidePiece.jpeg" alt="Rapid Pièces" width={48} height={48} className="h-12 w-auto object-contain rounded-lg" priority />
+      {/* Header */}
+      <header className="bg-slate-900/80 backdrop-blur-xl border-b border-slate-700/50 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 lg:px-6 py-3 flex items-center justify-between">
+          <Link href="/admin" className="flex items-center gap-2">
+            <Image src="/logo_rapidePiece.jpeg" alt="RP" width={36} height={36} className="h-9 w-auto object-contain rounded-lg" priority />
             <div>
-              <span className="text-lg font-bold text-rp-text">Rapid Pièces</span>
-              <span className="text-xs text-rp-text-muted block">Admin Panel</span>
+              <span className="text-sm font-bold text-white hidden sm:block">Admin Panel</span>
+              <span className="text-[10px] text-emerald-400 hidden sm:block">Rapide Pièces</span>
             </div>
           </Link>
-          <nav className="flex items-center gap-1">
-            {navLinks.map((link) => (
-              <Link key={link.href} href={link.href} className="px-3 py-2 text-sm font-medium text-rp-text-muted hover:text-rp-primary hover:bg-rp-primary/5 rounded-lg transition-colors">
+
+          <nav className="hidden lg:flex items-center gap-1">
+            {navLinks.map(link => (
+              <Link key={link.href} href={link.href}
+                className={`px-3 py-2 text-sm rounded-lg transition-colors ${link.href === '/admin' ? 'text-emerald-400 bg-emerald-500/10' : 'text-slate-300 hover:text-white hover:bg-slate-800'}`}>
                 {link.label}
               </Link>
             ))}
           </nav>
+
           <div className="flex items-center gap-3">
             <div className="relative">
-              <Bell className="w-5 h-5 text-rp-text-muted" />
-              <span className="absolute -top-1 -right-1 w-4 h-4 bg-rp-danger text-[9px] text-white rounded-full flex items-center justify-center font-bold">3</span>
+              <Bell className="w-5 h-5 text-slate-400 hover:text-white cursor-pointer" />
+              <span className="absolute -top-1 -right-1 w-4 h-4 bg-rp-primary text-white text-[9px] rounded-full flex items-center justify-center font-bold">3</span>
             </div>
-            <div className="w-8 h-8 bg-rp-secondary rounded-full flex items-center justify-center text-white text-xs font-bold">AD</div>
-            <button onClick={logout} className="p-2 text-rp-text-muted hover:text-rp-danger rounded-lg" title="Déconnexion">
-              <LogOut className="w-4 h-4" />
+            <div className="w-8 h-8 bg-emerald-600 rounded-full flex items-center justify-center text-white text-xs font-bold hidden sm:flex">AD</div>
+            <button onClick={logout} className="p-2 text-slate-400 hover:text-red-400"><LogOut className="w-4 h-4" /></button>
+            <button onClick={() => setMobileMenu(!mobileMenu)} className="lg:hidden p-2 text-slate-400 hover:text-white">
+              {mobileMenu ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
+
+        {mobileMenu && (
+          <div className="lg:hidden border-t border-slate-700/50 px-4 py-3 space-y-1 slide-up">
+            {navLinks.map(link => (
+              <Link key={link.href} href={link.href} onClick={() => setMobileMenu(false)}
+                className={`block px-4 py-2.5 text-sm rounded-lg ${link.href === '/admin' ? 'text-emerald-400 bg-emerald-500/10' : 'text-slate-300 hover:text-white hover:bg-slate-800'}`}>
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        )}
       </header>
 
-      {/* Mobile Header */}
-      <div className="lg:hidden bg-gradient-to-r from-rp-secondary to-rp-secondary-light text-white px-4 pt-12 pb-6">
-        <div className="max-w-lg mx-auto">
-          <div className="flex items-center justify-between mb-4">
-            <Link href="/admin" className="flex items-center gap-3">
-              <Image src="/logo_rapidePiece.jpeg" alt="Rapid Pièces" width={44} height={44} className="h-11 w-auto object-contain rounded-lg bg-white" priority />
-              <div>
-                <h1 className="text-lg font-bold">Dashboard Admin</h1>
-                <p className="text-xs text-white/60">Rapid Pièces</p>
-              </div>
-            </Link>
-            <div className="flex items-center gap-2">
-              <div className="relative">
-                <Bell className="w-6 h-6 text-white" />
-                <span className="absolute -top-1 -right-1 w-4 h-4 bg-rp-danger text-[9px] rounded-full flex items-center justify-center font-bold">3</span>
-              </div>
-              <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
-                {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-              </button>
-            </div>
-          </div>
-
-          {mobileMenuOpen && (
-            <div className="bg-white/10 rounded-2xl p-4 mb-4 slide-up">
-              <nav className="space-y-1">
-                {navLinks.map((link) => (
-                  <Link key={link.href} href={link.href} onClick={() => setMobileMenuOpen(false)} className="block px-4 py-2.5 text-sm font-medium text-white hover:bg-white/10 rounded-xl">
-                    {link.label}
-                  </Link>
-                ))}
-              </nav>
-            </div>
-          )}
-        </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 lg:px-6 -mt-3 lg:mt-6 space-y-4 lg:space-y-6 pb-20 lg:pb-6">
+      <div className="max-w-7xl mx-auto px-4 lg:px-6 py-6 space-y-6 pb-24 lg:pb-6">
         {/* KPI Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-          {kpiCards.map((kpi) => {
+          {kpiCards.map(kpi => {
             const Icon = kpi.icon;
             return (
-              <div key={kpi.label} className="bg-white rounded-2xl p-4 shadow-sm">
+              <div key={kpi.label} className="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-4">
                 <div className="flex items-center gap-2 mb-2">
-                  <div className={`w-8 h-8 ${kpi.color} rounded-lg flex items-center justify-center`}>
-                    <Icon className="w-4 h-4 text-white" />
+                  <div className={`w-8 h-8 ${kpi.bg} rounded-lg flex items-center justify-center`}>
+                    <Icon className={`w-4 h-4 ${kpi.color}`} />
                   </div>
-                  <span className="text-[10px] sm:text-xs text-rp-text-muted">{kpi.label}</span>
+                  <span className="text-[10px] text-slate-400">{kpi.label}</span>
                 </div>
-                <p className="text-xl sm:text-2xl font-bold text-rp-text">{kpi.value}</p>
+                <p className="text-xl font-extrabold text-white">{kpi.value}</p>
                 <div className="flex items-center gap-2 mt-1">
-                  <span className="text-[10px] text-rp-text-muted">{kpi.unit}</span>
-                  <span className="text-[10px] text-rp-success font-medium">{kpi.change}</span>
+                  <span className="text-[10px] text-slate-500">{kpi.unit}</span>
+                  <span className="text-[10px] text-emerald-400 font-medium">{kpi.change}</span>
                 </div>
               </div>
             );
           })}
         </div>
 
-        {/* Operational + Sourcing side by side on desktop */}
+        {/* Operational + Sourcing */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          {/* Operational KPIs */}
-          <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm">
-            <h3 className="font-bold text-sm sm:text-base text-rp-text mb-3">📈 Performance Opérationnelle</h3>
+          <section className="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-5">
+            <h3 className="text-sm font-bold text-white mb-4">📈 Performance</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              {operationalKPIs.map((kpi) => (
-                <div key={kpi.label} className="bg-rp-bg rounded-xl p-3">
-                  <span className="text-[10px] sm:text-xs text-rp-text-muted block">{kpi.label}</span>
-                  <p className="text-base sm:text-lg font-bold text-rp-text mt-1">{kpi.value}</p>
+              {operationalKPIs.map(kpi => (
+                <div key={kpi.label} className="bg-slate-700/30 rounded-xl p-3">
+                  <span className="text-[10px] text-slate-400 block">{kpi.label}</span>
+                  <p className="text-base font-bold text-white mt-0.5">{kpi.value}</p>
                 </div>
               ))}
             </div>
-          </div>
+          </section>
 
-          {/* Sourcing */}
-          <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm">
-            <h3 className="font-bold text-sm sm:text-base text-rp-text mb-3">🌍 Sourcing International</h3>
+          <section className="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-5">
+            <h3 className="text-sm font-bold text-white mb-4">🌍 Sourcing International</h3>
             <div className="grid grid-cols-3 gap-3">
-              {sourcingKPIs.map((kpi) => (
-                <div key={kpi.label} className="text-center bg-rp-bg rounded-xl p-3 sm:p-4">
-                  <span className="text-xl sm:text-2xl">{kpi.flag}</span>
-                  <p className="text-lg sm:text-xl font-bold text-rp-text mt-1">{kpi.value}</p>
-                  <p className="text-[9px] sm:text-[10px] text-rp-text-muted">{kpi.label}</p>
+              {sourcingKPIs.map(kpi => (
+                <div key={kpi.label} className="text-center bg-slate-700/30 rounded-xl p-3">
+                  <span className="text-xl">{kpi.flag}</span>
+                  <p className="text-lg font-bold text-white mt-1">{kpi.value}</p>
+                  <p className="text-[9px] text-slate-400">{kpi.label}</p>
                 </div>
               ))}
             </div>
-          </div>
+          </section>
         </div>
 
-        {/* Recent Activity + Quick Actions side by side on desktop */}
+        {/* Activity + Quick Actions */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          {/* Recent Activity */}
-          <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+          <section className="bg-slate-800/50 border border-slate-700/50 rounded-2xl overflow-hidden">
             <div className="px-4 pt-4 pb-2">
-              <h3 className="font-bold text-sm sm:text-base text-rp-text">🔔 Activité récente</h3>
+              <h3 className="text-sm font-bold text-white">🔔 Activité récente</h3>
             </div>
-            {recentActivity.map((activity, i) => (
-              <div key={activity.id} className={`px-4 py-3 flex items-center gap-3 ${i < recentActivity.length - 1 ? 'border-b border-rp-border/50' : ''}`}>
-                <span className="text-xl flex-shrink-0">{activity.icon}</span>
+            {recentActivity.map((a, i) => (
+              <div key={a.id} className={`px-4 py-3 flex items-center gap-3 ${i < recentActivity.length - 1 ? 'border-b border-slate-700/50' : ''}`}>
+                <span className="text-lg flex-shrink-0">{a.icon}</span>
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs sm:text-sm text-rp-text truncate">{activity.text}</p>
-                  <p className="text-[10px] text-rp-text-muted">{activity.time}</p>
+                  <p className="text-xs text-white truncate">{a.text}</p>
+                  <p className="text-[10px] text-slate-400">{a.time}</p>
                 </div>
               </div>
             ))}
-          </div>
+          </section>
 
-          {/* Quick Actions */}
           <div className="grid grid-cols-2 gap-3">
-            <Link href="/admin/sellers" className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm card-hover text-center">
-              <Users className="w-8 h-8 text-rp-primary mx-auto mb-2" />
-              <p className="text-xs sm:text-sm font-semibold text-rp-text">Gérer les vendeurs</p>
-              <p className="text-[10px] text-rp-text-muted mt-1">127 vendeurs</p>
-            </Link>
-            <Link href="/admin/orders" className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm card-hover text-center">
-              <ShoppingBag className="w-8 h-8 text-rp-success mx-auto mb-2" />
-              <p className="text-xs sm:text-sm font-semibold text-rp-text">Transactions</p>
-              <p className="text-[10px] text-rp-text-muted mt-1">500+/mois</p>
-            </Link>
-            <Link href="/admin/requests" className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm card-hover text-center">
-              <Package className="w-8 h-8 text-rp-accent mx-auto mb-2" />
-              <p className="text-xs sm:text-sm font-semibold text-rp-text">Demandes</p>
-              <p className="text-[10px] text-rp-text-muted mt-1">234/mois</p>
-            </Link>
-            <Link href="/admin/settings" className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm card-hover text-center">
-              <Shield className="w-8 h-8 text-rp-secondary mx-auto mb-2" />
-              <p className="text-xs sm:text-sm font-semibold text-rp-text">Configuration</p>
-              <p className="text-[10px] text-rp-text-muted mt-1">Plateforme</p>
-            </Link>
+            {[
+              { href: '/admin/sellers', icon: Users, label: 'Vendeurs', count: '127', color: 'text-rp-primary' },
+              { href: '/admin/orders', icon: ShoppingBag, label: 'Transactions', count: '500+', color: 'text-emerald-400' },
+              { href: '/admin/requests', icon: Package, label: 'Demandes', count: '234/mois', color: 'text-blue-400' },
+              { href: '/admin/settings', icon: Shield, label: 'Configuration', count: 'Plateforme', color: 'text-purple-400' },
+            ].map(item => {
+              const Icon = item.icon;
+              return (
+                <Link key={item.href} href={item.href}
+                  className="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-4 text-center hover:border-slate-600 transition-colors card-hover">
+                  <Icon className={`w-6 h-6 ${item.color} mx-auto mb-2`} />
+                  <p className="text-xs font-semibold text-white">{item.label}</p>
+                  <p className="text-[10px] text-slate-400 mt-0.5">{item.count}</p>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </div>
 
-      <BottomNav role="admin" />
+      {/* Bottom Nav */}
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-xl border-t border-slate-700/50 z-50">
+        <div className="flex items-center justify-around h-16 max-w-lg mx-auto">
+          {[
+            { href: '/admin', label: 'Dashboard', icon: BarChart3 },
+            { href: '/admin/sellers', label: 'Vendeurs', icon: Users },
+            { href: '/admin/orders', label: 'Transactions', icon: ShoppingBag },
+            { href: '/admin/requests', label: 'Demandes', icon: Package },
+            { href: '/admin/settings', label: 'Config', icon: Shield },
+          ].map(tab => {
+            const Icon = tab.icon;
+            return (
+              <Link key={tab.href} href={tab.href} className="flex flex-col items-center">
+                <Icon className={`w-5 h-5 ${tab.href === '/admin' ? 'text-emerald-400' : 'text-slate-400'}`} />
+                <span className={`text-[10px] mt-0.5 ${tab.href === '/admin' ? 'text-emerald-400' : 'text-slate-400'}`}>{tab.label}</span>
+              </Link>
+            );
+          })}
+        </div>
+      </nav>
     </div>
   );
 }
