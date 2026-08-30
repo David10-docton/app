@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Upload, Image, Save, Trash2, Eye, Edit3, Check, X, Camera } from 'lucide-react';
+import { ArrowLeft, Upload, Image, Save, Trash2, Eye, Edit3, Check, X, Camera, Download, RefreshCw } from 'lucide-react';
 import ThemeToggle from '@/components/ThemeToggle';
 
 interface ProductImage {
@@ -13,18 +13,18 @@ interface ProductImage {
 }
 
 const initialProducts: ProductImage[] = [
-  { id: '1', name: 'Plaquettes de frein avant', currentImage: '/products/brake-pads-real.jpg', category: 'Freinage' },
-  { id: '2', name: 'Filtre à huile moteur', currentImage: '/products/oil-filter-real.jpg', category: 'Filtration' },
-  { id: '3', name: 'Alternateur reconditionné', currentImage: '/products/alternator-real.jpg', category: 'Moteur' },
-  { id: '4', name: 'Amortisseur arrière gauche', currentImage: '/products/shock-absorber-real.jpg', category: 'Suspension' },
-  { id: '5', name: 'Kit d\'embrayage complet', currentImage: '/products/clutch-kit-real.jpg', category: 'Transmission' },
-  { id: '6', name: 'Batterie 60Ah', currentImage: '/products/battery-real.jpg', category: 'Électronique' },
-  { id: '7', name: 'Pneu 205/55R16', currentImage: '/products/tire-real.jpg', category: 'Suspension' },
-  { id: '8', name: 'Bobine d\'allumage', currentImage: '/products/ignition-real.jpg', category: 'Électronique' },
-  { id: '9', name: 'Phare avant droit', currentImage: '/products/headlight-real.jpg', category: 'Éclairage' },
-  { id: '10', name: 'Radiateur moteur', currentImage: '/products/radiator-real.jpg', category: 'Moteur' },
-  { id: '11', name: 'Disque de frein avant', currentImage: '/products/brake-disc-real.jpg', category: 'Freinage' },
-  { id: '12', name: 'Courroie accessoires', currentImage: '/products/belt-real.jpg', category: 'Moteur' },
+  { id: '1', name: 'Plaquettes de frein avant', currentImage: '/products/plaquettes_de_frein_avant.jpg', category: 'Freinage' },
+  { id: '2', name: 'Filtre à huile moteur', currentImage: '/products/filtre_a_huile_moteur.webp', category: 'Filtration' },
+  { id: '3', name: 'Alternateur reconditionné', currentImage: '/products/alternateur_reconditionne.webp', category: 'Moteur' },
+  { id: '4', name: 'Amortisseur arrière gauche', currentImage: '/products/Amortisseur_arriere_gauche.webp', category: 'Suspension' },
+  { id: '5', name: 'Kit d\'embrayage complet', currentImage: '/products/Kit_embrayage_complet.jpg', category: 'Transmission' },
+  { id: '6', name: 'Batterie 60Ah', currentImage: '/products/batterie.webp', category: 'Électronique' },
+  { id: '7', name: 'Pneu 205/55R16', currentImage: '/products/pneu.webp', category: 'Suspension' },
+  { id: '8', name: 'Bobine d\'allumage', currentImage: '/products/bobine.jpg', category: 'Électronique' },
+  { id: '9', name: 'Phare avant droit', currentImage: '/products/phare_avant_droit.jpg', category: 'Éclairage' },
+  { id: '10', name: 'Radiateur moteur', currentImage: '/products/radiateur_moteur.jpg', category: 'Moteur' },
+  { id: '11', name: 'Disque de frein avant', currentImage: '/products/disque_frein_avant.jpg', category: 'Freinage' },
+  { id: '12', name: 'Courroie accessoires', currentImage: '/products/courroie_accessoires.jpg', category: 'Moteur' },
 ];
 
 const svgFallbacks: Record<string, string> = {
@@ -109,8 +109,9 @@ export default function AdminImagesPage() {
       <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
         {/* Info banner */}
         <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-4 border border-blue-200 dark:border-blue-800">
-          <p className="text-xs text-blue-700 dark:text-blue-300">
-            📸 Modifiez les images des produits. Cliquez sur une image pour la changer. Les modifications sont sauvegardées localement.
+          <p className="text-xs text-blue-700 dark:text-blue-300 flex items-start gap-2">
+            <Camera className="w-4 h-4 shrink-0 mt-0.5" />
+            <span>Modifiez les images des produits. Cliquez sur une image pour la changer. Les modifications sont sauvegardées localement.</span>
           </p>
         </div>
 
@@ -167,15 +168,15 @@ export default function AdminImagesPage() {
               a.href = url;
               a.download = 'product-images.json';
               a.click();
-            }} className="flex-1 bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-slate-300 py-2 rounded-lg text-xs font-bold hover:bg-gray-200 dark:hover:bg-slate-600 transition-all">
-              📥 Exporter config
+            }} className="flex-1 bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-slate-300 py-2 rounded-lg text-xs font-bold hover:bg-gray-200 dark:hover:bg-slate-600 transition-all flex items-center justify-center gap-1.5">
+              <Download className="w-3 h-3" /> Exporter config
             </button>
             <button onClick={() => {
               if (confirm('Réinitialiser toutes les images ?')) {
                 setProducts(initialProducts);
               }
-            }} className="flex-1 bg-red-50 dark:bg-red-900/20 text-red-600 py-2 rounded-lg text-xs font-bold hover:bg-red-100 dark:hover:bg-red-900/30 transition-all">
-              🔄 Tout réinitialiser
+            }} className="flex-1 bg-red-50 dark:bg-red-900/20 text-red-600 py-2 rounded-lg text-xs font-bold hover:bg-red-100 dark:hover:bg-red-900/30 transition-all flex items-center justify-center gap-1.5">
+              <RefreshCw className="w-3 h-3" /> Tout réinitialiser
             </button>
           </div>
         </div>

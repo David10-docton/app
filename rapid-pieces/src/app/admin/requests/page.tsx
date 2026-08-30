@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, Package, MapPin, Clock, AlertTriangle, Eye, Users, ShoppingBag, BarChart3, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, Package, MapPin, Clock, AlertTriangle, Eye, Users, ShoppingBag, BarChart3, ShieldCheck, Circle, CheckCircle2, Zap } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { mockRequests } from '@/lib/mockData';
 
@@ -34,13 +34,13 @@ export default function AdminRequestsPage() {
         <div className="max-w-2xl mx-auto px-4 pb-3 flex gap-2">
           {[
             { key: 'all' as const, label: 'Toutes' },
-            { key: 'open' as const, label: '🟢 Ouvertes' },
-            { key: 'matched' as const, label: '🔵 Correspondance' },
-          ].map(f => (
+            { key: 'open' as const, label: 'Ouvertes', icon: <Circle className="w-3 h-3" /> },
+            { key: 'matched' as const, label: 'Correspondance', icon: <CheckCircle2 className="w-3 h-3" /> },
+          ].map((f: { key: 'all' | 'open' | 'matched'; label: string; icon?: ReactNode }) => (
             <button key={f.key} onClick={() => setFilter(f.key)}
-              className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all ${
+              className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all flex items-center gap-1 ${
                 filter === f.key ? 'bg-emerald-600 text-white' : 'bg-gray-100 text-gray-400 dark:text-slate-500 dark:text-slate-500 border border-gray-200'
-              }`}>{f.label}</button>
+              }`}>{f.icon}{f.label}</button>
           ))}
         </div>
       </header>
@@ -68,7 +68,7 @@ export default function AdminRequestsPage() {
                 <Eye className="w-3 h-3" /> Détails
               </button>
               {req.status === 'open' && req.responsesCount === 0 && (
-                <button onClick={() => alert("Recherche de vendeurs en cours...")} className="flex-1 py-2 bg-emerald-600 text-white rounded-lg text-[11px] font-semibold hover:bg-emerald-700">⚡ Trouver des vendeurs</button>
+                <button onClick={() => alert("Recherche de vendeurs en cours...")} className="flex-1 py-2 bg-emerald-600 text-white rounded-lg text-[11px] font-semibold flex items-center justify-center gap-1 hover:bg-emerald-700"><Zap className="w-3 h-3" /> Trouver des vendeurs</button>
               )}
             </div>
           </div>

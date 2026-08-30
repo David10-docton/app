@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ChevronLeft, Package, Truck, Check, Clock, Shield, TrendingUp, DollarSign, Filter } from 'lucide-react';
+import { ChevronLeft, Package, Truck, Check, Clock, Shield, TrendingUp, DollarSign, Filter, BarChart3 } from 'lucide-react';
 import BottomNav from '@/components/BottomNav';
 
 const sales = [
@@ -126,7 +126,7 @@ export default function SellerOrdersPage() {
 
         {/* Monthly Summary */}
         <div className="bg-gradient-to-r from-rp-secondary to-rp-secondary-light rounded-2xl p-4 text-gray-900 dark:text-white">
-          <h3 className="font-bold mb-3">📊 Résumé mensuel</h3>
+          <h3 className="font-bold mb-3 flex items-center gap-1.5"><BarChart3 className="w-4 h-4" /> Résumé mensuel</h3>
           <div className="grid grid-cols-3 gap-3">
             <div className="text-center">
               <p className="text-xl font-bold">{sales.length}</p>

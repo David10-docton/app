@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, TrendingUp, TrendingDown, Minus, Search, Info } from 'lucide-react';
+import { ArrowLeft, TrendingUp, TrendingDown, Minus, Search, Info, Lightbulb } from 'lucide-react';
 
 const popularParts = [
   { name: 'Plaquettes de frein avant', brand: 'Toyota Corolla', avgPrice: 42000, min: 28000, max: 65000, trend: 'stable', samples: 23, quality: 'OEM' },
@@ -147,7 +147,7 @@ export default function RapidPricePage() {
 
             {/* Advice */}
             <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-3">
-              <p className="text-xs text-emerald-400 font-medium">💡 Conseil Rapid Price</p>
+              <p className="text-xs text-emerald-400 font-medium flex items-center gap-1"><Lightbulb className="w-3 h-3" /> Conseil Rapid Price</p>
               <p className="text-[11px] text-gray-600 dark:text-slate-300 dark:text-slate-300 mt-1">
                 {selectedPart.trend === 'down'
                   ? 'Les prix sont en baisse. Bon moment pour acheter.'

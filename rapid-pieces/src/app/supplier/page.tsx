@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import ThemeToggle from '@/components/ThemeToggle';
-import { ArrowLeft, Package, Clock, DollarSign, Truck, CheckCircle, Globe, MapPin, Star, MessageSquare } from 'lucide-react';
+import { ArrowLeft, Package, Clock, DollarSign, Truck, CheckCircle, Globe, MapPin, Star, MessageSquare, Inbox, BarChart3, Lightbulb, Banknote, Timer, CheckCircle2 } from 'lucide-react';
 
 const incomingRequests = [
   { id: 'REQ-001', part: 'Alternateur Toyota Hilux 2018', origin: 'Bénin', quantity: 1, budget: '180 000 FCFA', deadline: '7 jours', quality: 'OEM', vehicle: 'Toyota Hilux 2018', description: 'Alternateur neuf ou reconditionné. Référence OEM si possible.' },
@@ -77,11 +77,12 @@ export default function SupplierPage() {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all ${
+              className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
                 activeTab === tab ? 'bg-red-600 text-white shadow-md' : 'bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-gray-500 dark:text-slate-400 dark:text-slate-400 hover:text-gray-700'
               }`}
             >
-              {tab === 'requests' ? '📩 Demandes' : tab === 'shipments' ? '📦 Expéditions' : '📊 Stats'}
+              {tab === 'requests' ? <Inbox className="w-4 h-4" /> : tab === 'shipments' ? <Package className="w-4 h-4" /> : <BarChart3 className="w-4 h-4" />}
+              <span className="truncate">{tab === 'requests' ? 'Demandes' : tab === 'shipments' ? 'Expéditions' : 'Stats'}</span>
             </button>
           ))}
         </div>
@@ -159,8 +160,8 @@ export default function SupplierPage() {
               <label className="text-xs text-gray-500 dark:text-slate-400 dark:text-slate-400 mb-1 block">Notes</label>
               <textarea rows={2} className="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg px-3 py-2.5 text-sm text-gray-900 dark:text-white resize-none" placeholder="Informations supplémentaires..." />
             </div>
-            <button className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-xl text-sm transition-all shadow-md">
-              Envoyer l&apos;offre 💰
+            <button className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-xl text-sm transition-all shadow-md flex items-center justify-center gap-2">
+              <Banknote className="w-4 h-4" /> Envoyer l&apos;offre
             </button>
           </div>
         )}
@@ -173,16 +174,16 @@ export default function SupplierPage() {
               <div key={ship.id} className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl p-4 shadow-sm">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500 font-mono">{ship.id}</span>
-                  <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold border ${statusColors[ship.status]}`}>
-                    {ship.status === 'in-transit' ? '🚛 En transit' : '✅ Livré'}
+                  <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold border inline-flex items-center gap-1 ${statusColors[ship.status]}`}>
+                    {ship.status === 'in-transit' ? (<><Truck className="w-3 h-3" /> En transit</>) : (<><CheckCircle2 className="w-3 h-3" /> Livré</>)}
                   </span>
                 </div>
                 <h4 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white">{ship.part}</h4>
                 <p className="text-xs text-gray-500 dark:text-slate-400 dark:text-slate-400">Acheteur: {ship.buyer}</p>
                 <div className="flex items-center gap-3 mt-2 text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">
-                  <span>📍 {ship.departure} → {ship.arrival}</span>
-                  <span>💰 {ship.value}</span>
-                  <span>⏱️ {ship.eta}</span>
+                  <span className="flex items-center gap-1"><MapPin className="w-3 h-3" /> {ship.departure} → {ship.arrival}</span>
+                  <span className="flex items-center gap-1"><Banknote className="w-3 h-3" /> {ship.value}</span>
+                  <span className="flex items-center gap-1"><Timer className="w-3 h-3" /> {ship.eta}</span>
                 </div>
               </div>
             ))}
@@ -193,7 +194,7 @@ export default function SupplierPage() {
         {activeTab === 'stats' && (
           <div className="space-y-4">
             <div className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl p-5 shadow-sm">
-              <h3 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white mb-4">📊 Performance</h3>
+              <h3 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white mb-4 flex items-center gap-1.5"><BarChart3 className="w-4 h-4" /> Performance</h3>
               <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-3">
                 {[
                   { label: 'Demandes reçues', value: stats.requestsReceived, color: 'text-gray-900 dark:text-white' },
@@ -212,7 +213,7 @@ export default function SupplierPage() {
             </div>
 
             <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-2xl p-5">
-              <h3 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white mb-2">💡 Conseil Rapid</h3>
+              <h3 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white mb-2 flex items-center gap-1.5"><Lightbulb className="w-4 h-4" /> Conseil Rapid</h3>
               <p className="text-xs text-gray-600 dark:text-slate-300 dark:text-slate-300">Répondez en moins de 4h pour augmenter vos chances de vente de 60%. Les vendeurs les plus rapides obtiennent 3x plus de commandes.</p>
             </div>
           </div>

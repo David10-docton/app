@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Bell, Car, Clock, Star, Gift, MessageCircle, Settings, ChevronRight, Plus, Trash2, Edit3 } from 'lucide-react';
+import { Bell, Car, Clock, Star, Gift, MessageCircle, Settings, ChevronRight, Plus, Trash2, Edit3, CheckCircle2, Zap } from 'lucide-react';
 import ThemeToggle from '@/components/ThemeToggle';
 
 const vehicles = [
@@ -18,9 +18,9 @@ const purchaseHistory = [
 ];
 
 const badges = [
-  { icon: '⭐', name: 'Top Buyer', desc: 'Plus de 10 achats' },
-  { icon: '✅', name: 'Fidèle', desc: '3 mois actif' },
-  { icon: '⚡', name: 'Rapide', desc: 'Temps de réponse < 5min' },
+  { icon: <Star className="w-3 h-3" />, name: 'Top Buyer', desc: 'Plus de 10 achats' },
+  { icon: <CheckCircle2 className="w-3 h-3" />, name: 'Fidèle', desc: '3 mois actif' },
+  { icon: <Zap className="w-3 h-3" />, name: 'Rapide', desc: 'Temps de réponse < 5min' },
 ];
 
 const menuItems = [
@@ -173,7 +173,7 @@ export default function BuyerProfilePage() {
                   <input type="text" placeholder="Motorisation" className="bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-white" />
                 </div>
                 <input type="text" placeholder="Immatriculation" className="w-full bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-white" />
-                <button onClick={() => { alert('Véhicule ajouté ✅'); setShowAddVehicle(false); }}
+                <button onClick={() => { alert('Véhicule ajouté'); setShowAddVehicle(false); }}
                   className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 rounded-lg text-sm transition-all">
                   Ajouter
                 </button>

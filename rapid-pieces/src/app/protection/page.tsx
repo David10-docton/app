@@ -3,40 +3,41 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { Lock, RefreshCw, Scale, Shield, CheckCircle2, PenLine, Banknote, CreditCard, Package, AlertOctagon } from 'lucide-react';
 
 const protections = [
   {
-    icon: '🔒',
+    icon: <Lock className="w-6 h-6" />,
     title: 'Escrow Sécurisé',
     desc: "Votre paiement est retenu par Rapid Pièces jusqu'à confirmation de réception. Le vendeur ne reçoit l'argent qu'après validation.",
     color: 'bg-blue-500/10 border-blue-500/30',
   },
   {
-    icon: '🔄',
+    icon: <RefreshCw className="w-6 h-6" />,
     title: 'Retour Garanti',
     desc: "Retour gratuit sous 7 jours si la pièce ne correspond pas à la description ou n'est pas conforme.",
     color: 'bg-purple-500/10 border-purple-500/30',
   },
   {
-    icon: '⚖️',
+    icon: <Scale className="w-6 h-6" />,
     title: 'Médiation',
     desc: "En cas de litige, l'équipe Rapid Pièces intervient comme médiateur pour trouver une solution équitable.",
     color: 'bg-yellow-500/10 border-yellow-500/30',
   },
   {
-    icon: '🛡️',
+    icon: <Shield className="w-6 h-6" />,
     title: 'Garantie Pièce',
     desc: "Chaque pièce achetée bénéficie d'une garantie selon sa classification (OEM : 12 mois, Premium : 6 mois, Standard : 3 mois).",
     color: 'bg-green-500/10 border-green-500/30',
   },
   {
-    icon: '✅',
+    icon: <CheckCircle2 className="w-6 h-6" />,
     title: 'Vendeurs Vérifiés',
     desc: "Tous nos vendeurs passent par un processus de vérification KYC. Les badges garantissent leur fiabilité.",
     color: 'bg-emerald-500/10 border-emerald-500/30',
   },
   {
-    icon: '📝',
+    icon: <PenLine className="w-6 h-6" />,
     title: 'Preuve de Livraison',
     desc: "Signature numérique à la livraison. Photo de la pièce installée si souhaité. Traçabilité complète.",
     color: 'bg-orange-500/10 border-orange-500/30',
@@ -71,7 +72,7 @@ export default function ProtectionPage() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 space-y-6">
         {/* Hero */}
         <div className="bg-gradient-to-br from-green-900/40 to-slate-900 rounded-2xl p-6 border border-green-500/20 text-center">
-          <div className="text-4xl mb-3">🛡️</div>
+          <Shield className="w-10 h-10 mx-auto mb-3 text-green-400" />
           <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Rapid Protection</h2>
           <p className="text-sm text-gray-600 dark:text-slate-300 dark:text-slate-300">Chaque transaction est protégée de bout en bout</p>
         </div>
@@ -82,7 +83,7 @@ export default function ProtectionPage() {
           {protections.map((p, i) => (
             <div key={i} className={`rounded-xl p-4 border ${p.color}`}>
               <div className="flex items-start gap-3">
-                <span className="text-2xl">{p.icon}</span>
+                {p.icon}
                 <div>
                   <h4 className="font-bold text-gray-900 dark:text-white text-sm">{p.title}</h4>
                   <p className="text-xs text-gray-600 dark:text-slate-300 dark:text-slate-300 mt-1 leading-relaxed">{p.desc}</p>
@@ -112,7 +113,7 @@ export default function ProtectionPage() {
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <span className="text-xl">🚨</span>
+              <span className="text-xl"><AlertOctagon className="w-5 h-5" /></span>
               <div>
                 <h4 className="font-bold text-gray-900 dark:text-white text-sm">Signaler un problème</h4>
                 <p className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500">Livrée, non conforme, litige</p>
@@ -153,10 +154,10 @@ export default function ProtectionPage() {
           <h3 className="text-sm font-semibold text-gray-400 dark:text-slate-500 dark:text-slate-500 uppercase tracking-wide mb-4">Comment fonctionne l'Escrow</h3>
           <div className="space-y-4">
             {[
-              { step: '1', icon: '💳', title: 'Vous payez', desc: "L'argent est sécurisé par Rapid Pièces" },
-              { step: '2', icon: '📦', title: 'Le vendeur expédie', desc: "Confirmation de la livraison par le livreur" },
-              { step: '3', icon: '✍️', title: 'Vous confirmez', desc: 'Signature ou validation de réception' },
-              { step: '4', icon: '💰', title: 'Le vendeur reçoit', desc: "Libération de l'escrow au vendeur" },
+              { step: '1', icon: <CreditCard className="w-5 h-5" />, title: 'Vous payez', desc: "L'argent est sécurisé par Rapid Pièces" },
+              { step: '2', icon: <Package className="w-5 h-5" />, title: 'Le vendeur expédie', desc: "Confirmation de la livraison par le livreur" },
+              { step: '3', icon: <PenLine className="w-5 h-5" />, title: 'Vous confirmez', desc: 'Signature ou validation de réception' },
+              { step: '4', icon: <Banknote className="w-5 h-5" />, title: 'Le vendeur reçoit', desc: "Libération de l'escrow au vendeur" },
             ].map((s) => (
               <div key={s.step} className="flex items-start gap-3">
                 <div className="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center text-green-400 font-bold text-sm shrink-0">
@@ -164,7 +165,7 @@ export default function ProtectionPage() {
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-lg">{s.icon}</span>
+                    {s.icon}
                     <h4 className="font-bold text-gray-900 dark:text-white text-sm">{s.title}</h4>
                   </div>
                   <p className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500 mt-0.5">{s.desc}</p>

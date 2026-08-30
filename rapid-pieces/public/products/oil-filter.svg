@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none">
-  <rect width="400" height="400" fill="#F8FAFC"/>
-  <ellipse cx="200" cy="200" rx="80" ry="90" fill="#1E40AF"/>
-  <ellipse cx="200" cy="200" rx="50" ry="55" fill="#3B82F6"/>
-  <ellipse cx="200" cy="200" rx="20" ry="22" fill="#1E40AF"/>
-  <text x="200" y="330" text-anchor="middle" font-size="14" font-weight="600" fill="#374151">FILTRE À HUILE</text>
-</svg>

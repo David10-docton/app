@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Camera, CheckCircle, XCircle, AlertTriangle, Shield, Upload } from 'lucide-react';
+import { ArrowLeft, Camera, CheckCircle, XCircle, AlertTriangle, Shield, Upload, AlertCircle, ClipboardList } from 'lucide-react';
 
 const inspectionSteps = [
   { step: 1, label: 'Photo de la pièce', desc: 'Le vendeur prend des photos de la pièce', icon: Camera },
@@ -82,8 +82,8 @@ export default function InspectionPage() {
             <div key={i} className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl p-4">
               <div className="flex items-center justify-between mb-2">
                 <h4 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white">{type.category}</h4>
-                <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold border ${riskColors[type.risk]}`}>
-                  {type.risk === 'high' ? '🔴 Risque élevé' : '🟡 Risque moyen'}
+                <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold border inline-flex items-center gap-1 ${riskColors[type.risk]}`}>
+                  {type.risk === 'high' ? (<><AlertTriangle className="w-3 h-3" /> Risque élevé</>) : (<><AlertCircle className="w-3 h-3" /> Risque moyen</>)}
                 </span>
               </div>
               <p className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500 mb-2">Raison: {type.reason}</p>
@@ -147,8 +147,8 @@ export default function InspectionPage() {
               <label className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500 mb-1 block">Notes supplémentaires</label>
               <textarea rows={2} className="w-full bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2.5 text-gray-900 dark:text-white text-sm resize-none" placeholder="Détails spécifiques..." />
             </div>
-            <button className="w-full bg-blue-600 hover:bg-blue-500 text-gray-900 dark:text-white font-bold py-3 rounded-xl text-sm transition-all">
-              📋 Demander l&apos;inspection
+            <button className="w-full bg-blue-600 hover:bg-blue-500 text-gray-900 dark:text-white font-bold py-3 rounded-xl text-sm transition-all flex items-center justify-center gap-2">
+              <ClipboardList className="w-4 h-4" /> Demander l&apos;inspection
             </button>
           </div>
         </div>

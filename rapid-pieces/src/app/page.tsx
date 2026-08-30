@@ -81,7 +81,7 @@ export default function Home() {
                 onClick={() => setMobileMenu(false)}
                 className="block px-4 py-2.5 text-sm text-gray-600 dark:text-slate-300 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-slate-800 rounded-lg">{item}</Link>
             ))}
-            <Link href="/login" onClick={() => setMobileMenu(false)} className="block px-4 py-2.5 text-sm text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-slate-800 rounded-lg">🏪 Espace Vendeur</Link>
+            <Link href="/login" onClick={() => setMobileMenu(false)} className="block px-4 py-2.5 text-sm text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-slate-800 rounded-lg flex items-center gap-2"><Store className="w-4 h-4" /> Espace Vendeur</Link>
             <div className="px-4 py-2"><ThemeToggle /></div>
           </div>
         )}

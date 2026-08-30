@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, Bell, Package, MapPin, Clock, AlertCircle, Check, Send, Star, Store, DollarSign, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Bell, Package, MapPin, Clock, AlertCircle, Check, Send, Star, Store, DollarSign, ChevronRight, AlertTriangle, Sparkles } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 
 const incomingRequests = [
@@ -58,13 +58,13 @@ export default function SellerRequestsPage() {
         <div className="max-w-2xl mx-auto px-4 pb-3 flex gap-2">
           {[
             { key: 'all' as const, label: 'Toutes' },
-            { key: 'urgent' as const, label: '🔴 Urgentes' },
-            { key: 'new' as const, label: '✨ Nouvelles' },
-          ].map(f => (
+            { key: 'urgent' as const, label: 'Urgentes', icon: <AlertTriangle className="w-3 h-3" /> },
+            { key: 'new' as const, label: 'Nouvelles', icon: <Sparkles className="w-3 h-3" /> },
+          ].map((f: { key: 'all' | 'urgent' | 'new'; label: string; icon?: ReactNode }) => (
             <button key={f.key} onClick={() => setFilter(f.key)}
-              className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all ${
+              className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all flex items-center gap-1 ${
                 filter === f.key ? 'bg-red-600 text-white' : 'bg-gray-100 text-gray-400 dark:text-slate-500 dark:text-slate-500 border border-gray-200'
-              }`}>{f.label}</button>
+              }`}>{f.icon}{f.label}</button>
           ))}
         </div>
       </header>

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Plus, ChevronRight, Calendar, MapPin, Wrench, Shield, AlertTriangle } from 'lucide-react';
+import { ArrowLeft, Plus, ChevronRight, Calendar, MapPin, Wrench, Shield, AlertTriangle, Car, Lightbulb, Check } from 'lucide-react';
 
 const vehicles = [
   {
@@ -93,7 +93,7 @@ export default function VehicleHistoryPage() {
               }`}
             >
               <div className="flex items-center gap-2">
-                <span className="text-xl">🚗</span>
+                <Car className="w-6 h-6 text-gray-500" />
                 <div className="text-left">
                   <div className="text-xs font-bold text-gray-900 dark:text-white dark:text-white">{v.brand} {v.model}</div>
                   <div className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">{v.year} • {v.plate}</div>
@@ -114,7 +114,7 @@ export default function VehicleHistoryPage() {
             {/* Vehicle Info */}
             <div className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl p-5">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-14 h-14 bg-red-600/20 rounded-xl flex items-center justify-center text-3xl">🚗</div>
+                <div className="w-14 h-14 bg-red-600/20 rounded-xl flex items-center justify-center"><Car className="w-7 h-7 text-red-600" /></div>
                 <div>
                   <h2 className="text-lg font-bold text-gray-900 dark:text-white dark:text-white">{selectedVehicle.brand} {selectedVehicle.model}</h2>
                   <p className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500">{selectedVehicle.year} • {selectedVehicle.motor}</p>
@@ -151,7 +151,7 @@ export default function VehicleHistoryPage() {
 
             {/* Maintenance schedule */}
             <div className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl p-4">
-              <h3 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white mb-3">🔧 Planning d&apos;entretien</h3>
+              <h3 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white mb-3 flex items-center gap-2"><Wrench className="w-4 h-4 text-red-600" /> Planning d&apos;entretien</h3>
               <div className="space-y-2">
                 {maintenanceSchedule.map((m, i) => (
                   <div key={i} className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0">
@@ -192,8 +192,8 @@ export default function VehicleHistoryPage() {
                     </div>
                   </div>
                   <div className="flex items-center justify-between mt-2 text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">
-                    <span>📍 {h.seller}</span>
-                    <span className="text-emerald-400">✓ {h.status}</span>
+                    <span className="flex items-center gap-1"><MapPin className="w-3 h-3" /> {h.seller}</span>
+                    <span className="text-emerald-400 flex items-center gap-1"><Check className="w-3 h-3" /> {h.status}</span>
                   </div>
                 </div>
               ))}
@@ -201,7 +201,7 @@ export default function VehicleHistoryPage() {
 
             {/* Recommendation */}
             <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4">
-              <p className="text-xs font-bold text-blue-400 mb-1">💡 Recommandation Rapid</p>
+              <p className="text-xs font-bold text-blue-400 mb-1 flex items-center gap-1.5"><Lightbulb className="w-3 h-3" /> Recommandation Rapid</p>
               <p className="text-[11px] text-gray-600 dark:text-slate-300 dark:text-slate-300">Basé sur votre historique, les prochaines pièces à prévoir : plaquettes arrière (~35 000 FCFA) et filtre à carburant (~15 000 FCFA).</p>
               <Link href="/requests/new" className="inline-block mt-2 text-xs text-blue-400 font-medium hover:underline">Demander ces pièces →</Link>
             </div>

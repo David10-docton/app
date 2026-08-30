@@ -15,7 +15,7 @@ export const products = [
     deliveryTime: '< 1h',
     inStock: true,
     category: 'Freinage',
-    image: '/products/brake-pads-real.jpg',
+    image: '/products/plaquettes_de_frein_avant.jpg',
   },
   {
     id: '2',
@@ -33,7 +33,7 @@ export const products = [
     deliveryTime: '< 2h',
     inStock: true,
     category: 'Filtration',
-    image: '/products/oil-filter-real.jpg',
+    image: '/products/filtre_a_huile_moteur.webp',
   },
   {
     id: '3',
@@ -50,7 +50,7 @@ export const products = [
     deliveryTime: '< 2h',
     inStock: true,
     category: 'Moteur',
-    image: '/products/alternator-real.jpg',
+    image: '/products/alternateur_reconditionne.webp',
   },
   {
     id: '4',
@@ -68,7 +68,7 @@ export const products = [
     deliveryTime: '< 2h',
     inStock: true,
     category: 'Suspension',
-    image: '/products/shock-absorber-real.jpg',
+    image: '/products/Amortisseur_arriere_gauche.webp',
   },
   {
     id: '5',
@@ -86,7 +86,7 @@ export const products = [
     deliveryTime: '48h',
     inStock: false,
     category: 'Transmission',
-    image: '/products/clutch-kit-real.jpg',
+    image: '/products/Kit_embrayage_complet.jpg',
   },
   {
     id: '6',
@@ -103,7 +103,7 @@ export const products = [
     deliveryTime: '< 1h',
     inStock: true,
     category: 'Électronique',
-    image: '/products/battery-real.jpg',
+    image: '/products/batterie.webp',
   },
   {
     id: '7',
@@ -121,7 +121,7 @@ export const products = [
     deliveryTime: '< 1h',
     inStock: true,
     category: 'Suspension',
-    image: '/products/tire-real.jpg',
+    image: '/products/pneu.webp',
   },
   {
     id: '8',
@@ -138,7 +138,7 @@ export const products = [
     deliveryTime: '< 2h',
     inStock: true,
     category: 'Électronique',
-    image: '/products/ignition-real.jpg',
+    image: '/products/bobine.jpg',
   },
   {
     id: '9',
@@ -156,7 +156,7 @@ export const products = [
     deliveryTime: '7 jours',
     inStock: false,
     category: 'Éclairage',
-    image: '/products/headlight-real.jpg',
+    image: '/products/phare_avant_droit.jpg',
   },
   {
     id: '10',
@@ -173,7 +173,7 @@ export const products = [
     deliveryTime: '< 2h',
     inStock: true,
     category: 'Moteur',
-    image: '/products/radiator-real.jpg',
+    image: '/products/radiateur_moteur.jpg',
   },
   {
     id: '11',
@@ -190,7 +190,7 @@ export const products = [
     deliveryTime: '< 1h',
     inStock: true,
     category: 'Freinage',
-    image: '/products/brake-disc-real.jpg',
+    image: '/products/disque_frein_avant.jpg',
   },
   {
     id: '12',
@@ -207,7 +207,7 @@ export const products = [
     deliveryTime: '< 2h',
     inStock: true,
     category: 'Moteur',
-    image: '/products/belt-real.jpg',
+    image: '/products/courroie_accessoires.jpg',
   },
 ];
 
@@ -225,8 +225,8 @@ export const categories = [
 ];
 
 export const deliveryOptions = [
-  { label: 'RAPID NOW', desc: 'Vendeur local', time: '< 1h', icon: '⚡' },
-  { label: 'RAPID CITY', desc: 'Intra-ville', time: '< 2h', icon: '🏙️' },
-  { label: 'RAPID NIGERIA', desc: 'Sourcing Nigeria', time: '48h', icon: '🇳🇬' },
-  { label: 'RAPID USA', desc: 'Sourcing USA', time: '7 jours', icon: '🇺🇸' },
+  { label: 'RAPID NOW', desc: 'Vendeur local', time: '< 1h' },
+  { label: 'RAPID CITY', desc: 'Intra-ville', time: '< 2h' },
+  { label: 'RAPID NIGERIA', desc: 'Sourcing Nigeria', time: '48h' },
+  { label: 'RAPID USA', desc: 'Sourcing USA', time: '7 jours' },
 ];

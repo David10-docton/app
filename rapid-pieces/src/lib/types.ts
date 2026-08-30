@@ -109,10 +109,10 @@ export interface DeliveryOption {
 }
 
 export const DELIVERY_OPTIONS: DeliveryOption[] = [
-  { type: 'RAPID_NOW', label: 'RAPID NOW', description: 'Disponible chez un vendeur local', timeframe: '< 1 heure', icon: '⚡' },
-  { type: 'RAPID_CITY', label: 'RAPID CITY', description: 'Disponible à Cotonou ou principales villes', timeframe: '< 2 heures', icon: '🏙️' },
-  { type: 'RAPID_NIGERIA', label: 'RAPID NIGERIA', description: 'Sourcé au Nigeria', timeframe: '48 heures', icon: '🇳🇬' },
-  { type: 'RAPID_USA', label: 'RAPID USA', description: 'Sourcé aux États-Unis', timeframe: '7 jours', icon: '🇺🇸' },
+  { type: 'RAPID_NOW', label: 'RAPID NOW', description: 'Disponible chez un vendeur local', timeframe: '< 1 heure', icon: 'Zap' },
+  { type: 'RAPID_CITY', label: 'RAPID CITY', description: 'Disponible à Cotonou ou principales villes', timeframe: '< 2 heures', icon: 'MapPin' },
+  { type: 'RAPID_NIGERIA', label: 'RAPID NIGERIA', description: 'Sourcé au Nigeria', timeframe: '48 heures', icon: 'Globe' },
+  { type: 'RAPID_USA', label: 'RAPID USA', description: 'Sourcé aux États-Unis', timeframe: '7 jours', icon: 'Globe' },
 ];
 
 export const QUALITY_LEVELS: { value: PartQuality; label: string; description: string; color: string }[] = [

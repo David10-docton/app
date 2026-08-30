@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, Camera, Upload, MapPin, ChevronDown, X, Check, FileText, Car, Phone, MessageSquare, Truck } from 'lucide-react';
+import { ArrowLeft, Camera, Upload, MapPin, ChevronDown, X, Check, FileText, Car, Phone, MessageSquare, Truck, Zap, Globe, Rocket } from 'lucide-react';
 
 
 const brands = ['Toyota', 'Honda', 'Mercedes-Benz', 'BMW', 'Volkswagen', 'Hyundai', 'Nissan', 'Ford', 'Peugeot', 'Renault', 'Kia', 'Mitsubishi', 'Isuzu', 'Land Rover', 'Suzuki', 'Mazda'];
@@ -20,10 +20,10 @@ const searchModes = [
 ];
 
 const deliveryTypes = [
-  { id: 'RAPID_NOW', label: 'RAPID NOW', time: '< 1h', icon: '⚡', desc: 'Vendeur local' },
-  { id: 'RAPID_CITY', label: 'RAPID CITY', time: '< 2h', icon: '🏙️', desc: 'Intra-ville' },
-  { id: 'RAPID_NIGERIA', label: 'RAPID NIGERIA', time: '48h', icon: '🇳🇬', desc: 'Sourcing Nigeria' },
-  { id: 'RAPID_USA', label: 'RAPID USA', time: '7j', icon: '🇺🇸', desc: 'Sourcing USA' },
+  { id: 'RAPID_NOW', label: 'RAPID NOW', time: '< 1h', icon: <Zap className="w-5 h-5" />, desc: 'Vendeur local' },
+  { id: 'RAPID_CITY', label: 'RAPID CITY', time: '< 2h', icon: <MapPin className="w-5 h-5" />, desc: 'Intra-ville' },
+  { id: 'RAPID_NIGERIA', label: 'RAPID NIGERIA', time: '48h', icon: <Globe className="w-5 h-5" />, desc: 'Sourcing Nigeria' },
+  { id: 'RAPID_USA', label: 'RAPID USA', time: '7j', icon: <Globe className="w-5 h-5" />, desc: 'Sourcing USA' },
 ];
 
 export default function NewRequestPage() {
@@ -251,9 +251,9 @@ export default function NewRequestPage() {
                   </div>
                   <div>
                     <label className="text-xs font-medium text-gray-400 dark:text-slate-500 dark:text-slate-500 mb-1 block">Photo (optionnel)</label>
-                    <label className="block py-3 px-4 bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded-xl text-sm text-gray-400 dark:text-slate-500 dark:text-slate-500 cursor-pointer hover:border-slate-500 transition-colors text-center">
+                    <label className="block py-3 px-4 bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded-xl text-sm text-gray-400 dark:text-slate-500 dark:text-slate-500 cursor-pointer hover:border-slate-500 transition-colors text-center flex items-center justify-center gap-1.5">
                       <input type="file" accept="image/*" className="hidden" onChange={(e) => handlePhoto(e, 'photo')} />
-                      {photoPreview ? '✅ Photo ajoutée' : '📷 Ajouter photo'}
+                      {photoPreview ? <><Check className="w-4 h-4" /> Photo ajoutée</> : <><Camera className="w-4 h-4" /> Ajouter photo</>}
                     </label>
                   </div>
                 </div>
@@ -284,7 +284,7 @@ export default function NewRequestPage() {
                         : 'bg-gray-50 border-gray-200 hover:border-gray-300 dark:hover:border-slate-500'
                     }`}>
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="text-lg">{dt.icon}</span>
+                      {dt.icon}
                       <span className="text-xs font-bold text-gray-900 dark:text-white dark:text-white">{dt.label}</span>
                     </div>
                     <p className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">{dt.desc}</p>
@@ -348,7 +348,7 @@ export default function NewRequestPage() {
               <button onClick={() => setStep(2)} className="flex-1 py-3 bg-gray-200 text-gray-900 dark:text-white rounded-xl text-sm font-medium">Retour</button>
               <button onClick={handleSubmit} disabled={!form.city}
                 className="flex-1 py-3.5 bg-red-600 text-white rounded-xl text-sm font-bold shadow-lg shadow-red-600/20 disabled:opacity-40 flex items-center justify-center gap-2">
-                🚀 Publier la demande
+                <Rocket className="w-4 h-4" /> Publier la demande
               </button>
             </div>
           </div>

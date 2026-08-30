@@ -2,20 +2,20 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Camera } from 'lucide-react';
+import { Camera, CircleStop, Settings, Lightbulb, Snowflake, Gauge, Car, CircuitBoard, Cpu, Droplets, Thermometer, MapPin, Star } from 'lucide-react';
 import Logo from '@/components/Logo';
 
 const categories = [
-  { name: 'Freinage', icon: '🛑', count: 145 },
-  { name: 'Moteur', icon: '⚙️', count: 230 },
-  { name: 'Éclairage', icon: '💡', count: 89 },
-  { name: 'Climatisation', icon: '❄️', count: 67 },
-  { name: 'Suspension', icon: '🔧', count: 112 },
-  { name: 'Carrosserie', icon: '🚗', count: 178 },
-  { name: 'Électronique', icon: '📡', count: 95 },
-  { name: 'Transmission', icon: '🔄', count: 88 },
-  { name: 'Filtration', icon: '🌀', count: 134 },
-  { name: 'Refroidissement', icon: '🌡️', count: 56 },
+  { name: 'Freinage', icon: <CircleStop className="w-5 h-5" />, count: 145 },
+  { name: 'Moteur', icon: <Settings className="w-5 h-5" />, count: 230 },
+  { name: 'Éclairage', icon: <Lightbulb className="w-5 h-5" />, count: 89 },
+  { name: 'Climatisation', icon: <Snowflake className="w-5 h-5" />, count: 67 },
+  { name: 'Suspension', icon: <Gauge className="w-5 h-5" />, count: 112 },
+  { name: 'Carrosserie', icon: <Car className="w-5 h-5" />, count: 178 },
+  { name: 'Électronique', icon: <CircuitBoard className="w-5 h-5" />, count: 95 },
+  { name: 'Transmission', icon: <Cpu className="w-5 h-5" />, count: 88 },
+  { name: 'Filtration', icon: <Droplets className="w-5 h-5" />, count: 134 },
+  { name: 'Refroidissement', icon: <Thermometer className="w-5 h-5" />, count: 56 },
 ];
 
 const qualities = ['OEM', 'Genuine', 'Premium Aftermarket', 'Standard Aftermarket', 'Occasion', 'Reconditionné'];
@@ -23,10 +23,10 @@ const qualities = ['OEM', 'Genuine', 'Premium Aftermarket', 'Standard Aftermarke
 const cities = ['Cotonou', 'Abomey-Calavi', 'Parakou', 'Porto-Novo', 'Bohicon'];
 
 const mockResults = [
-  { id: 1, name: 'Plaquettes de frein avant', category: 'Freinage', quality: 'OEM', price: 45000, seller: 'BigMoteurs', rating: 4.9, badges: ['Verified', 'Premium'], delivery: 'RAPID NOW', img: '🛑' },
-  { id: 2, name: 'Filtre à huile Toyota', category: 'Filtration', quality: 'Genuine', price: 12000, seller: 'Sotra Pièces', rating: 4.7, badges: ['Verified'], delivery: 'RAPID CITY', img: '🌀' },
-  { id: 3, name: 'Amortisseur arrière Honda', category: 'Suspension', quality: 'Premium Aftermarket', price: 85000, seller: 'Diallo & Frères', rating: 4.8, badges: ['Verified', 'Top Seller'], delivery: 'RAPID CITY', img: '🔧' },
-  { id: 4, name: 'Alternateur Toyota Corolla', category: 'Moteur', quality: 'Reconditionné', price: 120000, seller: 'Massa Garage', rating: 4.5, badges: ['Verified'], delivery: 'RAPID NIGERIA', img: '⚙️' },
+  { id: 1, name: 'Plaquettes de frein avant', category: 'Freinage', quality: 'OEM', price: 45000, seller: 'BigMoteurs', rating: 4.9, badges: ['Verified', 'Premium'], delivery: 'RAPID NOW', img: '/products/plaquettes_de_frein_avant.jpg' },
+  { id: 2, name: 'Filtre à huile Toyota', category: 'Filtration', quality: 'Genuine', price: 12000, seller: 'Sotra Pièces', rating: 4.7, badges: ['Verified'], delivery: 'RAPID CITY', img: '/products/filtre_a_huile_moteur.webp' },
+  { id: 3, name: 'Amortisseur arrière Honda', category: 'Suspension', quality: 'Premium Aftermarket', price: 85000, seller: 'Diallo & Frères', rating: 4.8, badges: ['Verified', 'Top Seller'], delivery: 'RAPID CITY', img: '/products/Amortisseur_arriere_gauche.webp' },
+  { id: 4, name: 'Alternateur Toyota Corolla', category: 'Moteur', quality: 'Reconditionné', price: 120000, seller: 'Massa Garage', rating: 4.5, badges: ['Verified'], delivery: 'RAPID NIGERIA', img: '/products/alternateur_reconditionne.webp' },
 ];
 
 export default function SearchPage() {
@@ -109,7 +109,7 @@ export default function SearchPage() {
                   <button
                     key={c.name}
                     onClick={() => setSelectedCategory(selectedCategory === c.name ? '' : c.name)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1 ${
                       selectedCategory === c.name
                         ? 'bg-red-600 text-white'
                         : 'bg-gray-50 text-gray-400 dark:text-slate-500 dark:text-slate-500 hover:text-gray-900 dark:text-white'
@@ -149,13 +149,13 @@ export default function SearchPage() {
                   <button
                     key={c}
                     onClick={() => setSelectedCity(selectedCity === c ? '' : c)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1 ${
                       selectedCity === c
                         ? 'bg-red-600 text-white'
                         : 'bg-gray-50 text-gray-400 dark:text-slate-500 dark:text-slate-500 hover:text-gray-900 dark:text-white'
                     }`}
                   >
-                    📍 {c}
+                    <MapPin className="w-3 h-3" /> {c}
                   </button>
                 ))}
               </div>
@@ -201,7 +201,7 @@ export default function SearchPage() {
                   onClick={() => { setSelectedCategory(c.name); handleSearch(); }}
                   className="bg-white backdrop-blur-sm rounded-xl p-3 border border-gray-200 text-center hover:border-red-500/30 transition-all"
                 >
-                  <span className="text-2xl">{c.icon}</span>
+                  <div className="w-10 h-10 mx-auto flex items-center justify-center mb-1">{c.icon}</div>
                   <div className="text-xs font-bold text-gray-900 dark:text-white dark:text-white mt-1">{c.name}</div>
                   <div className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">{c.count} pièces</div>
                 </button>
@@ -220,8 +220,8 @@ export default function SearchPage() {
             {mockResults.map((r) => (
               <Link key={r.id} href="/offers/1" className="block bg-white backdrop-blur-sm rounded-xl p-4 border border-gray-200 hover:border-red-500/30 transition-all">
                 <div className="flex items-start gap-3">
-                  <div className="w-14 h-14 bg-gray-50 rounded-xl flex items-center justify-center text-3xl shrink-0">
-                    {r.img}
+                  <div className="w-14 h-14 bg-gray-50 rounded-xl overflow-hidden shrink-0">
+                    <img src={r.img} alt={r.name} className="w-full h-full object-cover" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
@@ -229,8 +229,8 @@ export default function SearchPage() {
                       <span className="text-[10px] bg-blue-500/20 text-blue-300 px-1.5 py-0.5 rounded">{r.quality}</span>
                     </div>
                     <div className="flex items-center gap-2 mt-1">
-                      <span className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500">📍 {r.seller}</span>
-                      <span className="text-xs text-yellow-400">⭐ {r.rating}</span>
+                      <span className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500 flex items-center gap-1"><MapPin className="w-3 h-3" /> {r.seller}</span>
+                      <span className="text-xs text-yellow-400 flex items-center gap-1"><Star className="w-3 h-3" /> {r.rating}</span>
                       <div className="flex gap-1">
                         {r.badges.map((b) => (
                           <span key={b} className="text-[10px] bg-green-500/20 text-green-300 px-1 py-0.5 rounded">{b}</span>

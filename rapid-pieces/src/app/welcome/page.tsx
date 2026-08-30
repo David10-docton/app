@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { Search, Zap, Shield, Lock, CheckCircle2 } from 'lucide-react';
 
 export default function WelcomePage() {
   return (
@@ -26,22 +27,22 @@ export default function WelcomePage() {
         </div>
         <div className="grid grid-cols-3 gap-3 pt-6">
           <div className="text-center">
-            <div className="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center mx-auto mb-2"><span className="text-2xl">🔍</span></div>
+            <div className="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center mx-auto mb-2"><Search className="w-6 h-6 text-red-500" /></div>
             <div className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">Recherche</div>
           </div>
           <div className="text-center">
-            <div className="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center mx-auto mb-2"><span className="text-2xl">⚡</span></div>
+            <div className="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center mx-auto mb-2"><Zap className="w-6 h-6 text-red-500" /></div>
             <div className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">Livraison rapide</div>
           </div>
           <div className="text-center">
-            <div className="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center mx-auto mb-2"><span className="text-2xl">🛡️</span></div>
+            <div className="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center mx-auto mb-2"><Shield className="w-6 h-6 text-red-500" /></div>
             <div className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">Protection</div>
           </div>
         </div>
         <div className="flex items-center justify-center gap-4 pt-6 text-gray-400 dark:text-slate-500 dark:text-slate-500">
-          <span className="text-xs">🔒 Paiement sécurisé</span>
+          <span className="text-xs flex items-center gap-1"><Lock className="w-3 h-3" /> Paiement sécurisé</span>
           <span className="text-xs">•</span>
-          <span className="text-xs">✅ Vendeurs vérifiés</span>
+          <span className="text-xs flex items-center gap-1"><CheckCircle2 className="w-3 h-3" /> Vendeurs vérifiés</span>
         </div>
       </div>
     </div>

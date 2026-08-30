@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, Star, Shield, Bell, TrendingUp, Award, MapPin, Phone, LogOut, Store, Package, DollarSign, ChevronRight, Settings, HelpCircle } from 'lucide-react';
+import { ArrowLeft, Star, Shield, Bell, TrendingUp, Award, MapPin, Phone, LogOut, Store, Package, DollarSign, ChevronRight, Settings, HelpCircle, Trophy } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 
 export default function SellerProfilePage() {
@@ -61,7 +61,7 @@ export default function SellerProfilePage() {
                 {[1,2,3,4,5].map(i => <Star key={i} className={`w-4 h-4 ${i <= 4 ? 'fill-amber-400 text-amber-400' : 'fill-amber-400/30 text-amber-400/30'}`} />)}
               </div>
               <p className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">Basé sur 342 transactions</p>
-              <span className="text-[9px] px-2 py-0.5 bg-amber-500/10 text-amber-400 border border-amber-500/30 rounded-full font-medium">🏆 TOP 5% vendeurs</span>
+              <span className="text-[9px] px-2 py-0.5 bg-amber-500/10 text-amber-400 border border-amber-500/30 rounded-full font-medium flex items-center gap-1"><Trophy className="w-3 h-3" /> TOP 5% vendeurs</span>
             </div>
           </div>
 

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, TrendingUp, TrendingDown, Package, Clock, Star, Users, ShoppingCart, BarChart3 } from 'lucide-react';
+import { ArrowLeft, TrendingUp, TrendingDown, Package, Clock, Star, Users, ShoppingCart, BarChart3, Trophy, ClipboardList } from 'lucide-react';
 
 const stats = {
   revenue: { current: 4250000, previous: 3800000, currency: 'FCFA' },
@@ -102,7 +102,7 @@ export default function SellerStatsPage() {
 
         {/* Revenue chart */}
         <div className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl p-5">
-          <h3 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white mb-4">📈 Revenus mensuels</h3>
+          <h3 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white mb-4 flex items-center gap-1.5"><TrendingUp className="w-4 h-4" /> Revenus mensuels</h3>
           <div className="flex items-end gap-2 h-40">
             {monthlyRevenue.map((m, i) => (
               <div key={i} className="flex-1 flex flex-col items-center gap-1">
@@ -116,7 +116,7 @@ export default function SellerStatsPage() {
 
         {/* Top products */}
         <div className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl p-5">
-          <h3 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white mb-4">🏆 Produits les plus demandés</h3>
+          <h3 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white mb-4 flex items-center gap-1.5"><Trophy className="w-4 h-4" /> Produits les plus demandés</h3>
           <div className="space-y-3">
             {topProducts.map((p, i) => (
               <div key={i} className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0">
@@ -139,7 +139,7 @@ export default function SellerStatsPage() {
 
         {/* Recent orders */}
         <div className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl p-5">
-          <h3 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white mb-4">📋 Commandes récentes</h3>
+          <h3 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white mb-4 flex items-center gap-1.5"><ClipboardList className="w-4 h-4" /> Commandes récentes</h3>
           <div className="space-y-2">
             {recentOrders.map((o, i) => (
               <div key={i} className="flex items-center justify-between py-2 border-b border-gray-200 last:border-0">

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Eye, EyeOff, ArrowLeft, Store, Lock, User } from 'lucide-react';
+import { Eye, EyeOff, ArrowLeft, Store, Lock, User, AlertTriangle } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { POPULAR_BRANDS, POPULAR_CATEGORIES } from '@/lib/types';
 
@@ -187,7 +187,7 @@ export default function LoginPage() {
                 </form>
 
                 <div className="mt-3 p-3 bg-amber-50 border border-amber-200 rounded-xl">
-                  <p className="text-[10px] text-amber-600">⚠️ Votre compte sera en attente de vérification avant activation.</p>
+                  <p className="text-[10px] text-amber-600 flex items-center gap-1"><AlertTriangle className="w-3 h-3" /> Votre compte sera en attente de vérification avant activation.</p>
                 </div>
 
                 <div className="mt-4 text-center">

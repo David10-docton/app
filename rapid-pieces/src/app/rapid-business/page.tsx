@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Building2, Truck, Wrench, Users, CreditCard, BarChart3, Shield, Star, CheckCircle } from 'lucide-react';
+import { ArrowLeft, Building2, Truck, Wrench, Users, CreditCard, BarChart3, Shield, Star, CheckCircle, Phone } from 'lucide-react';
 
 const plans = [
   {
@@ -126,7 +126,7 @@ export default function RapidBusinessPage() {
                 } ${selectedPlan === plan.name ? 'ring-2 ring-rp-primary' : ''}`}
               >
                 {plan.highlight && (
-                  <span className="text-[10px] bg-red-600 text-white px-2 py-0.5 rounded-full font-bold mb-3 inline-block">⭐ Recommandé</span>
+                  <span className="text-[10px] bg-red-600 text-white px-2 py-0.5 rounded-full font-bold mb-3 inline-flex items-center gap-1"><Star className="w-3 h-3" /> Recommandé</span>
                 )}
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center">
@@ -194,7 +194,7 @@ export default function RapidBusinessPage() {
           <a href="https://wa.me/22901XXYYZZ?text=Bonjour%20Rapid%20Business%2C%20je%20suis%20intéressé%20par%20un%20plan%20professionnel."
             target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-xl text-sm font-semibold hover:bg-emerald-700 transition-colors">
-            📞 Contacter l'équipe commerciale
+            <Phone className="w-4 h-4" /> Contacter l'équipe commerciale
           </a>
         </div>
       </div>

@@ -103,9 +103,9 @@ export default function AdminSettingsPage() {
 
         {/* Danger Zone */}
         <div className="bg-red-500/5 border border-red-500/20 rounded-2xl p-5">
-          <h3 className="text-sm font-bold text-red-400 mb-3">⚠️ Zone dangereuse</h3>
+          <h3 className="text-sm font-bold text-red-400 mb-3 flex items-center gap-1.5"><AlertTriangle className="w-4 h-4" /> Zone dangereuse</h3>
           <div className="space-y-2">
-            <button onClick={() => alert("⚠️ Action de suspendre confirmée")} className="w-full py-2.5 bg-red-50 border border-red-200 text-red-600 rounded-lg text-xs font-medium hover:bg-red-100 transition-colors">Suspendre la plateforme</button>
+            <button onClick={() => alert("Action de suspendre confirmée")} className="w-full py-2.5 bg-red-50 border border-red-200 text-red-600 rounded-lg text-xs font-medium hover:bg-red-100 transition-colors">Suspendre la plateforme</button>
             <button onClick={() => alert("Export en cours...")} className="w-full py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-gray-600 dark:text-slate-300 dark:text-slate-300 rounded-lg text-xs font-medium hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors">Exporter toutes les données</button>
           </div>
         </div>

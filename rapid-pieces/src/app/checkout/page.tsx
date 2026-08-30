@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { Shield, CreditCard, Banknote, Smartphone, Lock, CheckCircle2, Gift } from 'lucide-react';
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -91,7 +92,7 @@ export default function CheckoutPage() {
             {/* Rapid Protection */}
             <div className="bg-green-900/20 rounded-xl p-4 border border-green-500/20">
               <div className="flex items-center gap-2 mb-2">
-                <span className="text-lg">🛡️</span>
+                <span className="text-lg"><Shield className="w-5 h-5" /></span>
                 <span className="text-sm font-bold text-green-400">Rapid Protection active</span>
               </div>
               <p className="text-xs text-green-300/70">Votre paiement est sécurisé par Escrow. L'argent est retenu jusqu'à confirmation de réception.</p>
@@ -109,9 +110,9 @@ export default function CheckoutPage() {
             <h3 className="text-sm font-semibold text-gray-900 dark:text-white">Méthode de paiement</h3>
             
             {[
-              { id: 'momo', icon: '📱', name: 'Mobile Money', desc: 'MTN MoMo, Moov Money' },
-              { id: 'card', icon: '💳', name: 'Carte bancaire', desc: 'Visa, Mastercard' },
-              { id: 'cod', icon: '💵', name: 'Paiement à la livraison', desc: 'Payez quand vous recevez' },
+              { id: 'momo', icon: <Smartphone className="w-6 h-6" />, name: 'Mobile Money', desc: 'MTN MoMo, Moov Money' },
+              { id: 'card', icon: <CreditCard className="w-6 h-6" />, name: 'Carte bancaire', desc: 'Visa, Mastercard' },
+              { id: 'cod', icon: <Banknote className="w-6 h-6" />, name: 'Paiement à la livraison', desc: 'Payez quand vous recevez' },
             ].map((m) => (
               <button
                 key={m.id}
@@ -123,7 +124,7 @@ export default function CheckoutPage() {
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <span className="text-2xl">{m.icon}</span>
+                  {m.icon}
                   <div>
                     <div className="text-sm font-bold text-gray-900 dark:text-white dark:text-white">{m.name}</div>
                     <div className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500">{m.desc}</div>
@@ -148,8 +149,8 @@ export default function CheckoutPage() {
               </div>
             )}
 
-            <button onClick={() => setStep(3)} className="w-full bg-red-600 hover:bg-red-500 text-gray-900 dark:text-white font-bold py-3 rounded-xl transition-all">
-              Payer {orderSummary.total.toLocaleString()} FCFA 🔒
+            <button onClick={() => setStep(3)} className="w-full bg-red-600 hover:bg-red-500 text-gray-900 dark:text-white font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-1.5">
+              <Lock className="w-4 h-4" /> Payer {orderSummary.total.toLocaleString()} FCFA
             </button>
           </div>
         )}
@@ -158,7 +159,7 @@ export default function CheckoutPage() {
         {step === 3 && (
           <div className="space-y-4 text-center">
             <div className="bg-green-900/20 rounded-2xl p-8 border border-green-500/20">
-              <div className="text-5xl mb-4">✅</div>
+              <CheckCircle2 className="w-12 h-12 mx-auto mb-4 text-emerald-400" />
               <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Paiement confirmé !</h2>
               <p className="text-sm text-gray-400 dark:text-slate-500 dark:text-slate-500">Votre commande est en cours de traitement</p>
             </div>
@@ -174,7 +175,7 @@ export default function CheckoutPage() {
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-gray-400 dark:text-slate-500 dark:text-slate-500">Escrow</span>
-                <span className="text-yellow-400 font-bold">🔒 Sécurisé</span>
+                <span className="text-yellow-400 font-bold inline-flex items-center gap-1"><Lock className="w-3 h-3" /> Sécurisé</span>
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-gray-400 dark:text-slate-500 dark:text-slate-500">Livraison estimée</span>
@@ -184,7 +185,7 @@ export default function CheckoutPage() {
 
             <div className="bg-white backdrop-blur-sm rounded-xl p-4 border border-gray-200">
               <div className="flex items-center gap-2 mb-2">
-                <span className="text-lg">🎁</span>
+                <span className="text-lg"><Gift className="w-5 h-5" /></span>
                 <span className="text-sm font-bold text-yellow-400">+480 Rapid Points gagnés !</span>
               </div>
               <div className="w-full bg-gray-100 rounded-full h-2">

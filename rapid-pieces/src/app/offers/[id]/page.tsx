@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { Trophy, Banknote, Star, BarChart3, Crown, MapPin, CheckCircle2, Gem } from 'lucide-react';
 
 const offers = [
   {
@@ -109,18 +110,18 @@ export default function OffersPage() {
         {/* Sort tabs */}
         <div className="flex gap-2">
           {[
-            { value: 'rapid-score', label: '🏆 Rapid Score' },
-            { value: 'price', label: '💰 Prix' },
-            { value: 'rating', label: '⭐ Note' },
+            { value: 'rapid-score', label: 'Rapid Score', icon: <Trophy className="w-3 h-3" /> },
+            { value: 'price', label: 'Prix', icon: <Banknote className="w-3 h-3" /> },
+            { value: 'rating', label: 'Note', icon: <Star className="w-3 h-3" /> },
           ].map((s) => (
             <button
               key={s.value}
               onClick={() => setSortBy(s.value)}
-              className={`px-3 py-2 rounded-xl text-xs font-bold transition-all ${
+              className={`px-3 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1 ${
                 sortBy === s.value ? 'bg-red-600 text-white' : 'bg-gray-50 text-gray-400 dark:text-slate-500 dark:text-slate-500'
               }`}
             >
-              {s.label}
+              {s.icon} {s.label}
             </button>
           ))}
         </div>
@@ -128,7 +129,7 @@ export default function OffersPage() {
         {/* Rapid Score explanation */}
         <div className="bg-white backdrop-blur-sm rounded-xl p-3 border border-gray-200">
           <div className="flex items-center gap-2 mb-2">
-            <span className="text-sm">📊</span>
+            <BarChart3 className="w-4 h-4 text-gray-400" />
             <span className="text-xs font-bold text-gray-900 dark:text-white dark:text-white">Rapid Score = Prix (30%) + Qualité (25%) + Disponibilité (20%) + Réputation (15%) + Délai (10%)</span>
           </div>
         </div>
@@ -152,14 +153,14 @@ export default function OffersPage() {
                     <div>
                       <div className="flex items-center gap-1.5">
                         <span className="text-sm font-bold text-gray-900 dark:text-white dark:text-white">{offer.seller}</span>
-                        {index === 0 && <span className="text-[10px] bg-yellow-500/20 text-yellow-300 px-1.5 py-0.5 rounded font-bold">👑 BEST</span>}
+                        {index === 0 && <span className="text-[10px] bg-yellow-500/20 text-yellow-300 px-1.5 py-0.5 rounded font-bold flex items-center gap-1"><Crown className="w-3 h-3" /> BEST</span>}
                       </div>
                       <div className="flex items-center gap-2 mt-0.5">
-                        <span className="text-xs text-yellow-400">⭐ {offer.rating}</span>
+                        <span className="text-xs text-yellow-400 flex items-center gap-1"><Star className="w-3 h-3" /> {offer.rating}</span>
                         <span className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500">•</span>
                         <span className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500">{offer.sales} ventes</span>
                         <span className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500">•</span>
-                        <span className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500">📍 {offer.distance}</span>
+                        <span className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500 flex items-center gap-1"><MapPin className="w-3 h-3" /> {offer.distance}</span>
                       </div>
                     </div>
                   </div>
@@ -171,8 +172,8 @@ export default function OffersPage() {
                 {/* Badges */}
                 <div className="flex gap-1.5 mt-2">
                   {offer.badges.map((b) => (
-                    <span key={b} className="text-[10px] bg-green-500/20 text-green-300 px-2 py-0.5 rounded-full font-bold">
-                      {b === 'Verified' ? '✅' : b === 'Premium' ? '💎' : '🏆'} {b}
+                    <span key={b} className="text-[10px] bg-green-500/20 text-green-300 px-2 py-0.5 rounded-full font-bold flex items-center gap-1">
+                      {b === 'Verified' ? <CheckCircle2 className="w-3 h-3" /> : b === 'Premium' ? <Gem className="w-3 h-3" /> : <Trophy className="w-3 h-3" />} {b}
                     </span>
                   ))}
                   <span className="text-[10px] bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded-full font-bold">{offer.quality}</span>
@@ -225,13 +226,13 @@ export default function OffersPage() {
                 {/* Action */}
                 <button
                   onClick={() => setSelectedOffer(selectedOffer === offer.id ? null : offer.id)}
-                  className={`w-full py-3 rounded-xl font-bold text-sm transition-all ${
+                  className={`w-full py-3 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-1.5 ${
                     selectedOffer === offer.id
                       ? 'bg-red-600 text-white'
                       : 'bg-gray-50 text-gray-900 dark:text-white hover:bg-red-600/80'
                   }`}
                 >
-                  {selectedOffer === offer.id ? 'Sélectionnée ✓' : 'Sélectionner cette offre'}
+                  {selectedOffer === offer.id ? <><CheckCircle2 className="w-4 h-4" /> Sélectionnée</> : 'Sélectionner cette offre'}
                 </button>
               </div>
             </div>

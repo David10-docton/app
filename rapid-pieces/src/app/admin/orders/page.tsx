@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, Shield, Check, AlertTriangle, DollarSign, Filter, Users, ShoppingBag, Package, BarChart3, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, Shield, Check, AlertTriangle, DollarSign, Filter, Users, ShoppingBag, Package, BarChart3, ShieldCheck, Lock, CheckCircle2, Undo2 } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 
 const allTransactions = [
@@ -22,10 +22,10 @@ const statusStyles: Record<string, { bg: string; text: string; border: string }>
   livree: { bg: 'bg-emerald-500/10', text: 'text-emerald-400', border: 'border-emerald-500/30' },
 };
 
-const escrowStyles: Record<string, { bg: string; text: string; label: string }> = {
-  held: { bg: 'bg-purple-500/10', text: 'text-purple-400', label: '🔒 Escrow actif' },
-  released: { bg: 'bg-emerald-500/10', text: 'text-emerald-400', label: '✅ Libéré' },
-  refunded: { bg: 'bg-red-500/10', text: 'text-red-400', label: '↩️ Remboursé' },
+const escrowStyles: Record<string, { bg: string; text: string; label: string; icon: ReactNode }> = {
+  held: { bg: 'bg-purple-500/10', text: 'text-purple-400', label: 'Escrow actif', icon: <Lock className="w-3 h-3" /> },
+  released: { bg: 'bg-emerald-500/10', text: 'text-emerald-400', label: 'Libéré', icon: <CheckCircle2 className="w-3 h-3" /> },
+  refunded: { bg: 'bg-red-500/10', text: 'text-red-400', label: 'Remboursé', icon: <Undo2 className="w-3 h-3" /> },
 };
 
 export default function AdminOrdersPage() {
@@ -71,13 +71,13 @@ export default function AdminOrdersPage() {
             {[
               { key: 'all' as const, label: 'Toutes' },
               { key: 'active' as const, label: 'En cours' },
-              { key: 'escrow' as const, label: '🔒 Escrow' },
-              { key: 'completed' as const, label: '✅ Terminées' },
-            ].map(f => (
+              { key: 'escrow' as const, label: 'Escrow', icon: <Lock className="w-3 h-3" /> },
+              { key: 'completed' as const, label: 'Terminées', icon: <CheckCircle2 className="w-3 h-3" /> },
+            ].map((f: { key: 'all' | 'active' | 'escrow' | 'completed'; label: string; icon?: ReactNode }) => (
               <button key={f.key} onClick={() => setFilter(f.key)}
-                className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all ${
+                className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all flex items-center gap-1 ${
                   filter === f.key ? 'bg-emerald-600 text-white' : 'bg-gray-100 text-gray-400 dark:text-slate-500 dark:text-slate-500 border border-gray-200'
-                }`}>{f.label}</button>
+                }`}>{f.icon}{f.label}</button>
             ))}
           </div>
         </div>
@@ -94,7 +94,7 @@ export default function AdminOrdersPage() {
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
                     <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${status.bg} ${status.text} border ${status.border}`}>{tx.statusLabel}</span>
-                    <span className={`text-[9px] px-1.5 py-0.5 rounded-full font-medium ${escrow.bg} ${escrow.text}`}>{escrow.label}</span>
+                    <span className={`text-[9px] px-1.5 py-0.5 rounded-full font-medium flex items-center gap-1 ${escrow.bg} ${escrow.text}`}>{escrow.icon}{escrow.label}</span>
                   </div>
                   <h3 className="text-xs font-semibold text-gray-900 dark:text-white">{tx.part}</h3>
                   <p className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">Acheteur: {tx.buyer} • Vendeur: {tx.seller}</p>
@@ -112,7 +112,7 @@ export default function AdminOrdersPage() {
 
               {tx.escrow === 'held' && (
                 <div className="flex gap-2 mt-3">
-                  <button onClick={() => alert("Escrow libéré au vendeur ✅")} className="flex-1 py-2 bg-emerald-600 text-white rounded-lg text-[11px] font-semibold hover:bg-emerald-700 transition-colors">Libérer</button>
+                  <button onClick={() => alert("Escrow libéré au vendeur")} className="flex-1 py-2 bg-emerald-600 text-white rounded-lg text-[11px] font-semibold hover:bg-emerald-700 transition-colors">Libérer</button>
                   <button onClick={() => alert("Remboursement en cours...")} className="flex-1 py-2 bg-red-50 text-red-600 border border-red-200 rounded-lg text-[11px] font-medium hover:bg-red-100 transition-colors">Rembourser</button>
                 </div>
               )}

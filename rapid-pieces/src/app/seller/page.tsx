@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Bell, TrendingUp, Package, Star, ChevronRight, DollarSign, AlertCircle, Menu, X, LogOut, ShoppingCart, Store, Phone, MapPin, Clock, CheckCircle } from 'lucide-react';
+import { Bell, TrendingUp, Package, Star, ChevronRight, DollarSign, AlertCircle, Menu, X, LogOut, ShoppingCart, Store, Phone, MapPin, Clock, CheckCircle, BarChart3 } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 
 const todayStats = { newRequests: 5, todaySales: 3, todayRevenue: 245000, responseRate: 96, avgResponseTime: '12 min' };
@@ -188,7 +188,7 @@ export default function SellerDashboard() {
 
         {/* Performance */}
         <section className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl p-5">
-          <h3 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white mb-4">📊 Performance du mois</h3>
+          <h3 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white mb-4 flex items-center gap-1.5"><BarChart3 className="w-4 h-4" /> Performance du mois</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {[
               { label: 'Transactions', value: '89', target: '100', pct: 89 },

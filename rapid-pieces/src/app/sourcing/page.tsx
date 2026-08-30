@@ -3,10 +3,11 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Logo from '@/components/Logo';
+import { Globe } from 'lucide-react';
 
 const sources = [
   {
-    country: 'Nigeria 🇳🇬',
+    country: 'Nigeria',
     name: 'RAPID NIGERIA',
     desc: 'Sourcing direct depuis Lagos — plus grande place de pièces en Afrique de l\'Ouest',
     delivery: '48h',
@@ -16,7 +17,7 @@ const sources = [
     border: 'border-green-500/20',
   },
   {
-    country: 'USA 🇺🇸',
+    country: 'USA',
     name: 'RAPID USA',
     desc: 'Pièces OEM et Genuine depuis Houston — stock massif de pièces neuves et reconditionnées',
     delivery: '7 jours',
@@ -28,9 +29,9 @@ const sources = [
 ];
 
 const recentSourcing = [
-  { part: 'Kit d\'embrayage Toyota Corolla', source: 'Nigeria 🇳🇬', status: 'En transit', eta: '2 jours', cost: 185000 },
-  { part: 'Boîtier de direction Honda', source: 'USA 🇺🇸', status: 'Expédié', eta: '5 jours', cost: 420000 },
-  { part: 'Turbo BMW Serie 3', source: 'USA 🇺🇸', status: 'En vérification', eta: '7 jours', cost: 890000 },
+  { part: 'Kit d\'embrayage Toyota Corolla', source: 'Nigeria', status: 'En transit', eta: '2 jours', cost: 185000 },
+  { part: 'Boîtier de direction Honda', source: 'USA', status: 'Expédié', eta: '5 jours', cost: 420000 },
+  { part: 'Turbo BMW Serie 3', source: 'USA', status: 'En vérification', eta: '7 jours', cost: 890000 },
 ];
 
 export default function SourcingPage() {
@@ -52,7 +53,7 @@ export default function SourcingPage() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 space-y-6">
         {/* Hero */}
         <div className="bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl p-6 border border-gray-200 text-center">
-          <div className="text-4xl mb-3">🌍</div>
+          <Globe className="w-10 h-10 mx-auto mb-3 text-slate-400" />
           <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Sourcing International</h2>
           <p className="text-sm text-gray-400 dark:text-slate-500 dark:text-slate-500">Accédez à des pièces du monde entier</p>
         </div>
@@ -87,9 +88,9 @@ export default function SourcingPage() {
         {/* Request sourcing */}
         <button
           onClick={() => setShowRequest(!showRequest)}
-          className="w-full bg-red-600 hover:bg-red-500 text-gray-900 dark:text-white font-bold py-4 rounded-2xl transition-all shadow-lg shadow-red-600/20"
+          className="w-full bg-red-600 hover:bg-red-500 text-gray-900 dark:text-white font-bold py-4 rounded-2xl transition-all shadow-lg shadow-red-600/20 flex items-center justify-center gap-2"
         >
-          🌍 Demander une pièce à l&apos;international
+          <Globe className="w-4 h-4" /> Demander une pièce à l&apos;international
         </button>
 
         {showRequest && (
@@ -116,16 +117,16 @@ export default function SourcingPage() {
             <div>
               <label className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500 mb-1 block">Source préférée</label>
               <div className="flex gap-2">
-                <button className="flex-1 bg-green-500/20 border border-green-500/30 text-green-300 py-2 rounded-lg text-xs font-bold">🇳🇬 Nigeria</button>
-                <button className="flex-1 bg-blue-500/20 border border-blue-500/30 text-blue-300 py-2 rounded-lg text-xs font-bold">🇺🇸 USA</button>
+                <button className="flex-1 bg-green-500/20 border border-green-500/30 text-green-300 py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5"><Globe className="w-3 h-3" /> Nigeria</button>
+                <button className="flex-1 bg-blue-500/20 border border-blue-500/30 text-blue-300 py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5"><Globe className="w-3 h-3" /> USA</button>
               </div>
             </div>
             <div>
               <label className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500 mb-1 block">Budget max</label>
               <input type="number" placeholder="500000 FCFA" className="w-full bg-gray-50 border border-gray-300 rounded-lg px-3 py-2.5 text-gray-900 dark:text-white text-sm" />
             </div>
-            <button className="w-full bg-red-600 hover:bg-red-500 text-gray-900 dark:text-white font-bold py-3 rounded-xl transition-all">
-              Envoyer la demande 🌍
+            <button className="w-full bg-red-600 hover:bg-red-500 text-gray-900 dark:text-white font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-2">
+              <Globe className="w-4 h-4" /> Envoyer la demande
             </button>
           </div>
         )}

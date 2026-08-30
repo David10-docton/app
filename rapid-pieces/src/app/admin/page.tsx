@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Users, ShoppingBag, DollarSign, Globe, Shield, Package, Bell, Menu, X, LogOut, TrendingUp, Clock, AlertTriangle, BarChart3, ChevronRight, Eye, Truck, Star, ImageIcon } from 'lucide-react';
+import { Users, ShoppingBag, DollarSign, Globe, Shield, Package, Bell, Menu, X, LogOut, TrendingUp, Clock, AlertTriangle, BarChart3, ChevronRight, Eye, Truck, Star, ImageIcon, Store, Banknote, PartyPopper } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { dashboardKPIs } from '@/lib/mockData';
 
@@ -25,17 +25,17 @@ const operationalKPIs = [
 ];
 
 const sourcingKPIs = [
-  { label: 'Nigeria', value: dashboardKPIs.nigerianOrders.toString(), flag: '🇳🇬' },
-  { label: 'USA', value: dashboardKPIs.usaOrders.toString(), flag: '🇺🇸' },
-  { label: 'Offres/demande', value: dashboardKPIs.avgOffersPerRequest.toString(), flag: '📊' },
+  { label: 'Nigeria', value: dashboardKPIs.nigerianOrders.toString(), icon: <Globe className="w-5 h-5" /> },
+  { label: 'USA', value: dashboardKPIs.usaOrders.toString(), icon: <Globe className="w-5 h-5" /> },
+  { label: 'Offres/demande', value: dashboardKPIs.avgOffersPerRequest.toString(), icon: <BarChart3 className="w-5 h-5" /> },
 ];
 
 const recentActivity = [
-  { id: '1', text: 'Nouveau vendeur: Sahel Auto (Parakou)', time: 'Il y a 30 min', icon: '🏪' },
-  { id: '2', text: 'Grosse commande: 380 000 FCFA — Kit embrayage Mercedes', time: 'Il y a 1h', icon: '💰' },
-  { id: '3', text: 'Litige en cours: Commande #ord5 — qualité', time: 'Il y a 2h', icon: '⚠️' },
-  { id: '4', text: 'Sourcing Nigeria: 3 commandes en transit', time: 'Il y a 3h', icon: '🇳🇬' },
-  { id: '5', text: 'Palier: 100ème vendeur vérifié!', time: 'Hier', icon: '🎉' },
+  { id: '1', text: 'Nouveau vendeur: Sahel Auto (Parakou)', time: 'Il y a 30 min', icon: <Store className="w-5 h-5" /> },
+  { id: '2', text: 'Grosse commande: 380 000 FCFA — Kit embrayage Mercedes', time: 'Il y a 1h', icon: <Banknote className="w-5 h-5" /> },
+  { id: '3', text: 'Litige en cours: Commande #ord5 — qualité', time: 'Il y a 2h', icon: <AlertTriangle className="w-5 h-5" /> },
+  { id: '4', text: 'Sourcing Nigeria: 3 commandes en transit', time: 'Il y a 3h', icon: <Globe className="w-5 h-5" /> },
+  { id: '5', text: 'Palier: 100ème vendeur vérifié!', time: 'Hier', icon: <PartyPopper className="w-5 h-5" /> },
 ];
 
 const navLinks = [
@@ -130,7 +130,7 @@ export default function AdminDashboard() {
         {/* Operational + Sourcing */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <section className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl p-5">
-            <h3 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white mb-4">📈 Performance</h3>
+            <h3 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white mb-4 flex items-center gap-1.5"><TrendingUp className="w-4 h-4" /> Performance</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {operationalKPIs.map(kpi => (
                 <div key={kpi.label} className="bg-gray-100 rounded-xl p-3">
@@ -142,11 +142,11 @@ export default function AdminDashboard() {
           </section>
 
           <section className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl p-5">
-            <h3 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white mb-4">🌍 Sourcing International</h3>
+            <h3 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white mb-4 flex items-center gap-1.5"><Globe className="w-4 h-4" /> Sourcing International</h3>
             <div className="grid grid-cols-3 gap-3">
               {sourcingKPIs.map(kpi => (
                 <div key={kpi.label} className="text-center bg-gray-100 rounded-xl p-3">
-                  <span className="text-xl">{kpi.flag}</span>
+                  <span className="flex justify-center">{kpi.icon}</span>
                   <p className="text-lg font-bold text-gray-900 dark:text-white dark:text-white mt-1">{kpi.value}</p>
                   <p className="text-[9px] text-gray-400 dark:text-slate-500 dark:text-slate-500">{kpi.label}</p>
                 </div>
@@ -159,11 +159,11 @@ export default function AdminDashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <section className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl overflow-hidden">
             <div className="px-4 pt-4 pb-2">
-              <h3 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white">🔔 Activité récente</h3>
+              <h3 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white flex items-center gap-1.5"><Bell className="w-4 h-4" /> Activité récente</h3>
             </div>
             {recentActivity.map((a, i) => (
               <div key={a.id} className={`px-4 py-3 flex items-center gap-3 ${i < recentActivity.length - 1 ? 'border-b border-gray-200' : ''}`}>
-                <span className="text-lg flex-shrink-0">{a.icon}</span>
+                <span className="flex-shrink-0">{a.icon}</span>
                 <div className="flex-1 min-w-0">
                   <p className="text-xs text-gray-900 dark:text-white truncate">{a.text}</p>
                   <p className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">{a.time}</p>

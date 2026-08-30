@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none">
-  <rect width="400" height="400" fill="#F8FAFC"/>
-  <circle cx="200" cy="180" r="75" fill="#6B7280"/>
-  <circle cx="200" cy="180" r="55" fill="#9CA3AF"/>
-  <circle cx="200" cy="180" r="30" fill="#374151"/>
-  <circle cx="200" cy="180" r="12" fill="#1F2937"/>
-  <text x="200" y="310" text-anchor="middle" font-size="14" font-weight="600" fill="#374151">KIT D'EMBRAYAGE</text>
-</svg>

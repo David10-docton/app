@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, Search, Star, Shield, Check, Ban, Eye, MapPin, Award, Users, ShoppingBag, Package, BarChart3, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, Search, Star, Shield, Check, Ban, Eye, MapPin, Award, Users, ShoppingBag, Package, BarChart3, ShieldCheck, CheckCircle2, Timer, Flag } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { mockSellers } from '@/lib/mockData';
 
@@ -43,14 +43,14 @@ export default function AdminSellersPage() {
           <div className="flex gap-2">
             {[
               { key: 'all' as const, label: 'Tous' },
-              { key: 'verified' as const, label: '✅ Vérifiés' },
-              { key: 'pending' as const, label: '⏳ En attente' },
-              { key: 'flagged' as const, label: '🚩 Signalés' },
-            ].map(f => (
+              { key: 'verified' as const, label: 'Vérifiés', icon: <CheckCircle2 className="w-3 h-3" /> },
+              { key: 'pending' as const, label: 'En attente', icon: <Timer className="w-3 h-3" /> },
+              { key: 'flagged' as const, label: 'Signalés', icon: <Flag className="w-3 h-3" /> },
+            ].map((f: { key: 'all' | 'verified' | 'pending' | 'flagged'; label: string; icon?: ReactNode }) => (
               <button key={f.key} onClick={() => setFilter(f.key)}
-                className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all ${
+                className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all flex items-center gap-1 ${
                   filter === f.key ? 'bg-emerald-600 text-white' : 'bg-gray-100 text-gray-400 dark:text-slate-500 dark:text-slate-500 border border-gray-200'
-                }`}>{f.label}</button>
+                }`}>{f.icon}{f.label}</button>
             ))}
           </div>
         </div>

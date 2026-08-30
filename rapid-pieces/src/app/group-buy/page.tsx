@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Users, TrendingDown, Clock, CheckCircle, Package } from 'lucide-react';
+import { ArrowLeft, Users, TrendingDown, Clock, CheckCircle, Package, CheckCircle2, Calendar } from 'lucide-react';
 
 const groupBuys = [
   {
@@ -85,13 +85,13 @@ export default function GroupBuyPage() {
           <h2 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white mb-3">Comment ça marche ?</h2>
           <div className="space-y-3">
             {[
-              { icon: '1️⃣', text: 'Rapid Pièces détecte 35+ demandes identiques' },
-              { icon: '2️⃣', text: 'Négociation collective avec le fournisseur (Nigeria/USA)' },
-              { icon: '3️⃣', text: 'Prix réduit garanti pour tous les participants' },
-              { icon: '4️⃣', text: 'Livraison groupée, vous recevez votre pièce' },
+              { icon: <span className="w-6 h-6 rounded-full bg-red-600 text-white text-[11px] font-bold flex items-center justify-center shrink-0">1</span>, text: 'Rapid Pièces détecte 35+ demandes identiques' },
+              { icon: <span className="w-6 h-6 rounded-full bg-red-600 text-white text-[11px] font-bold flex items-center justify-center shrink-0">2</span>, text: 'Négociation collective avec le fournisseur (Nigeria/USA)' },
+              { icon: <span className="w-6 h-6 rounded-full bg-red-600 text-white text-[11px] font-bold flex items-center justify-center shrink-0">3</span>, text: 'Prix réduit garanti pour tous les participants' },
+              { icon: <span className="w-6 h-6 rounded-full bg-red-600 text-white text-[11px] font-bold flex items-center justify-center shrink-0">4</span>, text: 'Livraison groupée, vous recevez votre pièce' },
             ].map((step, i) => (
               <div key={i} className="flex items-center gap-3">
-                <span className="text-lg">{step.icon}</span>
+                {step.icon}
                 <span className="text-xs text-gray-600 dark:text-slate-300 dark:text-slate-300">{step.text}</span>
               </div>
             ))}
@@ -170,18 +170,18 @@ export default function GroupBuyPage() {
 
               {/* Deadline */}
               <div className="flex items-center justify-between text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500 mb-3">
-                <span>📅 Deadline: {gb.deadline}</span>
+                <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> Deadline: {gb.deadline}</span>
                 <span>{gb.target - gb.participants} places restantes</span>
               </div>
 
               {/* CTA */}
               {gb.status === 'active' ? (
-                <button className="w-full bg-red-600 text-white font-bold py-3 sm:py-3.5 rounded-xl text-sm hover:bg-red-600-dark transition-all">
-                  Rejoindre l&apos;achat groupé 🤝
+                <button className="w-full bg-red-600 text-white font-bold py-3 sm:py-3.5 rounded-xl text-sm hover:bg-red-600-dark transition-all flex items-center justify-center gap-2">
+                  <Users className="w-4 h-4" /> Rejoindre l&apos;achat groupé
                 </button>
               ) : (
-                <div className="bg-emerald-500/10 text-emerald-400 text-xs font-bold py-3 rounded-xl text-center">
-                  ✅ Achat groupé livré avec succès
+                <div className="bg-emerald-500/10 text-emerald-400 text-xs font-bold py-3 rounded-xl text-center flex items-center justify-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4" /> Achat groupé livré avec succès
                 </div>
               )}
             </div>

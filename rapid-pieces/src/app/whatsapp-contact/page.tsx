@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Shield, Phone, MessageSquare, AlertTriangle, Lock, Eye } from 'lucide-react';
+import { ArrowLeft, Shield, Phone, MessageSquare, AlertTriangle, Lock, Eye, BarChart3, Bot } from 'lucide-react';
 
 const conversations = [
   {
@@ -28,10 +28,10 @@ const conversations = [
 ];
 
 const antiContournementRules = [
-  { icon: '🔒', title: 'Coordonnées masquées', desc: 'Numéros de téléphone, WhatsApp, emails sont automatiquement cachés.' },
-  { icon: '🤖', title: 'Détection automatique', desc: 'Le système détecte et remplace les coordonnées partagées dans les messages.' },
-  { icon: '🛡️', title: 'Rapid Protection', desc: 'En achetant via la plateforme, vous bénéficiez de la garantie et du retour.' },
-  { icon: '📊', title: 'Historique garanti', desc: 'Chaque transaction est enregistrée pour votre historique véhicule.' },
+  { icon: <Lock className="w-5 h-5 text-gray-400" />, title: 'Coordonnées masquées', desc: 'Numéros de téléphone, WhatsApp, emails sont automatiquement cachés.' },
+  { icon: <Bot className="w-5 h-5 text-gray-400" />, title: 'Détection automatique', desc: 'Le système détecte et remplace les coordonnées partagées dans les messages.' },
+  { icon: <Shield className="w-5 h-5 text-gray-400" />, title: 'Rapid Protection', desc: 'En achetant via la plateforme, vous bénéficiez de la garantie et du retour.' },
+  { icon: <BarChart3 className="w-5 h-5 text-gray-400" />, title: 'Historique garanti', desc: 'Chaque transaction est enregistrée pour votre historique véhicule.' },
 ];
 
 export default function WhatsAppContactPage() {
@@ -77,7 +77,7 @@ export default function WhatsAppContactPage() {
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2">
             {antiContournementRules.map((r, i) => (
               <div key={i} className="bg-gray-50 rounded-xl p-3">
-                <span className="text-lg">{r.icon}</span>
+                {r.icon}
                 <div className="text-[10px] font-bold text-gray-900 dark:text-white mt-1">{r.title}</div>
                 <div className="text-[9px] text-gray-400 dark:text-slate-500 mt-0.5">{r.desc}</div>
               </div>
@@ -154,7 +154,7 @@ export default function WhatsAppContactPage() {
             {blockedAttempt && (
               <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-3 flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4 text-red-400 shrink-0" />
-                <p className="text-[10px] text-red-300">⚠️ Coordonnées détectées et masquées. Utilisez la plateforme pour toute transaction.</p>
+                <p className="text-[10px] text-red-300">Coordonnées détectées et masquées. Utilisez la plateforme pour toute transaction.</p>
               </div>
             )}
 

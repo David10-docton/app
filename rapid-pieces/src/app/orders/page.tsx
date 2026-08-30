@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { CircleStop, RefreshCw, Wrench, Phone, PenLine, Shield, Star, Gift } from 'lucide-react';
 
 const orders = [
   {
@@ -129,20 +130,20 @@ export default function OrdersPage() {
               <div className="p-4">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
-                    <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold border ${statusColors[order.status]}`}>
-                      {order.status === 'in-transit' && '🔴 '}
+                    <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold border flex items-center gap-1 ${statusColors[order.status]}`}>
+                      {order.status === 'in-transit' && <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse inline-block" />}
                       {order.statusText}
                     </span>
                     {order.status === 'in-transit' && (
-                      <span className="text-[10px] bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded-full font-bold animate-pulse">🔴 Live</span>
+                      <span className="text-[10px] bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded-full font-bold animate-pulse flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse inline-block" />Live</span>
                     )}
                   </div>
                   <span className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500 font-mono">{order.id}</span>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center text-2xl shrink-0">
-                    {order.quality === 'OEM' ? '🛑' : order.quality === 'Genuine' ? '🌀' : '🔧'}
+                  <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center shrink-0">
+                    {order.quality === 'OEM' ? <CircleStop className="w-6 h-6 text-gray-400" /> : order.quality === 'Genuine' ? <RefreshCw className="w-6 h-6 text-gray-400" /> : <Wrench className="w-6 h-6 text-gray-400" />}
                   </div>
                   <div className="flex-1 min-w-0">
                     <h4 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white truncate">{order.part}</h4>
@@ -184,8 +185,8 @@ export default function OrdersPage() {
                           <div className="text-sm font-bold text-gray-900 dark:text-white dark:text-white">{order.driver}</div>
                           <div className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500">{order.driverPhone}</div>
                         </div>
-                        <a href={`tel:${order.driverPhone}`} className="bg-green-600 hover:bg-green-500 text-gray-900 dark:text-white text-xs font-bold px-3 py-2 rounded-lg transition-all">
-                          📞 Appeler
+                        <a href={`tel:${order.driverPhone}`} className="bg-green-600 hover:bg-green-500 text-gray-900 dark:text-white text-xs font-bold px-3 py-2 rounded-lg transition-all flex items-center gap-1">
+                          <Phone className="w-3 h-3" /> Appeler
                         </a>
                       </div>
                     </div>
@@ -193,7 +194,7 @@ export default function OrdersPage() {
                   {order.signed && (
                     <div className="bg-green-900/20 rounded-xl p-3 border border-green-500/20">
                       <div className="flex items-center gap-2">
-                        <span className="text-lg">✍️</span>
+                        <PenLine className="w-5 h-5 text-green-400" />
                         <div>
                           <div className="text-xs font-bold text-green-400">Livrée & signée</div>
                           <div className="text-[10px] text-green-300/70">Preuve de livraison confirmée</div>
@@ -202,11 +203,11 @@ export default function OrdersPage() {
                     </div>
                   )}
                   <div className="flex gap-2">
-                    <Link href="/protection" className="flex-1 bg-gray-50 hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-600 dark:text-slate-300 dark:text-slate-300 text-xs font-bold py-2.5 rounded-lg text-center transition-all">
-                      🛡️ Protection
+                    <Link href="/protection" className="flex-1 bg-gray-50 hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-600 dark:text-slate-300 dark:text-slate-300 text-xs font-bold py-2.5 rounded-lg transition-all flex items-center justify-center gap-1">
+                      <Shield className="w-3 h-3" /> Protection
                     </Link>
-                    <button className="flex-1 bg-gray-50 hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-600 dark:text-slate-300 dark:text-slate-300 text-xs font-bold py-2.5 rounded-lg transition-all">
-                      ⭐ Évaluer
+                    <button className="flex-1 bg-gray-50 hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-600 dark:text-slate-300 dark:text-slate-300 text-xs font-bold py-2.5 rounded-lg transition-all flex items-center justify-center gap-1">
+                      <Star className="w-3 h-3" /> Évaluer
                     </button>
                   </div>
                 </div>
@@ -226,7 +227,7 @@ export default function OrdersPage() {
         {/* Rapid Points */}
         <div className="bg-white backdrop-blur-sm rounded-2xl p-4 border border-gray-200">
           <div className="flex items-center gap-2 mb-3">
-            <span className="text-lg">🎁</span>
+            <Gift className="w-5 h-5 text-yellow-500" />
             <span className="text-sm font-bold text-gray-900 dark:text-white dark:text-white">Rapid Points</span>
           </div>
           <div className="flex items-center justify-between mb-2">

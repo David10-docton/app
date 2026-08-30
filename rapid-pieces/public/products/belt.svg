@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none">
-  <rect width="400" height="400" fill="#F8FAFC"/>
-  <ellipse cx="200" cy="180" rx="80" ry="50" fill="none" stroke="#1F2937" stroke-width="12"/>
-  <circle cx="140" cy="180" r="25" fill="#374151"/>
-  <circle cx="260" cy="180" r="25" fill="#374151"/>
-  <circle cx="200" cy="140" r="15" fill="#6B7280"/>
-  <text x="200" y="310" text-anchor="middle" font-size="14" font-weight="600" fill="#374151">COURROIE ACCESSOIRES</text>
-</svg>

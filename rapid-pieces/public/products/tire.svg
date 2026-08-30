@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" fill="none">
-  <rect width="400" height="400" fill="#F8FAFC"/>
-  <circle cx="200" cy="190" r="90" fill="#1F2937"/>
-  <circle cx="200" cy="190" r="70" fill="#374151"/>
-  <circle cx="200" cy="190" r="35" fill="#6B7280"/>
-  <circle cx="200" cy="190" r="15" fill="#9CA3AF"/>
-  <text x="200" y="320" text-anchor="middle" font-size="14" font-weight="600" fill="#374151">PNEU 205/55R16</text>
-</svg>

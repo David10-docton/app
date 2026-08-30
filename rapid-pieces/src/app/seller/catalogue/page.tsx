@@ -43,8 +43,8 @@ export default function SellerCataloguePage() {
           <button onClick={() => setShowAdd(!showAdd)} className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center"><Plus className="w-4 h-4 text-gray-900 dark:text-white" /></button>
         </div>
         <div className="max-w-2xl mx-auto px-4 pb-3 flex gap-2">
-          <button onClick={() => setTab('catalogue')} className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all ${tab === 'catalogue' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-400 dark:text-slate-500 dark:text-slate-500 border border-gray-200'}`}>📦 Catalogue</button>
-          <button onClick={() => setTab('stats')} className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all ${tab === 'stats' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-400 dark:text-slate-500 dark:text-slate-500 border border-gray-200'}`}>📊 Stats</button>
+          <button onClick={() => setTab('catalogue')} className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all flex items-center gap-1 ${tab === 'catalogue' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-400 dark:text-slate-500 dark:text-slate-500 border border-gray-200'}`}><Package className="w-3 h-3" /> Catalogue</button>
+          <button onClick={() => setTab('stats')} className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all flex items-center gap-1 ${tab === 'stats' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-400 dark:text-slate-500 dark:text-slate-500 border border-gray-200'}`}><BarChart3 className="w-3 h-3" /> Stats</button>
         </div>
       </header>
 
@@ -85,7 +85,7 @@ export default function SellerCataloguePage() {
                   </div>
                   <div className="flex gap-2">
                     <button onClick={() => setShowAdd(false)} className="flex-1 py-2 bg-gray-200 text-gray-900 dark:text-white rounded-lg text-xs font-medium">Annuler</button>
-                    <button onClick={() => { alert("Produit ajouté ✅"); }} className="flex-1 py-2 bg-blue-600 text-white rounded-lg text-xs font-semibold">Ajouter</button>
+                    <button onClick={() => { alert("Produit ajouté"); }} className="flex-1 py-2 bg-blue-600 text-white rounded-lg text-xs font-semibold">Ajouter</button>
                   </div>
                 </div>
               </div>

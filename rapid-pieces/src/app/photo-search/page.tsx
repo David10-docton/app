@@ -2,7 +2,7 @@
 
 import { useState, useRef, useCallback } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Camera, Upload, X, Scan, Search, Car, Wrench, CheckCircle, Loader2 } from 'lucide-react';
+import { ArrowLeft, Camera, Upload, X, Scan, Search, Car, Wrench, CheckCircle, Loader2, Lightbulb } from 'lucide-react';
 
 interface IdentifiedPart {
   name: string;
@@ -144,7 +144,7 @@ export default function PhotoSearchPage() {
 
             {/* Tips */}
             <div className="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-gray-200 dark:border-slate-700">
-              <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-3">💡 Conseils pour une meilleure identification</h3>
+              <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2"><Lightbulb className="w-4 h-4 text-yellow-500" /> Conseils pour une meilleure identification</h3>
               <ul className="space-y-2 text-xs text-gray-500 dark:text-slate-400">
                 <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-500 shrink-0" /> Photo nette et bien éclairée</li>
                 <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-green-500 shrink-0" /> La pièce doit être visible en entier</li>
@@ -162,8 +162,8 @@ export default function PhotoSearchPage() {
               <video ref={videoRef} autoPlay playsInline className="w-full h-80 object-cover" />
               <canvas ref={canvasRef} className="hidden" />
               <div className="absolute inset-0 border-2 border-dashed border-white/30 rounded-2xl m-4 pointer-events-none" />
-              <div className="absolute top-4 left-4 bg-black/50 text-white text-xs px-3 py-1 rounded-full">
-                📷 Caméra active
+              <div className="absolute top-4 left-4 bg-black/50 text-white text-xs px-3 py-1 rounded-full flex items-center gap-1">
+                <Camera className="w-3 h-3" /> Caméra active
               </div>
             </div>
             <div className="flex gap-3">
