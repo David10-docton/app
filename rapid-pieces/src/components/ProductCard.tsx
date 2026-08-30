@@ -20,19 +20,24 @@ interface ProductCardProps {
   inStock: boolean;
   image?: string;
   category: string;
+  [key: string]: unknown;
 }
 
 export default function ProductCard({
   id, name, brand, vehicle, price, oldPrice, quality, seller,
-  sellerBadge, rating, reviews, delivery, deliveryTime, inStock, category
+  sellerBadge, rating, reviews, delivery, deliveryTime, inStock, category, image
 }: ProductCardProps) {
   const discount = oldPrice ? Math.round(((oldPrice - price) / oldPrice) * 100) : 0;
 
   return (
     <Link href={`/offers/${id}`} className="group block bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl overflow-hidden hover:shadow-lg hover:border-red-300 dark:hover:border-red-600 transition-all duration-200">
-      {/* Image placeholder */}
-      <div className="relative h-40 sm:h-48 bg-gray-100 dark:bg-slate-700 flex items-center justify-center">
-        <div className="text-5xl opacity-30">🔧</div>
+      {/* Image */}
+      <div className="relative h-40 sm:h-48 bg-gray-100 dark:bg-slate-700 flex items-center justify-center overflow-hidden">
+        {image ? (
+          <img src={image} alt={name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+        ) : (
+          <div className="text-5xl opacity-30">🔧</div>
+        )}
         {discount > 0 && (
           <span className="absolute top-2 left-2 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
             -{discount}%

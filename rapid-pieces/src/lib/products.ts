@@ -15,6 +15,7 @@ export const products = [
     deliveryTime: '< 1h',
     inStock: true,
     category: 'Freinage',
+    image: '/products/brake-pads.jpg',
   },
   {
     id: '2',
@@ -32,6 +33,7 @@ export const products = [
     deliveryTime: '< 2h',
     inStock: true,
     category: 'Filtration',
+    image: '/products/oil-filter.jpg',
   },
   {
     id: '3',
@@ -48,6 +50,7 @@ export const products = [
     deliveryTime: '< 2h',
     inStock: true,
     category: 'Moteur',
+    image: '/products/alternator.jpg',
   },
   {
     id: '4',
@@ -65,6 +68,7 @@ export const products = [
     deliveryTime: '< 2h',
     inStock: true,
     category: 'Suspension',
+    image: '/products/shock-absorber.jpg',
   },
   {
     id: '5',
@@ -82,6 +86,7 @@ export const products = [
     deliveryTime: '48h',
     inStock: false,
     category: 'Transmission',
+    image: '/products/clutch-kit.jpg',
   },
   {
     id: '6',
@@ -98,6 +103,7 @@ export const products = [
     deliveryTime: '< 1h',
     inStock: true,
     category: 'Électronique',
+    image: '/products/battery.jpg',
   },
   {
     id: '7',
@@ -115,6 +121,7 @@ export const products = [
     deliveryTime: '< 1h',
     inStock: true,
     category: 'Suspension',
+    image: '/products/tire.jpg',
   },
   {
     id: '8',
@@ -131,6 +138,7 @@ export const products = [
     deliveryTime: '< 2h',
     inStock: true,
     category: 'Électronique',
+    image: '/products/ignition.jpg',
   },
   {
     id: '9',
@@ -148,6 +156,7 @@ export const products = [
     deliveryTime: '7 jours',
     inStock: false,
     category: 'Éclairage',
+    image: '/products/headlight.jpg',
   },
   {
     id: '10',
@@ -164,6 +173,7 @@ export const products = [
     deliveryTime: '< 2h',
     inStock: true,
     category: 'Moteur',
+    image: '/products/radiator.jpg',
   },
   {
     id: '11',
@@ -180,6 +190,7 @@ export const products = [
     deliveryTime: '< 1h',
     inStock: true,
     category: 'Freinage',
+    image: '/products/brake-disc.jpg',
   },
   {
     id: '12',
@@ -196,6 +207,7 @@ export const products = [
     deliveryTime: '< 2h',
     inStock: true,
     category: 'Moteur',
+    image: '/products/belt.jpg',
   },
 ];
 
