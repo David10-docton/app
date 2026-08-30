@@ -58,7 +58,7 @@ export default function BottomNav({ role = 'buyer' }: BottomNavProps) {
             <Link key={tab.href} href={tab.href} className="flex flex-col items-center relative">
               <div className="relative">
                 <Icon className={`w-5 h-5 ${isActive ? 'text-rp-primary' : 'text-rp-text-muted'}`} />
-                {tab.hasBadge && (
+                {tab.hasBadge > 0 && (
                   <span className="absolute -top-1 -right-2 w-4 h-4 bg-rp-danger text-white text-[9px] rounded-full flex items-center justify-center font-bold">
                     {tab.hasBadge}
                   </span>
