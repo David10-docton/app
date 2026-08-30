@@ -61,7 +61,7 @@ export default function AdminSettingsPage() {
         </div>
       </header>
 
-      <div className="max-w-2xl mx-auto px-4 py-6 space-y-6 pb-24 lg:pb-6">
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 py-4 sm:py-6 space-y-4 sm:space-y-6 pb-24 lg:pb-6">
         {/* Status */}
         <div className="bg-gradient-to-r from-emerald-600/20 to-emerald-500/10 border border-emerald-500/30 rounded-2xl p-5">
           <div className="flex items-center gap-2 mb-3">

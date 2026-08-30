@@ -172,7 +172,7 @@ export default function AdminDashboard() {
             ))}
           </section>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-3">
             {[
               { href: '/admin/sellers', icon: Users, label: 'Vendeurs', count: '127', color: 'text-red-600' },
               { href: '/admin/orders', icon: ShoppingBag, label: 'Transactions', count: '500+', color: 'text-emerald-400' },

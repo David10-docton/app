@@ -129,7 +129,7 @@ export default function LoginPage() {
                       onChange={(e) => setRegName(e.target.value)}
                       className="w-full px-4 py-3 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl text-sm text-gray-900 dark:text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent" />
                   </div>
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-3">
                     <div>
                       <label className="text-xs font-medium text-gray-500 dark:text-slate-400 dark:text-slate-400 mb-1 block">Téléphone *</label>
                       <input type="tel" placeholder="+229 XX XX XX XX" value={regPhone}

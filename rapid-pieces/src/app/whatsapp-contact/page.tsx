@@ -55,7 +55,7 @@ export default function WhatsAppContactPage() {
     <div className="min-h-screen bg-rp-bg pb-24 lg:pb-8">
       {/* Header */}
       <header className="bg-white backdrop-blur-xl border-b border-gray-200 sticky top-0 z-50">
-        <div className="max-w-4xl mx-auto px-4 py-3 flex items-center gap-3">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-3">
           <Link href="/" className="text-gray-400 dark:text-slate-500 hover:text-gray-900 dark:text-white">
             <ArrowLeft className="w-5 h-5" />
           </Link>
@@ -66,7 +66,7 @@ export default function WhatsAppContactPage() {
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-4 py-4 space-y-6">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4 space-y-6">
         {/* Anti-contournement banner */}
         <div className="bg-gradient-to-br from-blue-900/30 to-slate-900 rounded-2xl p-5 border border-blue-500/20">
           <div className="flex items-center gap-2 mb-3">
@@ -74,7 +74,7 @@ export default function WhatsAppContactPage() {
             <span className="text-sm font-bold text-blue-400">Communication protégée</span>
           </div>
           <p className="text-xs text-gray-600 dark:text-slate-300 mb-4">Tous les échanges passent par Rapid Pièces pour votre sécurité.</p>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2">
             {antiContournementRules.map((r, i) => (
               <div key={i} className="bg-gray-50 rounded-xl p-3">
                 <span className="text-lg">{r.icon}</span>

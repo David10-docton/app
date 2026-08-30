@@ -85,7 +85,7 @@ export default function OrdersPage() {
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-4 py-4 space-y-4">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4 space-y-4">
         {/* Summary cards */}
         <div className="grid grid-cols-3 gap-2">
           <div className="bg-white backdrop-blur-sm rounded-xl p-3 border border-gray-200 text-center">

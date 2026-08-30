@@ -129,7 +129,7 @@ export default function SellerRequestsPage() {
                         ))}
                       </div>
                     </div>
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2">
                       <div>
                         <label className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500 mb-1 block">Disponibilité</label>
                         <select value={offerForm.availability} onChange={(e) => setOfferForm(p => ({ ...p, availability: e.target.value }))}

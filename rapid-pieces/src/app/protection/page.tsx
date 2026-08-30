@@ -68,7 +68,7 @@ export default function ProtectionPage() {
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 space-y-6">
         {/* Hero */}
         <div className="bg-gradient-to-br from-green-900/40 to-slate-900 rounded-2xl p-6 border border-green-500/20 text-center">
           <div className="text-4xl mb-3">🛡️</div>

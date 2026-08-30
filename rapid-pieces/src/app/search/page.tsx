@@ -54,7 +54,7 @@ export default function SearchPage() {
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-4 py-4 space-y-4">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4 space-y-4">
         {/* Search bar */}
         <div className="flex gap-2">
           <div className="flex-1 relative">

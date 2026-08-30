@@ -173,7 +173,7 @@ export default function NewRequestPage() {
                     ))}
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-3">
                   <div>
                     <label className="text-xs font-medium text-gray-400 dark:text-slate-500 dark:text-slate-500 mb-1 block">Modèle *</label>
                     <input type="text" placeholder="Ex: Corolla" value={form.model} onChange={(e) => update('model', e.target.value)}
@@ -188,7 +188,7 @@ export default function NewRequestPage() {
                     </select>
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-3">
                   <div>
                     <label className="text-xs font-medium text-gray-400 dark:text-slate-500 dark:text-slate-500 mb-1 block">Motorisation</label>
                     <input type="text" placeholder="Ex: 1.8 essence" value={form.engine} onChange={(e) => update('engine', e.target.value)}
@@ -243,7 +243,7 @@ export default function NewRequestPage() {
                     onChange={(e) => update('description', e.target.value)} rows={4}
                     className="w-full px-4 py-3 bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded-xl text-sm text-gray-900 dark:text-white placeholder-slate-500 outline-none focus:ring-2 focus:ring-rp-primary resize-none" />
                 </div>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-3">
                   <div>
                     <label className="text-xs font-medium text-gray-400 dark:text-slate-500 dark:text-slate-500 mb-1 block">Quantité</label>
                     <input type="number" min="1" value={form.quantity} onChange={(e) => update('quantity', e.target.value)}
@@ -275,7 +275,7 @@ export default function NewRequestPage() {
           <div className="space-y-6">
             <div>
               <h2 className="text-base font-bold text-gray-900 dark:text-white mb-3">Mode de livraison</h2>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2">
                 {deliveryTypes.map(dt => (
                   <button key={dt.id} onClick={() => update('deliveryType', dt.id)}
                     className={`p-3 rounded-xl border text-left transition-all ${
@@ -315,7 +315,7 @@ export default function NewRequestPage() {
 
             <div>
               <h2 className="text-base font-bold text-gray-900 dark:text-white mb-3">Contact</h2>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2">
                 <button onClick={() => update('contactMethod', 'whatsapp')}
                   className={`p-3 rounded-xl border flex items-center gap-2 transition-all ${
                     form.contactMethod === 'whatsapp' ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-gray-50 border-gray-200'

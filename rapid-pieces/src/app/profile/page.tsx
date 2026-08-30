@@ -52,7 +52,7 @@ export default function BuyerProfilePage() {
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 space-y-6">
         {/* Profile card */}
         <div className="bg-white backdrop-blur-sm rounded-2xl p-6 border border-gray-200 text-center">
           <div className="w-20 h-20 bg-gradient-to-br from-red-500 to-orange-500 rounded-full flex items-center justify-center text-3xl font-bold text-gray-900 dark:text-white mx-auto mb-3">

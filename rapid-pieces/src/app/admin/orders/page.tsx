@@ -57,7 +57,7 @@ export default function AdminOrdersPage() {
           <h1 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white flex-1">Transactions</h1>
         </div>
         <div className="max-w-2xl mx-auto px-4 pb-3 space-y-3">
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-3">
             <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-3">
               <p className="text-[10px] text-emerald-400/70">GMV Total</p>
               <p className="text-lg font-bold text-emerald-400">{(totalGMV / 1000).toFixed(0)}k FCFA</p>

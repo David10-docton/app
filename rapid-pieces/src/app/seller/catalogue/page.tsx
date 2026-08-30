@@ -65,7 +65,7 @@ export default function SellerCataloguePage() {
                 <div className="space-y-2">
                   <input type="text" placeholder="Nom du produit" value={newProduct.name} onChange={(e) => setNewProduct(p => ({ ...p, name: e.target.value }))}
                     className="w-full px-3 py-2.5 bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded-lg text-sm text-gray-900 dark:text-white placeholder-slate-500 outline-none" />
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2">
                     <select value={newProduct.brand} onChange={(e) => setNewProduct(p => ({ ...p, brand: e.target.value }))}
                       className="w-full px-3 py-2.5 bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded-lg text-sm text-gray-900 dark:text-white outline-none">
                       <option value="">Marque</option>
@@ -77,7 +77,7 @@ export default function SellerCataloguePage() {
                       {POPULAR_CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
                     </select>
                   </div>
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2">
                     <input type="number" placeholder="Stock" value={newProduct.stock} onChange={(e) => setNewProduct(p => ({ ...p, stock: e.target.value }))}
                       className="w-full px-3 py-2.5 bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded-lg text-sm text-gray-900 dark:text-white placeholder-slate-500 outline-none" />
                     <input type="number" placeholder="Prix (FCFA)" value={newProduct.price} onChange={(e) => setNewProduct(p => ({ ...p, price: e.target.value }))}
@@ -124,7 +124,7 @@ export default function SellerCataloguePage() {
 
         {tab === 'stats' && (
           <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-3">
               {[
                 { label: 'Vues totales', value: '1 859', icon: Eye },
                 { label: 'Demandes reçues', value: '139', icon: TrendingUp },

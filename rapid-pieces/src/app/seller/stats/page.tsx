@@ -52,7 +52,7 @@ export default function SellerStatsPage() {
     <div className="min-h-screen bg-rp-bg pb-24 lg:pb-8">
       {/* Header */}
       <header className="bg-white backdrop-blur-xl border-b border-gray-200 sticky top-0 z-50">
-        <div className="max-w-4xl mx-auto px-4 py-3 flex items-center gap-3">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-3">
           <Link href="/seller" className="text-gray-400 dark:text-slate-500 dark:text-slate-500 hover:text-gray-900 dark:text-white">
             <ArrowLeft className="w-5 h-5" />
           </Link>
@@ -63,7 +63,7 @@ export default function SellerStatsPage() {
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-4 py-4 space-y-6">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4 space-y-6">
         {/* Period selector */}
         <div className="flex gap-2">
           {['week', 'month', 'quarter', 'year'].map(p => (

@@ -105,7 +105,7 @@ export default function OffersPage() {
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-4 py-4 space-y-4">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4 space-y-4">
         {/* Sort tabs */}
         <div className="flex gap-2">
           {[
@@ -190,7 +190,7 @@ export default function OffersPage() {
                 </div>
 
                 {/* Delivery & warranty */}
-                <div className="grid grid-cols-2 gap-2 mb-3">
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2 mb-3">
                   <div className="bg-gray-50 rounded-lg p-2 text-center">
                     <div className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">Livraison</div>
                     <div className="text-xs font-bold text-red-400">{offer.delivery}</div>

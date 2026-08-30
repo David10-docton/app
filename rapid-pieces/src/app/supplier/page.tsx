@@ -42,7 +42,7 @@ export default function SupplierPage() {
     <div className="min-h-screen bg-gray-50 dark:bg-slate-950 pb-24 lg:pb-8">
       {/* Header */}
       <header className="bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-700 sticky top-0 z-50 shadow-sm">
-        <div className="max-w-4xl mx-auto px-4 py-3 flex items-center gap-3">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-3">
           <ThemeToggle className="ml-auto" />
           <Link href="/" className="text-gray-400 dark:text-slate-500 dark:text-slate-500 hover:text-gray-600 dark:text-slate-300 dark:text-slate-300">
             <ArrowLeft className="w-5 h-5" />
@@ -54,7 +54,7 @@ export default function SupplierPage() {
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-4 py-4 space-y-6">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4 space-y-6">
         {/* Stats overview */}
         <div className="grid grid-cols-3 gap-2">
           <div className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl p-3 text-center shadow-sm">
@@ -125,7 +125,7 @@ export default function SupplierPage() {
               <div className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500 mt-1">{selectedRequest.description}</div>
               <div className="text-xs text-red-600 font-bold mt-2">Budget: {selectedRequest.budget}</div>
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-3">
               <div>
                 <label className="text-xs text-gray-500 dark:text-slate-400 dark:text-slate-400 mb-1 block">Votre prix (FCFA)</label>
                 <input type="number" value={offerPrice} onChange={(e) => setOfferPrice(e.target.value)} placeholder="Ex: 150000"
@@ -194,7 +194,7 @@ export default function SupplierPage() {
           <div className="space-y-4">
             <div className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl p-5 shadow-sm">
               <h3 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white mb-4">📊 Performance</h3>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-3">
                 {[
                   { label: 'Demandes reçues', value: stats.requestsReceived, color: 'text-gray-900 dark:text-white' },
                   { label: 'Offres soumises', value: stats.offersSubmitted, color: 'text-blue-600' },

@@ -55,7 +55,7 @@ export default function RapidPricePage() {
     <div className="min-h-screen bg-rp-bg pb-24 lg:pb-8">
       {/* Header */}
       <header className="bg-white backdrop-blur-xl border-b border-gray-200 sticky top-0 z-50">
-        <div className="max-w-4xl mx-auto px-4 py-3 flex items-center gap-3">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-3">
           <Link href="/" className="text-gray-400 dark:text-slate-500 dark:text-slate-500 hover:text-gray-900 dark:text-white">
             <ArrowLeft className="w-5 h-5" />
           </Link>
@@ -66,7 +66,7 @@ export default function RapidPricePage() {
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-4 py-4 space-y-6">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4 space-y-6">
         {/* Hero */}
         <div className="bg-gradient-to-br from-blue-900/30 to-slate-900 rounded-2xl p-5 border border-blue-500/20">
           <div className="flex items-center gap-2 mb-2">
