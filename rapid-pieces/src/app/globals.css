@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+:root {
+  --rp-primary: #E63946;
+  --rp-primary-dark: #C1121F;
+  --rp-secondary: #1D3557;
+  --rp-secondary-light: #457B9D;
+  --rp-accent: #F4A261;
+  --rp-success: #2D6A4F;
+  --rp-warning: #E9C46A;
+  --rp-danger: #E63946;
+  --rp-bg: #F8F9FA;
+  --rp-card: #FFFFFF;
+  --rp-text: #1A1A2E;
+  --rp-text-muted: #6C757D;
+  --rp-border: #DEE2E6;
+  --rp-gold: #FFD700;
+  --rp-silver: #C0C0C0;
+  --rp-bronze: #CD7F32;
+}
+
+@theme inline {
+  --color-rp-primary: var(--rp-primary);
+  --color-rp-primary-dark: var(--rp-primary-dark);
+  --color-rp-secondary: var(--rp-secondary);
+  --color-rp-secondary-light: var(--rp-secondary-light);
+  --color-rp-accent: var(--rp-accent);
+  --color-rp-success: var(--rp-success);
+  --color-rp-warning: var(--rp-warning);
+  --color-rp-danger: var(--rp-danger);
+  --color-rp-bg: var(--rp-bg);
+  --color-rp-card: var(--rp-card);
+  --color-rp-text: var(--rp-text);
+  --color-rp-text-muted: var(--rp-text-muted);
+  --color-rp-border: var(--rp-border);
+  --color-rp-gold: var(--rp-gold);
+  --color-rp-silver: var(--rp-silver);
+  --color-rp-bronze: var(--rp-bronze);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--rp-bg);
+  color: var(--rp-text);
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding-bottom: 80px; /* Space for bottom nav */
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--rp-border);
+  border-radius: 4px;
+}
+
+/* Rapid Score bar animation */
+@keyframes scoreBar {
+  from { width: 0%; }
+  to { width: var(--score-width); }
+}
+
+.score-bar {
+  animation: scoreBar 0.8s ease-out forwards;
+}
+
+/* Bottom sheet animation */
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.slide-up {
+  animation: slideUp 0.3s ease-out;
+}
+
+/* Pulse for notifications */
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+.pulse-ring {
+  animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+
+/* Card hover effect */
+.card-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-hover:active {
+  transform: scale(0.98);
+}
