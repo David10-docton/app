@@ -28,17 +28,17 @@ export default function AdminSellersPage() {
 
   return (
     <div className="min-h-screen bg-rp-bg">
-      <header className="bg-slate-900/80 backdrop-blur-xl border-b border-slate-700/50 sticky top-0 z-50">
+      <header className="bg-white backdrop-blur-xl border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center gap-3">
-          <Link href="/admin" className="text-slate-400 hover:text-white"><ArrowLeft className="w-5 h-5" /></Link>
-          <h1 className="text-sm font-bold text-white flex-1">Gestion des vendeurs</h1>
-          <span className="text-[10px] text-slate-400">{filtered.length} vendeurs</span>
+          <Link href="/admin" className="text-gray-400 dark:text-slate-500 dark:text-slate-500 hover:text-gray-900 dark:text-white"><ArrowLeft className="w-5 h-5" /></Link>
+          <h1 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white flex-1">Gestion des vendeurs</h1>
+          <span className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">{filtered.length} vendeurs</span>
         </div>
         <div className="max-w-2xl mx-auto px-4 pb-3 space-y-3">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 dark:text-slate-500 dark:text-slate-500" />
             <input type="text" placeholder="Rechercher un vendeur..." value={search} onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-slate-800/50 border border-slate-700/50 rounded-xl text-sm text-white placeholder-slate-500 outline-none focus:ring-2 focus:ring-emerald-500" />
+              className="w-full pl-10 pr-4 py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl text-sm text-gray-900 dark:text-white placeholder-slate-500 outline-none focus:ring-2 focus:ring-emerald-500" />
           </div>
           <div className="flex gap-2">
             {[
@@ -49,7 +49,7 @@ export default function AdminSellersPage() {
             ].map(f => (
               <button key={f.key} onClick={() => setFilter(f.key)}
                 className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all ${
-                  filter === f.key ? 'bg-emerald-600 text-white' : 'bg-slate-700/50 text-slate-400 border border-slate-600/50'
+                  filter === f.key ? 'bg-emerald-600 text-white' : 'bg-gray-100 text-gray-400 dark:text-slate-500 dark:text-slate-500 border border-gray-200'
                 }`}>{f.label}</button>
             ))}
           </div>
@@ -58,20 +58,20 @@ export default function AdminSellersPage() {
 
       <div className="max-w-2xl mx-auto px-4 py-4 space-y-3 pb-24 lg:pb-6">
         {filtered.map(seller => (
-          <div key={seller.id} className="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-4">
+          <div key={seller.id} className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl p-4">
             <div className="flex items-start gap-3 mb-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-xl flex items-center justify-center text-white font-bold flex-shrink-0">
+              <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-xl flex items-center justify-center text-gray-900 dark:text-white font-bold flex-shrink-0">
                 {seller.name.charAt(0)}
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <h3 className="text-sm font-semibold text-white truncate">{seller.name}</h3>
+                  <h3 className="text-sm font-semibold text-gray-900 dark:text-white truncate">{seller.name}</h3>
                   {seller.isVerified && <Shield className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />}
                 </div>
-                <p className="text-[10px] text-slate-400 flex items-center gap-1"><MapPin className="w-3 h-3" /> {seller.location}</p>
+                <p className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500 flex items-center gap-1"><MapPin className="w-3 h-3" /> {seller.location}</p>
                 <div className="flex items-center gap-2 mt-1">
                   <span className="flex items-center gap-1 text-[10px]"><Star className="w-3 h-3 fill-amber-400 text-amber-400" /> {seller.rating}</span>
-                  <span className="text-[10px] text-slate-400">{seller.totalTransactions} ventes</span>
+                  <span className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">{seller.totalTransactions} ventes</span>
                   <span className={`text-[9px] px-1.5 py-0.5 rounded-full font-medium ${
                     seller.badge === 'Top Seller' ? 'bg-amber-500/10 text-amber-400 border border-amber-500/30' :
                     seller.badge === 'Premium Seller' ? 'bg-purple-500/10 text-purple-400 border border-purple-500/30' :
@@ -87,15 +87,15 @@ export default function AdminSellersPage() {
                 { label: 'Réponse', value: `${seller.responseRate}%`, color: 'text-blue-400' },
                 { label: 'Retours', value: `${seller.returnRate}%`, color: seller.returnRate > 4 ? 'text-red-400' : 'text-emerald-400' },
               ].map(m => (
-                <div key={m.label} className="bg-slate-700/30 rounded-lg py-2 text-center">
+                <div key={m.label} className="bg-gray-100 rounded-lg py-2 text-center">
                   <p className={`text-xs font-bold ${m.color}`}>{m.value}</p>
-                  <p className="text-[9px] text-slate-400">{m.label}</p>
+                  <p className="text-[9px] text-gray-400 dark:text-slate-500 dark:text-slate-500">{m.label}</p>
                 </div>
               ))}
             </div>
 
             <div className="flex gap-2">
-              <button className="flex-1 py-2 bg-slate-700/50 text-slate-300 rounded-lg text-[11px] font-medium flex items-center justify-center gap-1 hover:bg-slate-600/50 transition-colors">
+              <button className="flex-1 py-2 bg-gray-100 text-gray-600 dark:text-slate-300 dark:text-slate-300 rounded-lg text-[11px] font-medium flex items-center justify-center gap-1 hover:bg-slate-600/50 transition-colors">
                 <Eye className="w-3 h-3" /> Détails
               </button>
               {!seller.isVerified && (
@@ -112,7 +112,7 @@ export default function AdminSellersPage() {
       </div>
 
       {/* Bottom Nav */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-xl border-t border-slate-700/50 z-50">
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white backdrop-blur-xl border-t border-gray-200 z-50">
         <div className="flex items-center justify-around h-16 max-w-lg mx-auto">
           {[
             { href: '/admin', label: 'Dashboard', icon: BarChart3 },
@@ -124,8 +124,8 @@ export default function AdminSellersPage() {
             const Icon = tab.icon;
             return (
               <Link key={tab.href} href={tab.href} className="flex flex-col items-center">
-                <Icon className={`w-5 h-5 ${tab.href === '/admin/sellers' ? 'text-emerald-400' : 'text-slate-400'}`} />
-                <span className={`text-[10px] mt-0.5 ${tab.href === '/admin/sellers' ? 'text-emerald-400' : 'text-slate-400'}`}>{tab.label}</span>
+                <Icon className={`w-5 h-5 ${tab.href === '/admin/sellers' ? 'text-emerald-400' : 'text-gray-400 dark:text-slate-500 dark:text-slate-500'}`} />
+                <span className={`text-[10px] mt-0.5 ${tab.href === '/admin/sellers' ? 'text-emerald-400' : 'text-gray-400 dark:text-slate-500 dark:text-slate-500'}`}>{tab.label}</span>
               </Link>
             );
           })}

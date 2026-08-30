@@ -51,14 +51,14 @@ export default function SellerStatsPage() {
   return (
     <div className="min-h-screen bg-rp-bg pb-24 lg:pb-8">
       {/* Header */}
-      <header className="bg-slate-900/80 backdrop-blur-xl border-b border-slate-700/50 sticky top-0 z-50">
+      <header className="bg-white backdrop-blur-xl border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-4xl mx-auto px-4 py-3 flex items-center gap-3">
-          <Link href="/seller" className="text-slate-400 hover:text-white">
+          <Link href="/seller" className="text-gray-400 dark:text-slate-500 dark:text-slate-500 hover:text-gray-900 dark:text-white">
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div>
-            <h1 className="text-sm font-bold text-white">Statistiques</h1>
-            <p className="text-[10px] text-slate-400">Performance de votre boutique</p>
+            <h1 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white">Statistiques</h1>
+            <p className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">Performance de votre boutique</p>
           </div>
         </div>
       </header>
@@ -71,7 +71,7 @@ export default function SellerStatsPage() {
               key={p}
               onClick={() => setPeriod(p)}
               className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                period === p ? 'bg-blue-600 text-white' : 'bg-slate-800/50 text-slate-400'
+                period === p ? 'bg-blue-600 text-white' : 'bg-gray-50 text-gray-400 dark:text-slate-500 dark:text-slate-500'
               }`}
             >
               {p === 'week' ? 'Semaine' : p === 'month' ? 'Mois' : p === 'quarter' ? 'Trimestre' : 'Année'}
@@ -89,9 +89,9 @@ export default function SellerStatsPage() {
             { label: 'Taux conversion', value: `${stats.conversionRate.current}%`, change: '+6%', up: true, color: 'text-emerald-400', icon: Users },
             { label: 'Taux annulation', value: `${stats.cancelRate.current}%`, change: '-50%', up: true, color: 'text-emerald-400', icon: Package },
           ].map((kpi, i) => (
-            <div key={i} className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-4">
-              <div className="text-xs text-slate-400 mb-1">{kpi.label}</div>
-              <div className="text-xl font-black text-white">{kpi.value}</div>
+            <div key={i} className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl p-4">
+              <div className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500 mb-1">{kpi.label}</div>
+              <div className="text-xl font-black text-gray-900 dark:text-white">{kpi.value}</div>
               <div className={`text-[10px] font-medium ${kpi.color} flex items-center gap-1 mt-1`}>
                 {kpi.up ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
                 {kpi.change} vs mois dernier
@@ -101,57 +101,57 @@ export default function SellerStatsPage() {
         </div>
 
         {/* Revenue chart */}
-        <div className="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-5">
-          <h3 className="text-sm font-bold text-white mb-4">📈 Revenus mensuels</h3>
+        <div className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl p-5">
+          <h3 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white mb-4">📈 Revenus mensuels</h3>
           <div className="flex items-end gap-2 h-40">
             {monthlyRevenue.map((m, i) => (
               <div key={i} className="flex-1 flex flex-col items-center gap-1">
-                <span className="text-[9px] text-slate-400">{(m.revenue / 1000000).toFixed(1)}M</span>
+                <span className="text-[9px] text-gray-400 dark:text-slate-500 dark:text-slate-500">{(m.revenue / 1000000).toFixed(1)}M</span>
                 <div className="w-full bg-blue-500 rounded-t transition-all" style={{ height: `${(m.revenue / maxRevenue) * 120}px` }} />
-                <span className="text-[9px] text-slate-500">{m.month}</span>
+                <span className="text-[9px] text-gray-400 dark:text-slate-500 dark:text-slate-500">{m.month}</span>
               </div>
             ))}
           </div>
         </div>
 
         {/* Top products */}
-        <div className="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-5">
-          <h3 className="text-sm font-bold text-white mb-4">🏆 Produits les plus demandés</h3>
+        <div className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl p-5">
+          <h3 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white mb-4">🏆 Produits les plus demandés</h3>
           <div className="space-y-3">
             {topProducts.map((p, i) => (
-              <div key={i} className="flex items-center gap-3 py-2 border-b border-slate-700/50 last:border-0">
-                <div className="w-8 h-8 bg-rp-primary/20 rounded-lg flex items-center justify-center text-sm font-bold text-rp-primary">
+              <div key={i} className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0">
+                <div className="w-8 h-8 bg-red-600/20 rounded-lg flex items-center justify-center text-sm font-bold text-red-600">
                   {i + 1}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="text-xs font-bold text-white truncate">{p.name}</div>
-                  <div className="flex items-center gap-3 text-[10px] text-slate-400">
+                  <div className="text-xs font-bold text-gray-900 dark:text-white dark:text-white truncate">{p.name}</div>
+                  <div className="flex items-center gap-3 text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">
                     <span>{p.sold} vendus</span>
                     <span>{p.demandes} demandes</span>
                     <span>{p.views} vues</span>
                   </div>
                 </div>
-                <div className="text-xs font-bold text-white">{p.revenue.toLocaleString()} FCFA</div>
+                <div className="text-xs font-bold text-gray-900 dark:text-white dark:text-white">{p.revenue.toLocaleString()} FCFA</div>
               </div>
             ))}
           </div>
         </div>
 
         {/* Recent orders */}
-        <div className="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-5">
-          <h3 className="text-sm font-bold text-white mb-4">📋 Commandes récentes</h3>
+        <div className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl p-5">
+          <h3 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white mb-4">📋 Commandes récentes</h3>
           <div className="space-y-2">
             {recentOrders.map((o, i) => (
-              <div key={i} className="flex items-center justify-between py-2 border-b border-slate-700/50 last:border-0">
+              <div key={i} className="flex items-center justify-between py-2 border-b border-gray-200 last:border-0">
                 <div>
-                  <div className="text-xs font-bold text-white">{o.part}</div>
-                  <div className="text-[10px] text-slate-400">{o.id} • {o.date}</div>
+                  <div className="text-xs font-bold text-gray-900 dark:text-white dark:text-white">{o.part}</div>
+                  <div className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">{o.id} • {o.date}</div>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${statusColors[o.status]}`}>
                     {o.status === 'delivered' ? 'Livrée' : o.status === 'in-transit' ? 'En livraison' : 'En cours'}
                   </span>
-                  <span className="text-xs font-bold text-white">{o.amount.toLocaleString()} FCFA</span>
+                  <span className="text-xs font-bold text-gray-900 dark:text-white dark:text-white">{o.amount.toLocaleString()} FCFA</span>
                 </div>
               </div>
             ))}

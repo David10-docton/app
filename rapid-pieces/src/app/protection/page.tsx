@@ -49,7 +49,7 @@ const guarantees = [
   { quality: 'Premium Aftermarket', period: '6 mois', color: 'text-purple-400' },
   { quality: 'Standard Aftermarket', period: '3 mois', color: 'text-yellow-400' },
   { quality: 'Reconditionné', period: '3 mois', color: 'text-orange-400' },
-  { quality: 'Occasion', period: '1 mois', color: 'text-slate-400' },
+  { quality: 'Occasion', period: '1 mois', color: 'text-gray-400 dark:text-slate-500 dark:text-slate-500' },
 ];
 
 export default function ProtectionPage() {
@@ -57,14 +57,14 @@ export default function ProtectionPage() {
   const [showReport, setShowReport] = useState(false);
 
   return (
-    <div className="min-h-screen bg-slate-950 pb-24 lg:pb-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-950 pb-24 lg:pb-8">
       {/* Header */}
-      <header className="sticky top-0 z-40 bg-slate-900/95 backdrop-blur-xl border-b border-slate-700/50">
+      <header className="sticky top-0 z-40 bg-white backdrop-blur-xl border-b border-gray-200">
         <div className="max-w-4xl mx-auto px-4 h-14 flex items-center gap-3">
-          <button onClick={() => router.back()} className="text-slate-400 hover:text-white">
+          <button onClick={() => router.back()} className="text-gray-400 dark:text-slate-500 dark:text-slate-500 hover:text-gray-900 dark:text-white">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           </button>
-          <h1 className="text-lg font-bold text-white">Rapid Protection</h1>
+          <h1 className="text-lg font-bold text-gray-900 dark:text-white dark:text-white">Rapid Protection</h1>
         </div>
       </header>
 
@@ -72,20 +72,20 @@ export default function ProtectionPage() {
         {/* Hero */}
         <div className="bg-gradient-to-br from-green-900/40 to-slate-900 rounded-2xl p-6 border border-green-500/20 text-center">
           <div className="text-4xl mb-3">🛡️</div>
-          <h2 className="text-xl font-bold text-white mb-2">Rapid Protection</h2>
-          <p className="text-sm text-slate-300">Chaque transaction est protégée de bout en bout</p>
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Rapid Protection</h2>
+          <p className="text-sm text-gray-600 dark:text-slate-300 dark:text-slate-300">Chaque transaction est protégée de bout en bout</p>
         </div>
 
         {/* Protections */}
         <div className="space-y-3">
-          <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wide">Ce qui est inclus</h3>
+          <h3 className="text-sm font-semibold text-gray-400 dark:text-slate-500 dark:text-slate-500 uppercase tracking-wide">Ce qui est inclus</h3>
           {protections.map((p, i) => (
             <div key={i} className={`rounded-xl p-4 border ${p.color}`}>
               <div className="flex items-start gap-3">
                 <span className="text-2xl">{p.icon}</span>
                 <div>
-                  <h4 className="font-bold text-white text-sm">{p.title}</h4>
-                  <p className="text-xs text-slate-300 mt-1 leading-relaxed">{p.desc}</p>
+                  <h4 className="font-bold text-gray-900 dark:text-white text-sm">{p.title}</h4>
+                  <p className="text-xs text-gray-600 dark:text-slate-300 dark:text-slate-300 mt-1 leading-relaxed">{p.desc}</p>
                 </div>
               </div>
             </div>
@@ -93,13 +93,13 @@ export default function ProtectionPage() {
         </div>
 
         {/* Guarantees by quality */}
-        <div className="bg-slate-900/50 backdrop-blur-sm rounded-2xl p-5 border border-slate-700/50">
-          <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wide mb-4">Garantie par qualité</h3>
+        <div className="bg-white backdrop-blur-sm rounded-2xl p-5 border border-gray-200">
+          <h3 className="text-sm font-semibold text-gray-400 dark:text-slate-500 dark:text-slate-500 uppercase tracking-wide mb-4">Garantie par qualité</h3>
           <div className="space-y-2">
             {guarantees.map((g, i) => (
               <div key={i} className="flex items-center justify-between py-2 border-b border-slate-800 last:border-0">
                 <span className={`text-sm font-medium ${g.color}`}>{g.quality}</span>
-                <span className="text-sm text-white font-bold">{g.period}</span>
+                <span className="text-sm text-gray-900 dark:text-white font-bold">{g.period}</span>
               </div>
             ))}
           </div>
@@ -108,25 +108,25 @@ export default function ProtectionPage() {
         {/* Report a problem */}
         <button
           onClick={() => setShowReport(!showReport)}
-          className="w-full bg-slate-900/50 backdrop-blur-sm rounded-xl p-4 border border-slate-700/50 text-left hover:border-red-500/30 transition-all"
+          className="w-full bg-white backdrop-blur-sm rounded-xl p-4 border border-gray-200 text-left hover:border-red-500/30 transition-all"
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <span className="text-xl">🚨</span>
               <div>
-                <h4 className="font-bold text-white text-sm">Signaler un problème</h4>
-                <p className="text-xs text-slate-400">Livrée, non conforme, litige</p>
+                <h4 className="font-bold text-gray-900 dark:text-white text-sm">Signaler un problème</h4>
+                <p className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500">Livrée, non conforme, litige</p>
               </div>
             </div>
-            <svg className={`w-5 h-5 text-slate-400 transition-transform ${showReport ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+            <svg className={`w-5 h-5 text-gray-400 dark:text-slate-500 dark:text-slate-500 transition-transform ${showReport ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
           </div>
         </button>
 
         {showReport && (
-          <div className="bg-slate-900/50 backdrop-blur-sm rounded-xl p-5 border border-slate-700/50 space-y-4">
+          <div className="bg-white backdrop-blur-sm rounded-xl p-5 border border-gray-200 space-y-4">
             <div>
-              <label className="text-xs text-slate-400 mb-1 block">Type de problème</label>
-              <select className="w-full bg-slate-800 border border-slate-600 rounded-lg px-3 py-2.5 text-white text-sm">
+              <label className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500 mb-1 block">Type de problème</label>
+              <select className="w-full bg-gray-100 border border-gray-300 rounded-lg px-3 py-2.5 text-gray-900 dark:text-white text-sm">
                 <option>Pièce non reçue</option>
                 <option>Pièce non conforme</option>
                 <option>Pièce défectueuse</option>
@@ -135,22 +135,22 @@ export default function ProtectionPage() {
               </select>
             </div>
             <div>
-              <label className="text-xs text-slate-400 mb-1 block">Numéro de commande</label>
-              <input type="text" placeholder="RP-XXXXX" className="w-full bg-slate-800 border border-slate-600 rounded-lg px-3 py-2.5 text-white text-sm" />
+              <label className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500 mb-1 block">Numéro de commande</label>
+              <input type="text" placeholder="RP-XXXXX" className="w-full bg-gray-100 border border-gray-300 rounded-lg px-3 py-2.5 text-gray-900 dark:text-white text-sm" />
             </div>
             <div>
-              <label className="text-xs text-slate-400 mb-1 block">Description</label>
-              <textarea rows={3} className="w-full bg-slate-800 border border-slate-600 rounded-lg px-3 py-2.5 text-white text-sm resize-none" placeholder="Décrivez le problème..." />
+              <label className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500 mb-1 block">Description</label>
+              <textarea rows={3} className="w-full bg-gray-100 border border-gray-300 rounded-lg px-3 py-2.5 text-gray-900 dark:text-white text-sm resize-none" placeholder="Décrivez le problème..." />
             </div>
-            <button className="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-3 rounded-xl transition-all">
+            <button className="w-full bg-red-600 hover:bg-red-500 text-gray-900 dark:text-white font-bold py-3 rounded-xl transition-all">
               Envoyer le signalement
             </button>
           </div>
         )}
 
         {/* Escrow explanation */}
-        <div className="bg-slate-900/50 backdrop-blur-sm rounded-2xl p-5 border border-slate-700/50">
-          <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wide mb-4">Comment fonctionne l'Escrow</h3>
+        <div className="bg-white backdrop-blur-sm rounded-2xl p-5 border border-gray-200">
+          <h3 className="text-sm font-semibold text-gray-400 dark:text-slate-500 dark:text-slate-500 uppercase tracking-wide mb-4">Comment fonctionne l'Escrow</h3>
           <div className="space-y-4">
             {[
               { step: '1', icon: '💳', title: 'Vous payez', desc: "L'argent est sécurisé par Rapid Pièces" },
@@ -165,9 +165,9 @@ export default function ProtectionPage() {
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="text-lg">{s.icon}</span>
-                    <h4 className="font-bold text-white text-sm">{s.title}</h4>
+                    <h4 className="font-bold text-gray-900 dark:text-white text-sm">{s.title}</h4>
                   </div>
-                  <p className="text-xs text-slate-400 mt-0.5">{s.desc}</p>
+                  <p className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500 mt-0.5">{s.desc}</p>
                 </div>
               </div>
             ))}
@@ -176,7 +176,7 @@ export default function ProtectionPage() {
       </div>
 
       {/* Bottom nav placeholder */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-xl border-t border-slate-700/50 h-16" />
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white backdrop-blur-xl border-t border-gray-200 h-16" />
     </div>
   );
 }

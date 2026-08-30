@@ -54,10 +54,10 @@ export default function AdminSettingsPage() {
 
   return (
     <div className="min-h-screen bg-rp-bg">
-      <header className="bg-slate-900/80 backdrop-blur-xl border-b border-slate-700/50 sticky top-0 z-50">
+      <header className="bg-white backdrop-blur-xl border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center gap-3">
-          <Link href="/admin" className="text-slate-400 hover:text-white"><ArrowLeft className="w-5 h-5" /></Link>
-          <h1 className="text-sm font-bold text-white">Configuration</h1>
+          <Link href="/admin" className="text-gray-400 dark:text-slate-500 dark:text-slate-500 hover:text-gray-900 dark:text-white"><ArrowLeft className="w-5 h-5" /></Link>
+          <h1 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white">Configuration</h1>
         </div>
       </header>
 
@@ -69,30 +69,30 @@ export default function AdminSettingsPage() {
             <span className="text-sm font-semibold text-emerald-400">Plateforme active</span>
           </div>
           <div className="grid grid-cols-3 gap-3 text-center">
-            <div><p className="text-lg font-bold text-white">127</p><p className="text-[10px] text-emerald-400/70">Vendeurs</p></div>
-            <div><p className="text-lg font-bold text-white">342</p><p className="text-[10px] text-emerald-400/70">Acheteurs</p></div>
-            <div><p className="text-lg font-bold text-white">99.9%</p><p className="text-[10px] text-emerald-400/70">Uptime</p></div>
+            <div><p className="text-lg font-bold text-gray-900 dark:text-white dark:text-white">127</p><p className="text-[10px] text-emerald-400/70">Vendeurs</p></div>
+            <div><p className="text-lg font-bold text-gray-900 dark:text-white dark:text-white">342</p><p className="text-[10px] text-emerald-400/70">Acheteurs</p></div>
+            <div><p className="text-lg font-bold text-gray-900 dark:text-white dark:text-white">99.9%</p><p className="text-[10px] text-emerald-400/70">Uptime</p></div>
           </div>
         </div>
 
         {settingsGroups.map(group => (
           <div key={group.title}>
-            <h2 className="text-xs font-bold text-slate-400 mb-3 uppercase tracking-wider">{group.title}</h2>
-            <div className="bg-slate-800/50 border border-slate-700/50 rounded-2xl overflow-hidden">
+            <h2 className="text-xs font-bold text-gray-400 dark:text-slate-500 dark:text-slate-500 mb-3 uppercase tracking-wider">{group.title}</h2>
+            <div className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl overflow-hidden">
               {group.items.map((item, i) => {
                 const Icon = item.icon;
                 return (
-                  <button key={item.label} className={`w-full px-4 py-3.5 flex items-center gap-3 ${i < group.items.length - 1 ? 'border-b border-slate-700/50' : ''}`}>
-                    <div className="w-8 h-8 bg-slate-700/50 rounded-lg flex items-center justify-center">
-                      <Icon className="w-4 h-4 text-slate-400" />
+                  <button key={item.label} className={`w-full px-4 py-3.5 flex items-center gap-3 ${i < group.items.length - 1 ? 'border-b border-gray-200' : ''}`}>
+                    <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                      <Icon className="w-4 h-4 text-gray-400 dark:text-slate-500 dark:text-slate-500" />
                     </div>
                     <div className="flex-1 text-left">
-                      <p className="text-xs font-medium text-white">{item.label}</p>
-                      <p className="text-[10px] text-slate-400">{item.desc}</p>
+                      <p className="text-xs font-medium text-gray-900 dark:text-white">{item.label}</p>
+                      <p className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">{item.desc}</p>
                     </div>
                     <div className="flex items-center gap-1">
                       <span className="text-xs font-semibold text-emerald-400">{item.value}</span>
-                      <ChevronRight className="w-4 h-4 text-slate-500" />
+                      <ChevronRight className="w-4 h-4 text-gray-400 dark:text-slate-500 dark:text-slate-500" />
                     </div>
                   </button>
                 );
@@ -105,13 +105,13 @@ export default function AdminSettingsPage() {
         <div className="bg-red-500/5 border border-red-500/20 rounded-2xl p-5">
           <h3 className="text-sm font-bold text-red-400 mb-3">⚠️ Zone dangereuse</h3>
           <div className="space-y-2">
-            <button className="w-full py-2.5 bg-slate-800/50 border border-red-500/20 text-red-400 rounded-lg text-xs font-medium hover:bg-red-500/10 transition-colors">Suspendre la plateforme</button>
-            <button className="w-full py-2.5 bg-slate-800/50 border border-red-500/20 text-red-400 rounded-lg text-xs font-medium hover:bg-red-500/10 transition-colors">Exporter toutes les données</button>
+            <button onClick={() => alert("⚠️ Action de suspendre confirmée")} className="w-full py-2.5 bg-red-50 border border-red-200 text-red-600 rounded-lg text-xs font-medium hover:bg-red-100 transition-colors">Suspendre la plateforme</button>
+            <button onClick={() => alert("Export en cours...")} className="w-full py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-gray-600 dark:text-slate-300 dark:text-slate-300 rounded-lg text-xs font-medium hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors">Exporter toutes les données</button>
           </div>
         </div>
       </div>
 
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-xl border-t border-slate-700/50 z-50">
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white backdrop-blur-xl border-t border-gray-200 z-50">
         <div className="flex items-center justify-around h-16 max-w-lg mx-auto">
           {[
             { href: '/admin', label: 'Dashboard', icon: BarChart3 },
@@ -123,8 +123,8 @@ export default function AdminSettingsPage() {
             const Icon = tab.icon;
             return (
               <Link key={tab.href} href={tab.href} className="flex flex-col items-center">
-                <Icon className={`w-5 h-5 ${tab.href === '/admin/settings' ? 'text-emerald-400' : 'text-slate-400'}`} />
-                <span className={`text-[10px] mt-0.5 ${tab.href === '/admin/settings' ? 'text-emerald-400' : 'text-slate-400'}`}>{tab.label}</span>
+                <Icon className={`w-5 h-5 ${tab.href === '/admin/settings' ? 'text-emerald-400' : 'text-gray-400 dark:text-slate-500 dark:text-slate-500'}`} />
+                <span className={`text-[10px] mt-0.5 ${tab.href === '/admin/settings' ? 'text-emerald-400' : 'text-gray-400 dark:text-slate-500 dark:text-slate-500'}`}>{tab.label}</span>
               </Link>
             );
           })}

@@ -40,14 +40,14 @@ export default function InspectionPage() {
   return (
     <div className="min-h-screen bg-rp-bg pb-24 lg:pb-8">
       {/* Header */}
-      <header className="bg-slate-900/80 backdrop-blur-xl border-b border-slate-700/50 sticky top-0 z-50">
+      <header className="bg-white backdrop-blur-xl border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-4xl mx-auto px-4 py-3 flex items-center gap-3">
-          <Link href="/protection" className="text-slate-400 hover:text-white">
+          <Link href="/protection" className="text-gray-400 dark:text-slate-500 dark:text-slate-500 hover:text-gray-900 dark:text-white">
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div>
-            <h1 className="text-sm font-bold text-white">Inspection qualité</h1>
-            <p className="text-[10px] text-slate-400">Vérification avant livraison</p>
+            <h1 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white">Inspection qualité</h1>
+            <p className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">Vérification avant livraison</p>
           </div>
         </div>
       </header>
@@ -55,7 +55,7 @@ export default function InspectionPage() {
       <div className="max-w-4xl mx-auto px-4 py-4 space-y-6">
         {/* How it works */}
         <div className="bg-gradient-to-br from-blue-900/30 to-slate-900 rounded-2xl p-5 border border-blue-500/20">
-          <h2 className="text-sm font-bold text-white mb-4">Comment fonctionne l&apos;inspection ?</h2>
+          <h2 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white mb-4">Comment fonctionne l&apos;inspection ?</h2>
           <div className="space-y-3">
             {inspectionSteps.map((s, i) => {
               const Icon = s.icon;
@@ -65,8 +65,8 @@ export default function InspectionPage() {
                     <span className="text-xs font-bold text-blue-400">{s.step}</span>
                   </div>
                   <div className="flex-1">
-                    <div className="text-xs font-bold text-white">{s.label}</div>
-                    <div className="text-[10px] text-slate-400">{s.desc}</div>
+                    <div className="text-xs font-bold text-gray-900 dark:text-white dark:text-white">{s.label}</div>
+                    <div className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">{s.desc}</div>
                   </div>
                   <Icon className="w-4 h-4 text-blue-400 shrink-0" />
                 </div>
@@ -77,19 +77,19 @@ export default function InspectionPage() {
 
         {/* Inspection types */}
         <div className="space-y-3">
-          <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wide">Pièces soumises à inspection</h3>
+          <h3 className="text-sm font-semibold text-gray-400 dark:text-slate-500 dark:text-slate-500 uppercase tracking-wide">Pièces soumises à inspection</h3>
           {inspectionTypes.map((type, i) => (
-            <div key={i} className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-4">
+            <div key={i} className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl p-4">
               <div className="flex items-center justify-between mb-2">
-                <h4 className="text-sm font-bold text-white">{type.category}</h4>
+                <h4 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white">{type.category}</h4>
                 <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold border ${riskColors[type.risk]}`}>
                   {type.risk === 'high' ? '🔴 Risque élevé' : '🟡 Risque moyen'}
                 </span>
               </div>
-              <p className="text-[10px] text-slate-400 mb-2">Raison: {type.reason}</p>
+              <p className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500 mb-2">Raison: {type.reason}</p>
               <div className="flex flex-wrap gap-1.5">
                 {type.parts.map(p => (
-                  <span key={p} className="text-[10px] bg-slate-700/50 text-slate-300 px-2 py-0.5 rounded-full">{p}</span>
+                  <span key={p} className="text-[10px] bg-gray-100 text-gray-600 dark:text-slate-300 dark:text-slate-300 px-2 py-0.5 rounded-full">{p}</span>
                 ))}
               </div>
             </div>
@@ -98,25 +98,25 @@ export default function InspectionPage() {
 
         {/* Recent inspections */}
         <div className="space-y-3">
-          <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wide">Inspections récentes</h3>
+          <h3 className="text-sm font-semibold text-gray-400 dark:text-slate-500 dark:text-slate-500 uppercase tracking-wide">Inspections récentes</h3>
           {recentInspections.map((insp, i) => (
-            <div key={i} className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-4">
+            <div key={i} className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl p-4">
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] text-slate-500 font-mono">{insp.id}</span>
+                  <span className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500 font-mono">{insp.id}</span>
                   <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold border flex items-center gap-1 ${statusConfig[insp.status].color}`}>
                     {statusConfig[insp.status].icon}
                     {statusConfig[insp.status].label}
                   </span>
                 </div>
-                <span className="text-[10px] text-slate-500">{insp.date}</span>
+                <span className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">{insp.date}</span>
               </div>
               <div className="flex items-center justify-between">
                 <div>
-                  <div className="text-xs font-bold text-white">{insp.part}</div>
-                  <div className="text-[10px] text-slate-400">Vendeur: {insp.seller}</div>
+                  <div className="text-xs font-bold text-gray-900 dark:text-white dark:text-white">{insp.part}</div>
+                  <div className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">Vendeur: {insp.seller}</div>
                 </div>
-                <div className="flex items-center gap-1 text-[10px] text-slate-400">
+                <div className="flex items-center gap-1 text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">
                   <Camera className="w-3 h-3" /> {insp.photos} photos
                 </div>
               </div>
@@ -125,17 +125,17 @@ export default function InspectionPage() {
         </div>
 
         {/* Request inspection */}
-        <div className="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-5">
-          <h3 className="text-sm font-bold text-white mb-3">Demander une inspection</h3>
-          <p className="text-xs text-slate-400 mb-4">Pour les pièces sensibles (freinage, électronique, moteur), vous pouvez demander une inspection avant livraison.</p>
+        <div className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl p-5">
+          <h3 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white mb-3">Demander une inspection</h3>
+          <p className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500 mb-4">Pour les pièces sensibles (freinage, électronique, moteur), vous pouvez demander une inspection avant livraison.</p>
           <div className="space-y-3">
             <div>
-              <label className="text-xs text-slate-400 mb-1 block">Numéro de commande</label>
-              <input type="text" placeholder="RP-XXXXX" className="w-full bg-slate-700/50 border border-slate-600/50 rounded-lg px-3 py-2.5 text-white text-sm" />
+              <label className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500 mb-1 block">Numéro de commande</label>
+              <input type="text" placeholder="RP-XXXXX" className="w-full bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2.5 text-gray-900 dark:text-white text-sm" />
             </div>
             <div>
-              <label className="text-xs text-slate-400 mb-1 block">Type de pièce</label>
-              <select className="w-full bg-slate-700/50 border border-slate-600/50 rounded-lg px-3 py-2.5 text-white text-sm">
+              <label className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500 mb-1 block">Type de pièce</label>
+              <select className="w-full bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2.5 text-gray-900 dark:text-white text-sm">
                 <option>Freinage</option>
                 <option>Moteur</option>
                 <option>Électronique</option>
@@ -144,10 +144,10 @@ export default function InspectionPage() {
               </select>
             </div>
             <div>
-              <label className="text-xs text-slate-400 mb-1 block">Notes supplémentaires</label>
-              <textarea rows={2} className="w-full bg-slate-700/50 border border-slate-600/50 rounded-lg px-3 py-2.5 text-white text-sm resize-none" placeholder="Détails spécifiques..." />
+              <label className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500 mb-1 block">Notes supplémentaires</label>
+              <textarea rows={2} className="w-full bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded-lg px-3 py-2.5 text-gray-900 dark:text-white text-sm resize-none" placeholder="Détails spécifiques..." />
             </div>
-            <button className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl text-sm transition-all">
+            <button className="w-full bg-blue-600 hover:bg-blue-500 text-gray-900 dark:text-white font-bold py-3 rounded-xl text-sm transition-all">
               📋 Demander l&apos;inspection
             </button>
           </div>

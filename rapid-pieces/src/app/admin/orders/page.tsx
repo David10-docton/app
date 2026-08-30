@@ -51,10 +51,10 @@ export default function AdminOrdersPage() {
 
   return (
     <div className="min-h-screen bg-rp-bg">
-      <header className="bg-slate-900/80 backdrop-blur-xl border-b border-slate-700/50 sticky top-0 z-50">
+      <header className="bg-white backdrop-blur-xl border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center gap-3">
-          <Link href="/admin" className="text-slate-400 hover:text-white"><ArrowLeft className="w-5 h-5" /></Link>
-          <h1 className="text-sm font-bold text-white flex-1">Transactions</h1>
+          <Link href="/admin" className="text-gray-400 dark:text-slate-500 dark:text-slate-500 hover:text-gray-900 dark:text-white"><ArrowLeft className="w-5 h-5" /></Link>
+          <h1 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white flex-1">Transactions</h1>
         </div>
         <div className="max-w-2xl mx-auto px-4 pb-3 space-y-3">
           <div className="grid grid-cols-2 gap-3">
@@ -76,7 +76,7 @@ export default function AdminOrdersPage() {
             ].map(f => (
               <button key={f.key} onClick={() => setFilter(f.key)}
                 className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all ${
-                  filter === f.key ? 'bg-emerald-600 text-white' : 'bg-slate-700/50 text-slate-400 border border-slate-600/50'
+                  filter === f.key ? 'bg-emerald-600 text-white' : 'bg-gray-100 text-gray-400 dark:text-slate-500 dark:text-slate-500 border border-gray-200'
                 }`}>{f.label}</button>
             ))}
           </div>
@@ -89,31 +89,31 @@ export default function AdminOrdersPage() {
           const escrow = escrowStyles[tx.escrow] || escrowStyles.held;
 
           return (
-            <div key={tx.id} className="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-4">
+            <div key={tx.id} className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl p-4">
               <div className="flex items-start justify-between mb-2">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
                     <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${status.bg} ${status.text} border ${status.border}`}>{tx.statusLabel}</span>
                     <span className={`text-[9px] px-1.5 py-0.5 rounded-full font-medium ${escrow.bg} ${escrow.text}`}>{escrow.label}</span>
                   </div>
-                  <h3 className="text-xs font-semibold text-white">{tx.part}</h3>
-                  <p className="text-[10px] text-slate-400">Acheteur: {tx.buyer} • Vendeur: {tx.seller}</p>
+                  <h3 className="text-xs font-semibold text-gray-900 dark:text-white">{tx.part}</h3>
+                  <p className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">Acheteur: {tx.buyer} • Vendeur: {tx.seller}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-sm font-bold text-white">{tx.price.toLocaleString()} <span className="text-[9px] text-slate-400">FCFA</span></p>
-                  <p className="text-[9px] text-slate-500">Commission: {Math.round(tx.price * 0.07).toLocaleString()}</p>
+                  <p className="text-sm font-bold text-gray-900 dark:text-white dark:text-white">{tx.price.toLocaleString()} <span className="text-[9px] text-gray-400 dark:text-slate-500 dark:text-slate-500">FCFA</span></p>
+                  <p className="text-[9px] text-gray-400 dark:text-slate-500 dark:text-slate-500">Commission: {Math.round(tx.price * 0.07).toLocaleString()}</p>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between text-[10px] text-slate-400 bg-slate-700/30 rounded-lg p-2">
+              <div className="flex items-center justify-between text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500 bg-gray-100 rounded-lg p-2">
                 <span>{tx.delivery.replace('_', ' ')}</span>
                 <span>{tx.date}</span>
               </div>
 
               {tx.escrow === 'held' && (
                 <div className="flex gap-2 mt-3">
-                  <button className="flex-1 py-2 bg-emerald-600 text-white rounded-lg text-[11px] font-semibold hover:bg-emerald-700 transition-colors">Libérer</button>
-                  <button className="flex-1 py-2 bg-red-500/10 text-red-400 border border-red-500/30 rounded-lg text-[11px] font-medium hover:bg-red-500/20 transition-colors">Rembourser</button>
+                  <button onClick={() => alert("Escrow libéré au vendeur ✅")} className="flex-1 py-2 bg-emerald-600 text-white rounded-lg text-[11px] font-semibold hover:bg-emerald-700 transition-colors">Libérer</button>
+                  <button onClick={() => alert("Remboursement en cours...")} className="flex-1 py-2 bg-red-50 text-red-600 border border-red-200 rounded-lg text-[11px] font-medium hover:bg-red-100 transition-colors">Rembourser</button>
                 </div>
               )}
             </div>
@@ -122,7 +122,7 @@ export default function AdminOrdersPage() {
       </div>
 
       {/* Bottom Nav */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-xl border-t border-slate-700/50 z-50">
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white backdrop-blur-xl border-t border-gray-200 z-50">
         <div className="flex items-center justify-around h-16 max-w-lg mx-auto">
           {[
             { href: '/admin', label: 'Dashboard', icon: BarChart3 },
@@ -134,8 +134,8 @@ export default function AdminOrdersPage() {
             const Icon = tab.icon;
             return (
               <Link key={tab.href} href={tab.href} className="flex flex-col items-center">
-                <Icon className={`w-5 h-5 ${tab.href === '/admin/orders' ? 'text-emerald-400' : 'text-slate-400'}`} />
-                <span className={`text-[10px] mt-0.5 ${tab.href === '/admin/orders' ? 'text-emerald-400' : 'text-slate-400'}`}>{tab.label}</span>
+                <Icon className={`w-5 h-5 ${tab.href === '/admin/orders' ? 'text-emerald-400' : 'text-gray-400 dark:text-slate-500 dark:text-slate-500'}`} />
+                <span className={`text-[10px] mt-0.5 ${tab.href === '/admin/orders' ? 'text-emerald-400' : 'text-gray-400 dark:text-slate-500 dark:text-slate-500'}`}>{tab.label}</span>
               </Link>
             );
           })}

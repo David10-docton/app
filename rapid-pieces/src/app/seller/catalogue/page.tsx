@@ -35,16 +35,16 @@ export default function SellerCataloguePage() {
   return (
     <div className="min-h-screen bg-rp-bg">
       {/* Header */}
-      <header className="bg-slate-900/80 backdrop-blur-xl border-b border-slate-700/50 sticky top-0 z-50">
+      <header className="bg-white backdrop-blur-xl border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center gap-3">
-          <Link href="/seller" className="text-slate-400 hover:text-white"><ArrowLeft className="w-5 h-5" /></Link>
-          <h1 className="text-sm font-bold text-white flex-1">Mon catalogue</h1>
-          <span className="text-[10px] text-slate-400">{myCatalogue.length} produits</span>
-          <button onClick={() => setShowAdd(!showAdd)} className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center"><Plus className="w-4 h-4 text-white" /></button>
+          <Link href="/seller" className="text-gray-400 dark:text-slate-500 dark:text-slate-500 hover:text-gray-900 dark:text-white"><ArrowLeft className="w-5 h-5" /></Link>
+          <h1 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white flex-1">Mon catalogue</h1>
+          <span className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">{myCatalogue.length} produits</span>
+          <button onClick={() => setShowAdd(!showAdd)} className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center"><Plus className="w-4 h-4 text-gray-900 dark:text-white" /></button>
         </div>
         <div className="max-w-2xl mx-auto px-4 pb-3 flex gap-2">
-          <button onClick={() => setTab('catalogue')} className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all ${tab === 'catalogue' ? 'bg-blue-600 text-white' : 'bg-slate-700/50 text-slate-400 border border-slate-600/50'}`}>📦 Catalogue</button>
-          <button onClick={() => setTab('stats')} className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all ${tab === 'stats' ? 'bg-blue-600 text-white' : 'bg-slate-700/50 text-slate-400 border border-slate-600/50'}`}>📊 Stats</button>
+          <button onClick={() => setTab('catalogue')} className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all ${tab === 'catalogue' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-400 dark:text-slate-500 dark:text-slate-500 border border-gray-200'}`}>📦 Catalogue</button>
+          <button onClick={() => setTab('stats')} className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all ${tab === 'stats' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-400 dark:text-slate-500 dark:text-slate-500 border border-gray-200'}`}>📊 Stats</button>
         </div>
       </header>
 
@@ -53,39 +53,39 @@ export default function SellerCataloguePage() {
           <>
             {/* Search */}
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 dark:text-slate-500 dark:text-slate-500" />
               <input type="text" placeholder="Rechercher..." value={search} onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 bg-slate-800/50 border border-slate-700/50 rounded-xl text-sm text-white placeholder-slate-500 outline-none focus:ring-2 focus:ring-blue-500" />
+                className="w-full pl-10 pr-4 py-2.5 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl text-sm text-gray-900 dark:text-white placeholder-slate-500 outline-none focus:ring-2 focus:ring-blue-500" />
             </div>
 
             {/* Add Form */}
             {showAdd && (
-              <div className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-4 slide-up">
-                <h3 className="text-sm font-bold text-white mb-3">Ajouter un produit</h3>
+              <div className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl p-4 slide-up">
+                <h3 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white mb-3">Ajouter un produit</h3>
                 <div className="space-y-2">
                   <input type="text" placeholder="Nom du produit" value={newProduct.name} onChange={(e) => setNewProduct(p => ({ ...p, name: e.target.value }))}
-                    className="w-full px-3 py-2.5 bg-slate-700/50 border border-slate-600/50 rounded-lg text-sm text-white placeholder-slate-500 outline-none" />
+                    className="w-full px-3 py-2.5 bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded-lg text-sm text-gray-900 dark:text-white placeholder-slate-500 outline-none" />
                   <div className="grid grid-cols-2 gap-2">
                     <select value={newProduct.brand} onChange={(e) => setNewProduct(p => ({ ...p, brand: e.target.value }))}
-                      className="w-full px-3 py-2.5 bg-slate-700/50 border border-slate-600/50 rounded-lg text-sm text-white outline-none">
+                      className="w-full px-3 py-2.5 bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded-lg text-sm text-gray-900 dark:text-white outline-none">
                       <option value="">Marque</option>
                       {POPULAR_BRANDS.map(b => <option key={b} value={b}>{b}</option>)}
                     </select>
                     <select value={newProduct.category} onChange={(e) => setNewProduct(p => ({ ...p, category: e.target.value }))}
-                      className="w-full px-3 py-2.5 bg-slate-700/50 border border-slate-600/50 rounded-lg text-sm text-white outline-none">
+                      className="w-full px-3 py-2.5 bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded-lg text-sm text-gray-900 dark:text-white outline-none">
                       <option value="">Catégorie</option>
                       {POPULAR_CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
                     </select>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
                     <input type="number" placeholder="Stock" value={newProduct.stock} onChange={(e) => setNewProduct(p => ({ ...p, stock: e.target.value }))}
-                      className="w-full px-3 py-2.5 bg-slate-700/50 border border-slate-600/50 rounded-lg text-sm text-white placeholder-slate-500 outline-none" />
+                      className="w-full px-3 py-2.5 bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded-lg text-sm text-gray-900 dark:text-white placeholder-slate-500 outline-none" />
                     <input type="number" placeholder="Prix (FCFA)" value={newProduct.price} onChange={(e) => setNewProduct(p => ({ ...p, price: e.target.value }))}
-                      className="w-full px-3 py-2.5 bg-slate-700/50 border border-slate-600/50 rounded-lg text-sm text-white placeholder-slate-500 outline-none" />
+                      className="w-full px-3 py-2.5 bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded-lg text-sm text-gray-900 dark:text-white placeholder-slate-500 outline-none" />
                   </div>
                   <div className="flex gap-2">
-                    <button onClick={() => setShowAdd(false)} className="flex-1 py-2 bg-slate-700 text-white rounded-lg text-xs font-medium">Annuler</button>
-                    <button className="flex-1 py-2 bg-blue-600 text-white rounded-lg text-xs font-semibold">Ajouter</button>
+                    <button onClick={() => setShowAdd(false)} className="flex-1 py-2 bg-gray-200 text-gray-900 dark:text-white rounded-lg text-xs font-medium">Annuler</button>
+                    <button onClick={() => { alert("Produit ajouté ✅"); }} className="flex-1 py-2 bg-blue-600 text-white rounded-lg text-xs font-semibold">Ajouter</button>
                   </div>
                 </div>
               </div>
@@ -94,26 +94,26 @@ export default function SellerCataloguePage() {
             {/* Product List */}
             <div className="space-y-2">
               {filtered.map(product => (
-                <div key={product.id} className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-3">
+                <div key={product.id} className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl p-3">
                   <div className="flex items-start justify-between mb-2">
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
-                        <h3 className="text-xs font-semibold text-white">{product.name}</h3>
+                        <h3 className="text-xs font-semibold text-gray-900 dark:text-white">{product.name}</h3>
                         {product.stock === 0 && <span className="text-[8px] bg-red-500/10 text-red-400 border border-red-500/30 px-1.5 py-0.5 rounded-full">Rupture</span>}
                       </div>
-                      <p className="text-[10px] text-slate-400">{product.brand} • {product.category}</p>
+                      <p className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">{product.brand} • {product.category}</p>
                     </div>
-                    <p className="text-sm font-bold text-rp-primary">{product.price.toLocaleString()} <span className="text-[9px] text-slate-400">FCFA</span></p>
+                    <p className="text-sm font-bold text-red-600">{product.price.toLocaleString()} <span className="text-[9px] text-gray-400 dark:text-slate-500 dark:text-slate-500">FCFA</span></p>
                   </div>
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3 text-[10px] text-slate-400">
-                      <span className="flex items-center gap-1"><Package className="w-3 h-3" /> Stock: <strong className={product.stock === 0 ? 'text-red-400' : 'text-white'}>{product.stock}</strong></span>
+                    <div className="flex items-center gap-3 text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">
+                      <span className="flex items-center gap-1"><Package className="w-3 h-3" /> Stock: <strong className={product.stock === 0 ? 'text-red-400' : 'text-gray-900 dark:text-white'}>{product.stock}</strong></span>
                       <span className="flex items-center gap-1"><Eye className="w-3 h-3" /> {product.views}</span>
                       <span className="flex items-center gap-1"><TrendingUp className="w-3 h-3" /> {product.inquiries}</span>
                     </div>
                     <div className="flex gap-1">
-                      <button className="w-7 h-7 bg-slate-700/50 rounded-lg flex items-center justify-center hover:bg-slate-600"><Edit3 className="w-3 h-3 text-slate-400" /></button>
-                      <button className="w-7 h-7 bg-red-500/10 rounded-lg flex items-center justify-center hover:bg-red-500/20"><Trash2 className="w-3 h-3 text-red-400" /></button>
+                      <button onClick={() => alert("Modifier le produit")} className="w-7 h-7 bg-gray-100 rounded-lg flex items-center justify-center hover:bg-gray-200"><Edit3 className="w-3 h-3 text-gray-500 dark:text-slate-400 dark:text-slate-400" /></button>
+                      <button onClick={() => alert("Supprimer le produit")} className="w-7 h-7 bg-red-50 rounded-lg flex items-center justify-center hover:bg-red-100"><Trash2 className="w-3 h-3 text-red-500" /></button>
                     </div>
                   </div>
                 </div>
@@ -133,25 +133,25 @@ export default function SellerCataloguePage() {
               ].map(stat => {
                 const Icon = stat.icon;
                 return (
-                  <div key={stat.label} className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-3 text-center">
+                  <div key={stat.label} className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl p-3 text-center">
                     <Icon className="w-4 h-4 text-blue-400 mx-auto mb-1" />
-                    <p className="text-lg font-bold text-white">{stat.value}</p>
-                    <p className="text-[10px] text-slate-400">{stat.label}</p>
+                    <p className="text-lg font-bold text-gray-900 dark:text-white dark:text-white">{stat.value}</p>
+                    <p className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">{stat.label}</p>
                   </div>
                 );
               })}
             </div>
 
-            <div className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-4">
-              <h3 className="text-sm font-bold text-white mb-3">Produits les plus demandés</h3>
+            <div className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl p-4">
+              <h3 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white mb-3">Produits les plus demandés</h3>
               {myCatalogue.sort((a, b) => b.inquiries - a.inquiries).slice(0, 5).map((p, i) => (
-                <div key={p.id} className={`flex items-center gap-3 py-2 ${i < 4 ? 'border-b border-slate-700/50' : ''}`}>
-                  <span className="text-xs font-bold text-slate-500 w-4">{i + 1}</span>
+                <div key={p.id} className={`flex items-center gap-3 py-2 ${i < 4 ? 'border-b border-gray-200' : ''}`}>
+                  <span className="text-xs font-bold text-gray-400 dark:text-slate-500 dark:text-slate-500 w-4">{i + 1}</span>
                   <div className="flex-1">
-                    <p className="text-xs font-medium text-white">{p.name}</p>
-                    <p className="text-[10px] text-slate-400">{p.inquiries} demandes • {p.views} vues</p>
+                    <p className="text-xs font-medium text-gray-900 dark:text-white">{p.name}</p>
+                    <p className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">{p.inquiries} demandes • {p.views} vues</p>
                   </div>
-                  <span className="text-xs font-bold text-rp-primary">{p.price.toLocaleString()}</span>
+                  <span className="text-xs font-bold text-red-600">{p.price.toLocaleString()}</span>
                 </div>
               ))}
             </div>
@@ -160,7 +160,7 @@ export default function SellerCataloguePage() {
       </div>
 
       {/* Bottom Nav */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-xl border-t border-slate-700/50 z-50">
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white backdrop-blur-xl border-t border-gray-200 z-50">
         <div className="flex items-center justify-around h-16 max-w-lg mx-auto">
           {[
             { href: '/seller', label: 'Accueil', icon: Store },
@@ -172,15 +172,15 @@ export default function SellerCataloguePage() {
             const Icon = tab.icon;
             if (tab.center) return (
               <Link key={tab.href} href={tab.href} className="flex flex-col items-center -mt-4">
-                <div className="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center shadow-lg shadow-blue-600/30"><Icon className="w-6 h-6 text-white" /></div>
+                <div className="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center shadow-lg shadow-blue-600/30"><Icon className="w-6 h-6 text-gray-900 dark:text-white" /></div>
                 <span className="text-[10px] mt-1 text-blue-400 font-medium">{tab.label}</span>
               </Link>
             );
             return (
               <Link key={tab.href} href={tab.href} className="flex flex-col items-center relative">
-                <Icon className="w-5 h-5 text-slate-400" />
-                {tab.badge && <span className="absolute -top-1 -right-1 w-4 h-4 bg-rp-primary text-white text-[9px] rounded-full flex items-center justify-center font-bold">{tab.badge}</span>}
-                <span className="text-[10px] mt-0.5 text-slate-400">{tab.label}</span>
+                <Icon className="w-5 h-5 text-gray-400 dark:text-slate-500 dark:text-slate-500" />
+                {tab.badge && <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-600 text-white text-[9px] rounded-full flex items-center justify-center font-bold">{tab.badge}</span>}
+                <span className="text-[10px] mt-0.5 text-gray-400 dark:text-slate-500 dark:text-slate-500">{tab.label}</span>
               </Link>
             );
           })}

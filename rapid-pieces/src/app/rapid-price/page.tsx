@@ -27,7 +27,7 @@ const priceHistory = [
 const trendIcons: Record<string, React.ReactNode> = {
   up: <TrendingUp className="w-4 h-4 text-red-400" />,
   down: <TrendingDown className="w-4 h-4 text-emerald-400" />,
-  stable: <Minus className="w-4 h-4 text-slate-400" />,
+  stable: <Minus className="w-4 h-4 text-gray-400 dark:text-slate-500 dark:text-slate-500" />,
 };
 
 const trendLabels: Record<string, string> = {
@@ -39,7 +39,7 @@ const trendLabels: Record<string, string> = {
 const trendColors: Record<string, string> = {
   up: 'text-red-400',
   down: 'text-emerald-400',
-  stable: 'text-slate-400',
+  stable: 'text-gray-400 dark:text-slate-500 dark:text-slate-500',
 };
 
 export default function RapidPricePage() {
@@ -54,14 +54,14 @@ export default function RapidPricePage() {
   return (
     <div className="min-h-screen bg-rp-bg pb-24 lg:pb-8">
       {/* Header */}
-      <header className="bg-slate-900/80 backdrop-blur-xl border-b border-slate-700/50 sticky top-0 z-50">
+      <header className="bg-white backdrop-blur-xl border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-4xl mx-auto px-4 py-3 flex items-center gap-3">
-          <Link href="/" className="text-slate-400 hover:text-white">
+          <Link href="/" className="text-gray-400 dark:text-slate-500 dark:text-slate-500 hover:text-gray-900 dark:text-white">
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div>
-            <h1 className="text-sm font-bold text-white">Rapid Price</h1>
-            <p className="text-[10px] text-slate-400">Prix moyen du marché</p>
+            <h1 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white">Rapid Price</h1>
+            <p className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">Prix moyen du marché</p>
           </div>
         </div>
       </header>
@@ -73,36 +73,36 @@ export default function RapidPricePage() {
             <Info className="w-4 h-4 text-blue-400" />
             <span className="text-xs font-bold text-blue-400">Rapid Price</span>
           </div>
-          <p className="text-sm text-slate-300">Le prix moyen du marché basé sur les transactions réelles. Savoir si vous payez trop cher.</p>
+          <p className="text-sm text-gray-600 dark:text-slate-300 dark:text-slate-300">Le prix moyen du marché basé sur les transactions réelles. Savoir si vous payez trop cher.</p>
         </div>
 
         {/* Search */}
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 dark:text-slate-500 dark:text-slate-500" />
           <input
             type="text"
             placeholder="Rechercher une pièce..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-3 bg-slate-800/50 border border-slate-700/50 rounded-xl text-sm text-white placeholder-slate-500 outline-none focus:ring-2 focus:ring-rp-primary"
+            className="w-full pl-10 pr-4 py-3 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl text-sm text-gray-900 dark:text-white placeholder-slate-500 outline-none focus:ring-2 focus:ring-rp-primary"
           />
         </div>
 
         {/* Selected Part Detail */}
         {selectedPart && (
-          <div className="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-5 space-y-4">
+          <div className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl p-5 space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-sm font-bold text-white">{selectedPart.name}</h3>
-                <p className="text-xs text-slate-400">{selectedPart.brand} • {selectedPart.quality}</p>
+                <h3 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white">{selectedPart.name}</h3>
+                <p className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500">{selectedPart.brand} • {selectedPart.quality}</p>
               </div>
-              <button onClick={() => setSelectedPart(null)} className="text-slate-400 hover:text-white">✕</button>
+              <button onClick={() => setSelectedPart(null)} className="text-gray-400 dark:text-slate-500 dark:text-slate-500 hover:text-gray-900 dark:text-white">✕</button>
             </div>
 
             {/* Price display */}
             <div className="text-center py-4">
-              <div className="text-xs text-slate-400 mb-1">Prix moyen du marché</div>
-              <div className="text-3xl font-black text-white">{selectedPart.avgPrice.toLocaleString()} <span className="text-sm font-normal text-slate-400">FCFA</span></div>
+              <div className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500 mb-1">Prix moyen du marché</div>
+              <div className="text-3xl font-black text-gray-900 dark:text-white">{selectedPart.avgPrice.toLocaleString()} <span className="text-sm font-normal text-gray-400 dark:text-slate-500 dark:text-slate-500">FCFA</span></div>
               <div className={`flex items-center justify-center gap-1 mt-2 ${trendColors[selectedPart.trend]}`}>
                 {trendIcons[selectedPart.trend]}
                 <span className="text-xs font-medium">{trendLabels[selectedPart.trend]}</span>
@@ -110,8 +110,8 @@ export default function RapidPricePage() {
             </div>
 
             {/* Price range */}
-            <div className="bg-slate-700/30 rounded-xl p-4">
-              <div className="flex justify-between text-xs text-slate-400 mb-2">
+            <div className="bg-gray-100 rounded-xl p-4">
+              <div className="flex justify-between text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500 mb-2">
                 <span>Fourchette de prix</span>
                 <span>{selectedPart.samples} offres analysées</span>
               </div>
@@ -121,14 +121,14 @@ export default function RapidPricePage() {
               </div>
               <div className="flex justify-between text-xs mt-2">
                 <span className="text-emerald-400">{selectedPart.min.toLocaleString()} FCFA</span>
-                <span className="text-white font-bold">{selectedPart.avgPrice.toLocaleString()} FCFA</span>
+                <span className="text-gray-900 dark:text-white font-bold">{selectedPart.avgPrice.toLocaleString()} FCFA</span>
                 <span className="text-red-400">{selectedPart.max.toLocaleString()} FCFA</span>
               </div>
             </div>
 
             {/* Mini chart */}
             <div>
-              <div className="text-xs text-slate-400 mb-2">Évolution 6 mois</div>
+              <div className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500 mb-2">Évolution 6 mois</div>
               <div className="flex items-end gap-1 h-20">
                 {priceHistory.map((h, i) => {
                   const maxP = Math.max(...priceHistory.map(p => p.price));
@@ -136,9 +136,9 @@ export default function RapidPricePage() {
                   const height = ((h.price - minP) / (maxP - minP)) * 60 + 20;
                   return (
                     <div key={i} className="flex-1 flex flex-col items-center gap-1">
-                      <span className="text-[8px] text-slate-500">{(h.price / 1000).toFixed(0)}k</span>
-                      <div className="w-full bg-rp-primary rounded-t" style={{ height: `${height}px` }} />
-                      <span className="text-[8px] text-slate-500">{h.month}</span>
+                      <span className="text-[8px] text-gray-400 dark:text-slate-500 dark:text-slate-500">{(h.price / 1000).toFixed(0)}k</span>
+                      <div className="w-full bg-red-600 rounded-t" style={{ height: `${height}px` }} />
+                      <span className="text-[8px] text-gray-400 dark:text-slate-500 dark:text-slate-500">{h.month}</span>
                     </div>
                   );
                 })}
@@ -148,7 +148,7 @@ export default function RapidPricePage() {
             {/* Advice */}
             <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-3">
               <p className="text-xs text-emerald-400 font-medium">💡 Conseil Rapid Price</p>
-              <p className="text-[11px] text-slate-300 mt-1">
+              <p className="text-[11px] text-gray-600 dark:text-slate-300 dark:text-slate-300 mt-1">
                 {selectedPart.trend === 'down'
                   ? 'Les prix sont en baisse. Bon moment pour acheter.'
                   : selectedPart.trend === 'up'
@@ -157,7 +157,7 @@ export default function RapidPricePage() {
               </p>
             </div>
 
-            <Link href="/requests/new" className="block w-full bg-rp-primary text-white font-bold py-3 rounded-xl text-center text-sm">
+            <Link href="/requests/new" className="block w-full bg-red-600 text-white font-bold py-3 rounded-xl text-center text-sm">
               Chercher cette pièce →
             </Link>
           </div>
@@ -165,27 +165,27 @@ export default function RapidPricePage() {
 
         {/* Parts List */}
         <div className="space-y-3">
-          <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wide">Prix populaires</h3>
+          <h3 className="text-sm font-semibold text-gray-400 dark:text-slate-500 dark:text-slate-500 uppercase tracking-wide">Prix populaires</h3>
           {filtered.map((part, i) => (
             <button
               key={i}
               onClick={() => setSelectedPart(part)}
-              className="w-full bg-slate-800/50 border border-slate-700/50 rounded-xl p-4 text-left hover:border-rp-primary/30 transition-all"
+              className="w-full bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl p-4 text-left hover:border-red-200 transition-all"
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <h4 className="text-sm font-bold text-white">{part.name}</h4>
-                  <p className="text-xs text-slate-400">{part.brand} • {part.quality}</p>
+                  <h4 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white">{part.name}</h4>
+                  <p className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500">{part.brand} • {part.quality}</p>
                 </div>
                 <div className="text-right">
-                  <div className="text-lg font-black text-white">{part.avgPrice.toLocaleString()}</div>
+                  <div className="text-lg font-black text-gray-900 dark:text-white">{part.avgPrice.toLocaleString()}</div>
                   <div className="flex items-center gap-1 justify-end">
                     {trendIcons[part.trend]}
                     <span className={`text-[10px] ${trendColors[part.trend]}`}>{trendLabels[part.trend]}</span>
                   </div>
                 </div>
               </div>
-              <div className="flex items-center gap-3 mt-2 text-[10px] text-slate-500">
+              <div className="flex items-center gap-3 mt-2 text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">
                 <span>{part.min.toLocaleString()} - {part.max.toLocaleString()} FCFA</span>
                 <span>•</span>
                 <span>{part.samples} offres</span>
@@ -196,24 +196,24 @@ export default function RapidPricePage() {
       </div>
 
       {/* Bottom nav */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-xl border-t border-slate-700/50">
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white backdrop-blur-xl border-t border-gray-200">
         <div className="flex items-center justify-around h-16">
-          <Link href="/" className="flex flex-col items-center gap-1 text-slate-500">
+          <Link href="/" className="flex flex-col items-center gap-1 text-gray-400 dark:text-slate-500 dark:text-slate-500">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
             <span className="text-[10px]">Accueil</span>
           </Link>
-          <Link href="/search" className="flex flex-col items-center gap-1 text-slate-500">
+          <Link href="/search" className="flex flex-col items-center gap-1 text-gray-400 dark:text-slate-500 dark:text-slate-500">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
             <span className="text-[10px]">Rechercher</span>
           </Link>
-          <Link href="/requests/new" className="w-12 h-12 bg-rp-primary rounded-full flex items-center justify-center -mt-4 shadow-lg shadow-red-600/30">
-            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
+          <Link href="/requests/new" className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center -mt-4 shadow-lg shadow-red-600/20">
+            <svg className="w-6 h-6 text-gray-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
           </Link>
-          <Link href="/orders" className="flex flex-col items-center gap-1 text-slate-500">
+          <Link href="/orders" className="flex flex-col items-center gap-1 text-gray-400 dark:text-slate-500 dark:text-slate-500">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
             <span className="text-[10px]">Commandes</span>
           </Link>
-          <Link href="/profile" className="flex flex-col items-center gap-1 text-slate-500">
+          <Link href="/profile" className="flex flex-col items-center gap-1 text-gray-400 dark:text-slate-500 dark:text-slate-500">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
             <span className="text-[10px]">Profil</span>
           </Link>

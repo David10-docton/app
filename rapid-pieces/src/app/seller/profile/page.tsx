@@ -23,21 +23,21 @@ export default function SellerProfilePage() {
       <header className="bg-gradient-to-b from-blue-600/20 to-transparent">
         <div className="max-w-2xl mx-auto px-4 pt-8 pb-6">
           <div className="flex items-center gap-3 mb-6">
-            <Link href="/seller" className="text-slate-400 hover:text-white"><ArrowLeft className="w-5 h-5" /></Link>
-            <h1 className="text-sm font-bold text-white flex-1">Mon profil</h1>
-            <button onClick={logout} className="text-slate-400 hover:text-red-400"><LogOut className="w-4 h-4" /></button>
+            <Link href="/seller" className="text-gray-400 dark:text-slate-500 dark:text-slate-500 hover:text-gray-900 dark:text-white"><ArrowLeft className="w-5 h-5" /></Link>
+            <h1 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white flex-1">Mon profil</h1>
+            <button onClick={logout} className="text-gray-400 dark:text-slate-500 dark:text-slate-500 hover:text-red-600"><LogOut className="w-4 h-4" /></button>
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl flex items-center justify-center text-white text-2xl font-bold shadow-lg shadow-blue-600/30">AP</div>
+            <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl flex items-center justify-center text-gray-900 dark:text-white text-2xl font-bold shadow-lg shadow-blue-600/30">AP</div>
             <div>
-              <h2 className="text-lg font-bold text-white">Auto Pièces Cotonou</h2>
-              <p className="text-xs text-slate-400">Marché Dantokpa, Cotonou</p>
+              <h2 className="text-lg font-bold text-gray-900 dark:text-white dark:text-white">Auto Pièces Cotonou</h2>
+              <p className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500">Marché Dantokpa, Cotonou</p>
               <div className="flex items-center gap-2 mt-1">
                 <span className="text-[10px] px-2 py-0.5 bg-blue-500/10 text-blue-400 border border-blue-500/30 rounded-full font-medium flex items-center gap-1">
                   <Shield className="w-3 h-3" /> Verified Seller
                 </span>
-                <span className="text-[10px] text-slate-500">Depuis Juin 2024</span>
+                <span className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">Depuis Juin 2024</span>
               </div>
             </div>
           </div>
@@ -46,21 +46,21 @@ export default function SellerProfilePage() {
 
       <div className="max-w-2xl mx-auto px-4 space-y-4 pb-24 lg:pb-6">
         {/* Rapid Seller Score */}
-        <section className="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-5">
+        <section className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl p-5">
           <div className="flex items-center gap-2 mb-4">
             <Award className="w-5 h-5 text-amber-400" />
-            <h3 className="text-sm font-bold text-white">Rapid Seller Score</h3>
+            <h3 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white">Rapid Seller Score</h3>
           </div>
 
           <div className="flex items-center gap-4 mb-4">
             <div className="w-20 h-20 bg-gradient-to-br from-amber-400/20 to-amber-500/10 border border-amber-500/30 rounded-full flex items-center justify-center">
-              <span className="text-3xl font-extrabold text-white">4.8</span>
+              <span className="text-3xl font-extrabold text-gray-900 dark:text-white">4.8</span>
             </div>
             <div className="flex-1">
               <div className="flex items-center gap-1 mb-1">
                 {[1,2,3,4,5].map(i => <Star key={i} className={`w-4 h-4 ${i <= 4 ? 'fill-amber-400 text-amber-400' : 'fill-amber-400/30 text-amber-400/30'}`} />)}
               </div>
-              <p className="text-[10px] text-slate-400">Basé sur 342 transactions</p>
+              <p className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">Basé sur 342 transactions</p>
               <span className="text-[9px] px-2 py-0.5 bg-amber-500/10 text-amber-400 border border-amber-500/30 rounded-full font-medium">🏆 TOP 5% vendeurs</span>
             </div>
           </div>
@@ -75,10 +75,10 @@ export default function SellerProfilePage() {
             ].map(m => (
               <div key={m.label}>
                 <div className="flex justify-between items-center mb-1">
-                  <span className="text-[11px] text-slate-400">{m.label}</span>
-                  <span className="text-[11px] font-semibold text-white">{m.value}</span>
+                  <span className="text-[11px] text-gray-400 dark:text-slate-500 dark:text-slate-500">{m.label}</span>
+                  <span className="text-[11px] font-semibold text-gray-900 dark:text-white">{m.value}</span>
                 </div>
-                <div className="h-1 bg-slate-700 rounded-full overflow-hidden">
+                <div className="h-1 bg-gray-200 rounded-full overflow-hidden">
                   <div className="h-full bg-blue-500 rounded-full" style={{ width: `${m.pct}%` }} />
                 </div>
               </div>
@@ -86,54 +86,54 @@ export default function SellerProfilePage() {
           </div>
 
           {/* Badge Progression */}
-          <div className="mt-4 pt-4 border-t border-slate-700/50">
-            <p className="text-[10px] text-slate-400 mb-2">Progression des badges</p>
+          <div className="mt-4 pt-4 border-t border-gray-200">
+            <p className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500 mb-2">Progression des badges</p>
             <div className="flex items-center gap-1">
               {['New', 'Rapid', 'Verified', 'Premium', 'Top'].map((b, i) => (
                 <div key={b} className="flex items-center gap-1 flex-1">
-                  <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[9px] font-bold ${i <= 2 ? 'bg-amber-400 text-slate-900' : 'bg-slate-700 text-slate-500'}`}>{i + 1}</div>
-                  {i < 4 && <div className={`flex-1 h-0.5 ${i < 2 ? 'bg-amber-400' : 'bg-slate-700'}`} />}
+                  <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[9px] font-bold ${i <= 2 ? 'bg-amber-400 text-slate-900' : 'bg-gray-200 text-gray-400 dark:text-slate-500 dark:text-slate-500'}`}>{i + 1}</div>
+                  {i < 4 && <div className={`flex-1 h-0.5 ${i < 2 ? 'bg-amber-400' : 'bg-gray-200'}`} />}
                 </div>
               ))}
             </div>
-            <p className="text-[9px] text-slate-500 text-center mt-2">Badge: <strong className="text-amber-400">Verified Seller</strong></p>
+            <p className="text-[9px] text-gray-400 dark:text-slate-500 dark:text-slate-500 text-center mt-2">Badge: <strong className="text-amber-400">Verified Seller</strong></p>
           </div>
         </section>
 
         {/* Stats */}
         <div className="grid grid-cols-3 gap-3">
-          <div className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-3 text-center">
+          <div className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl p-3 text-center">
             <p className="text-lg font-bold text-blue-400">342</p>
-            <p className="text-[10px] text-slate-400">Transactions</p>
+            <p className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">Transactions</p>
           </div>
-          <div className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-3 text-center">
+          <div className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl p-3 text-center">
             <p className="text-lg font-bold text-emerald-400">42M</p>
-            <p className="text-[10px] text-slate-400">CA Total</p>
+            <p className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">CA Total</p>
           </div>
-          <div className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-3 text-center">
+          <div className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl p-3 text-center">
             <p className="text-lg font-bold text-amber-400">97%</p>
-            <p className="text-[10px] text-slate-400">Conformité</p>
+            <p className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">Conformité</p>
           </div>
         </div>
 
         {/* Spécialités */}
-        <section className="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-4">
-          <h3 className="text-xs font-bold text-white mb-2">Spécialités</h3>
+        <section className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl p-4">
+          <h3 className="text-xs font-bold text-gray-900 dark:text-white dark:text-white mb-2">Spécialités</h3>
           <div className="flex flex-wrap gap-1.5 mb-3">
             {['Moteurs diesels', 'Systèmes de freinage', 'Importation'].map(s => (
               <span key={s} className="text-[10px] px-2 py-0.5 bg-blue-500/10 text-blue-400 border border-blue-500/30 rounded-full">{s}</span>
             ))}
           </div>
-          <h3 className="text-xs font-bold text-white mb-2">Marques</h3>
+          <h3 className="text-xs font-bold text-gray-900 dark:text-white dark:text-white mb-2">Marques</h3>
           <div className="flex flex-wrap gap-1.5">
             {['Toyota', 'Honda', 'Mercedes-Benz'].map(b => (
-              <span key={b} className="text-[10px] px-2 py-0.5 bg-slate-700 text-slate-300 rounded-full">{b}</span>
+              <span key={b} className="text-[10px] px-2 py-0.5 bg-gray-200 text-gray-600 dark:text-slate-300 dark:text-slate-300 rounded-full">{b}</span>
             ))}
           </div>
         </section>
 
         {/* Menu */}
-        <section className="bg-slate-800/50 border border-slate-700/50 rounded-2xl overflow-hidden">
+        <section className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl overflow-hidden">
           {[
             { icon: Bell, label: 'Notifications', desc: 'Alertes nouvelles demandes' },
             { icon: TrendingUp, label: 'Statistiques', desc: 'Rapports et analyses' },
@@ -144,13 +144,13 @@ export default function SellerProfilePage() {
           ].map((item, i) => {
             const Icon = item.icon;
             return (
-              <button key={item.label} className={`w-full px-4 py-3.5 flex items-center gap-3 ${i < 5 ? 'border-b border-slate-700/50' : ''}`}>
-                <Icon className="w-4 h-4 text-slate-400" />
+              <button key={item.label} className={`w-full px-4 py-3.5 flex items-center gap-3 ${i < 5 ? 'border-b border-gray-200' : ''}`}>
+                <Icon className="w-4 h-4 text-gray-400 dark:text-slate-500 dark:text-slate-500" />
                 <div className="flex-1 text-left">
-                  <p className="text-xs font-medium text-white">{item.label}</p>
-                  <p className="text-[10px] text-slate-400">{item.desc}</p>
+                  <p className="text-xs font-medium text-gray-900 dark:text-white">{item.label}</p>
+                  <p className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">{item.desc}</p>
                 </div>
-                <ChevronRight className="w-4 h-4 text-slate-500" />
+                <ChevronRight className="w-4 h-4 text-gray-400 dark:text-slate-500 dark:text-slate-500" />
               </button>
             );
           })}
@@ -158,7 +158,7 @@ export default function SellerProfilePage() {
       </div>
 
       {/* Bottom Nav */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-xl border-t border-slate-700/50 z-50">
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white backdrop-blur-xl border-t border-gray-200 z-50">
         <div className="flex items-center justify-around h-16 max-w-lg mx-auto">
           {[
             { href: '/seller', label: 'Accueil', icon: Store },
@@ -170,15 +170,15 @@ export default function SellerProfilePage() {
             const Icon = tab.icon;
             if (tab.center) return (
               <Link key={tab.href} href={tab.href} className="flex flex-col items-center -mt-4">
-                <div className="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center shadow-lg shadow-blue-600/30"><Icon className="w-6 h-6 text-white" /></div>
+                <div className="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center shadow-lg shadow-blue-600/30"><Icon className="w-6 h-6 text-gray-900 dark:text-white" /></div>
                 <span className="text-[10px] mt-1 text-blue-400 font-medium">{tab.label}</span>
               </Link>
             );
             return (
               <Link key={tab.href} href={tab.href} className="flex flex-col items-center relative">
-                <Icon className={`w-5 h-5 ${tab.href === '/seller/profile' ? 'text-blue-400' : 'text-slate-400'}`} />
-                {tab.badge && <span className="absolute -top-1 -right-1 w-4 h-4 bg-rp-primary text-white text-[9px] rounded-full flex items-center justify-center font-bold">{tab.badge}</span>}
-                <span className={`text-[10px] mt-0.5 ${tab.href === '/seller/profile' ? 'text-blue-400' : 'text-slate-400'}`}>{tab.label}</span>
+                <Icon className={`w-5 h-5 ${tab.href === '/seller/profile' ? 'text-blue-400' : 'text-gray-400 dark:text-slate-500 dark:text-slate-500'}`} />
+                {tab.badge && <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-600 text-white text-[9px] rounded-full flex items-center justify-center font-bold">{tab.badge}</span>}
+                <span className={`text-[10px] mt-0.5 ${tab.href === '/seller/profile' ? 'text-blue-400' : 'text-gray-400 dark:text-slate-500 dark:text-slate-500'}`}>{tab.label}</span>
               </Link>
             );
           })}

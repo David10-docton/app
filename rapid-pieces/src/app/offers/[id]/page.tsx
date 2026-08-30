@@ -91,16 +91,16 @@ export default function OffersPage() {
   });
 
   return (
-    <div className="min-h-screen bg-slate-950 pb-24 lg:pb-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-950 pb-24 lg:pb-8">
       {/* Header */}
-      <header className="sticky top-0 z-40 bg-slate-900/95 backdrop-blur-xl border-b border-slate-700/50">
+      <header className="sticky top-0 z-40 bg-white backdrop-blur-xl border-b border-gray-200">
         <div className="max-w-4xl mx-auto px-4 h-14 flex items-center gap-3">
-          <button onClick={() => router.back()} className="text-slate-400 hover:text-white">
+          <button onClick={() => router.back()} className="text-gray-400 dark:text-slate-500 dark:text-slate-500 hover:text-gray-900 dark:text-white">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           </button>
           <div>
-            <h1 className="text-sm font-bold text-white">Offres reçues</h1>
-            <p className="text-[10px] text-slate-400">Plaquettes de frein avant — Toyota Corolla 2018</p>
+            <h1 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white">Offres reçues</h1>
+            <p className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">Plaquettes de frein avant — Toyota Corolla 2018</p>
           </div>
         </div>
       </header>
@@ -117,7 +117,7 @@ export default function OffersPage() {
               key={s.value}
               onClick={() => setSortBy(s.value)}
               className={`px-3 py-2 rounded-xl text-xs font-bold transition-all ${
-                sortBy === s.value ? 'bg-red-600 text-white' : 'bg-slate-800/50 text-slate-400'
+                sortBy === s.value ? 'bg-red-600 text-white' : 'bg-gray-50 text-gray-400 dark:text-slate-500 dark:text-slate-500'
               }`}
             >
               {s.label}
@@ -126,10 +126,10 @@ export default function OffersPage() {
         </div>
 
         {/* Rapid Score explanation */}
-        <div className="bg-slate-900/50 backdrop-blur-sm rounded-xl p-3 border border-slate-700/50">
+        <div className="bg-white backdrop-blur-sm rounded-xl p-3 border border-gray-200">
           <div className="flex items-center gap-2 mb-2">
             <span className="text-sm">📊</span>
-            <span className="text-xs font-bold text-white">Rapid Score = Prix (30%) + Qualité (25%) + Disponibilité (20%) + Réputation (15%) + Délai (10%)</span>
+            <span className="text-xs font-bold text-gray-900 dark:text-white dark:text-white">Rapid Score = Prix (30%) + Qualité (25%) + Disponibilité (20%) + Réputation (15%) + Délai (10%)</span>
           </div>
         </div>
 
@@ -138,34 +138,34 @@ export default function OffersPage() {
           {sorted.map((offer, index) => (
             <div
               key={offer.id}
-              className={`bg-slate-900/50 backdrop-blur-sm rounded-2xl border transition-all ${
-                selectedOffer === offer.id ? 'border-red-500/50 ring-1 ring-red-500/20' : 'border-slate-700/50 hover:border-slate-600'
+              className={`bg-white backdrop-blur-sm rounded-2xl border transition-all ${
+                selectedOffer === offer.id ? 'border-red-500/50 ring-1 ring-red-500/20' : 'border-gray-200 hover:border-gray-300 dark:hover:border-slate-500'
               }`}
             >
               {/* Seller header */}
               <div className="p-4 pb-0">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                    <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-gray-900 dark:text-white font-bold text-sm">
                       {offer.seller.charAt(0)}
                     </div>
                     <div>
                       <div className="flex items-center gap-1.5">
-                        <span className="text-sm font-bold text-white">{offer.seller}</span>
+                        <span className="text-sm font-bold text-gray-900 dark:text-white dark:text-white">{offer.seller}</span>
                         {index === 0 && <span className="text-[10px] bg-yellow-500/20 text-yellow-300 px-1.5 py-0.5 rounded font-bold">👑 BEST</span>}
                       </div>
                       <div className="flex items-center gap-2 mt-0.5">
                         <span className="text-xs text-yellow-400">⭐ {offer.rating}</span>
-                        <span className="text-xs text-slate-500">•</span>
-                        <span className="text-xs text-slate-400">{offer.sales} ventes</span>
-                        <span className="text-xs text-slate-500">•</span>
-                        <span className="text-xs text-slate-400">📍 {offer.distance}</span>
+                        <span className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500">•</span>
+                        <span className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500">{offer.sales} ventes</span>
+                        <span className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500">•</span>
+                        <span className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500">📍 {offer.distance}</span>
                       </div>
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="text-2xl font-black text-white">{offer.rapidScore}</div>
-                    <div className="text-[10px] text-slate-400">Rapid Score</div>
+                    <div className="text-2xl font-black text-gray-900 dark:text-white">{offer.rapidScore}</div>
+                    <div className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">Rapid Score</div>
                   </div>
                 </div>
                 {/* Badges */}
@@ -181,25 +181,25 @@ export default function OffersPage() {
 
               {/* Part details */}
               <div className="p-4">
-                <div className="bg-slate-800/50 rounded-xl p-3 mb-3">
-                  <div className="text-sm font-bold text-white">{offer.part}</div>
-                  <div className="text-xs text-slate-400 mt-0.5">Marque: {offer.brand}</div>
+                <div className="bg-gray-50 rounded-xl p-3 mb-3">
+                  <div className="text-sm font-bold text-gray-900 dark:text-white dark:text-white">{offer.part}</div>
+                  <div className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500 mt-0.5">Marque: {offer.brand}</div>
                   <div className="flex items-center gap-3 mt-2">
-                    <span className="text-lg font-black text-white">{offer.price.toLocaleString()} <span className="text-xs font-normal text-slate-400">FCFA</span></span>
+                    <span className="text-lg font-black text-gray-900 dark:text-white">{offer.price.toLocaleString()} <span className="text-xs font-normal text-gray-400 dark:text-slate-500 dark:text-slate-500">FCFA</span></span>
                   </div>
                 </div>
 
                 {/* Delivery & warranty */}
                 <div className="grid grid-cols-2 gap-2 mb-3">
-                  <div className="bg-slate-800/50 rounded-lg p-2 text-center">
-                    <div className="text-[10px] text-slate-400">Livraison</div>
+                  <div className="bg-gray-50 rounded-lg p-2 text-center">
+                    <div className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">Livraison</div>
                     <div className="text-xs font-bold text-red-400">{offer.delivery}</div>
-                    <div className="text-[10px] text-slate-500">{offer.deliveryTime}</div>
+                    <div className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">{offer.deliveryTime}</div>
                   </div>
-                  <div className="bg-slate-800/50 rounded-lg p-2 text-center">
-                    <div className="text-[10px] text-slate-400">Garantie</div>
+                  <div className="bg-gray-50 rounded-lg p-2 text-center">
+                    <div className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">Garantie</div>
                     <div className="text-xs font-bold text-green-400">{offer.warranty}</div>
-                    <div className="text-[10px] text-slate-500">{offer.stock} en stock</div>
+                    <div className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">{offer.stock} en stock</div>
                   </div>
                 </div>
 
@@ -213,11 +213,11 @@ export default function OffersPage() {
                     { label: 'Délai', value: offer.scoreBreakdown.delivery, max: 10, color: 'bg-red-500' },
                   ].map((s) => (
                     <div key={s.label} className="flex items-center gap-2">
-                      <span className="text-[10px] text-slate-400 w-8">{s.label}</span>
-                      <div className="flex-1 bg-slate-800 rounded-full h-1.5">
+                      <span className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500 w-8">{s.label}</span>
+                      <div className="flex-1 bg-gray-100 rounded-full h-1.5">
                         <div className={`${s.color} h-1.5 rounded-full`} style={{ width: `${(s.value / s.max) * 100}%` }} />
                       </div>
-                      <span className="text-[10px] text-slate-500 w-6 text-right">{s.value}/{s.max}</span>
+                      <span className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500 w-6 text-right">{s.value}/{s.max}</span>
                     </div>
                   ))}
                 </div>
@@ -228,7 +228,7 @@ export default function OffersPage() {
                   className={`w-full py-3 rounded-xl font-bold text-sm transition-all ${
                     selectedOffer === offer.id
                       ? 'bg-red-600 text-white'
-                      : 'bg-slate-800/50 text-white hover:bg-red-600/80'
+                      : 'bg-gray-50 text-gray-900 dark:text-white hover:bg-red-600/80'
                   }`}
                 >
                   {selectedOffer === offer.id ? 'Sélectionnée ✓' : 'Sélectionner cette offre'}
@@ -240,13 +240,13 @@ export default function OffersPage() {
 
         {/* CTA */}
         {selectedOffer && (
-          <div className="sticky bottom-20 lg:bottom-4 bg-slate-900/95 backdrop-blur-xl rounded-2xl p-4 border border-red-500/30">
+          <div className="sticky bottom-20 lg:bottom-4 bg-white backdrop-blur-xl rounded-2xl p-4 border border-red-500/30">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-sm font-bold text-white">Offre sélectionnée</div>
-                <div className="text-xs text-slate-400">{offers.find(o => o.id === selectedOffer)?.seller}</div>
+                <div className="text-sm font-bold text-gray-900 dark:text-white dark:text-white">Offre sélectionnée</div>
+                <div className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500">{offers.find(o => o.id === selectedOffer)?.seller}</div>
               </div>
-              <Link href="/checkout" className="bg-red-600 hover:bg-red-500 text-white font-bold px-6 py-3 rounded-xl transition-all">
+              <Link href="/checkout" className="bg-red-600 hover:bg-red-500 text-gray-900 dark:text-white font-bold px-6 py-3 rounded-xl transition-all">
                 Commander →
               </Link>
             </div>

@@ -49,11 +49,11 @@ export default function SellerRequestsPage() {
   return (
     <div className="min-h-screen bg-rp-bg">
       {/* Header */}
-      <header className="bg-slate-900/80 backdrop-blur-xl border-b border-slate-700/50 sticky top-0 z-50">
+      <header className="bg-white backdrop-blur-xl border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center gap-3">
-          <Link href="/seller" className="text-slate-400 hover:text-white"><ArrowLeft className="w-5 h-5" /></Link>
-          <h1 className="text-sm font-bold text-white flex-1">Demandes reçues</h1>
-          <span className="w-6 h-6 bg-rp-primary text-white text-[10px] rounded-full flex items-center justify-center font-bold">5</span>
+          <Link href="/seller" className="text-gray-400 dark:text-slate-500 dark:text-slate-500 hover:text-gray-900 dark:text-white"><ArrowLeft className="w-5 h-5" /></Link>
+          <h1 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white flex-1">Demandes reçues</h1>
+          <span className="w-6 h-6 bg-red-600 text-white text-[10px] rounded-full flex items-center justify-center font-bold">5</span>
         </div>
         <div className="max-w-2xl mx-auto px-4 pb-3 flex gap-2">
           {[
@@ -63,7 +63,7 @@ export default function SellerRequestsPage() {
           ].map(f => (
             <button key={f.key} onClick={() => setFilter(f.key)}
               className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all ${
-                filter === f.key ? 'bg-rp-primary text-white' : 'bg-slate-700/50 text-slate-400 border border-slate-600/50'
+                filter === f.key ? 'bg-red-600 text-white' : 'bg-gray-100 text-gray-400 dark:text-slate-500 dark:text-slate-500 border border-gray-200'
               }`}>{f.label}</button>
           ))}
         </div>
@@ -75,34 +75,34 @@ export default function SellerRequestsPage() {
           const isSubmitted = submittedId === req.id;
 
           return (
-            <div key={req.id} className="bg-slate-800/50 border border-slate-700/50 rounded-2xl overflow-hidden">
+            <div key={req.id} className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl overflow-hidden">
               <div className="p-4">
                 <div className="flex items-start justify-between mb-2">
                   <div className="flex items-center gap-2">
-                    {req.urgent && <AlertCircle className="w-4 h-4 text-rp-primary" />}
-                    <h3 className="text-xs font-semibold text-white">{req.part}</h3>
+                    {req.urgent && <AlertCircle className="w-4 h-4 text-red-600" />}
+                    <h3 className="text-xs font-semibold text-gray-900 dark:text-white">{req.part}</h3>
                   </div>
                   {req.responses === 0 && <span className="text-[8px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-1.5 py-0.5 rounded-full">PAS D&apos;OFFRE</span>}
                 </div>
 
-                <div className="flex items-center gap-3 text-[10px] text-slate-400 mb-2">
+                <div className="flex items-center gap-3 text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500 mb-2">
                   <span className="flex items-center gap-1"><MapPin className="w-3 h-3" /> {req.location}</span>
                   <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {req.time}</span>
-                  {req.budget && <span className="text-rp-primary font-medium">{req.budget}</span>}
+                  {req.budget && <span className="text-red-600 font-medium">{req.budget}</span>}
                 </div>
 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 bg-slate-700 rounded-full flex items-center justify-center"><span className="text-[9px] font-bold text-white">{req.buyer.charAt(0)}</span></div>
-                    <span className="text-[10px] text-slate-400">{req.buyer}</span>
-                    <span className="text-[10px] text-slate-500">• {req.type}</span>
+                    <div className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center"><span className="text-[9px] font-bold text-gray-900 dark:text-white">{req.buyer.charAt(0)}</span></div>
+                    <span className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">{req.buyer}</span>
+                    <span className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">• {req.type}</span>
                   </div>
-                  <span className="text-[10px] text-slate-500">{req.responses} offre{req.responses > 1 ? 's' : ''}</span>
+                  <span className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">{req.responses} offre{req.responses > 1 ? 's' : ''}</span>
                 </div>
 
                 {!isResponding && !isSubmitted && (
                   <button onClick={() => setRespondingTo(req.id)}
-                    className="w-full mt-3 py-2.5 bg-rp-primary text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 shadow-lg shadow-red-600/20 hover:bg-rp-primary-dark transition-colors">
+                    className="w-full mt-3 py-2.5 bg-red-600 text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 shadow-lg shadow-red-600/20 hover:bg-red-600-dark transition-colors">
                     <Send className="w-3.5 h-3.5" /> Proposer une offre
                   </button>
                 )}
@@ -110,45 +110,45 @@ export default function SellerRequestsPage() {
 
               {/* Offer Form */}
               {isResponding && (
-                <div className="bg-slate-700/30 p-4 border-t border-slate-600/50 slide-up">
-                  <h4 className="text-xs font-bold text-white mb-3">Votre offre</h4>
+                <div className="bg-gray-100 p-4 border-t border-gray-200 slide-up">
+                  <h4 className="text-xs font-bold text-gray-900 dark:text-white dark:text-white mb-3">Votre offre</h4>
                   <div className="space-y-3">
                     <div>
-                      <label className="text-[10px] text-slate-400 mb-1 block">Prix (FCFA) *</label>
+                      <label className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500 mb-1 block">Prix (FCFA) *</label>
                       <input type="number" placeholder="Ex: 62000" value={offerForm.price} onChange={(e) => setOfferForm(p => ({ ...p, price: e.target.value }))}
-                        className="w-full px-3 py-2.5 bg-slate-700/50 border border-slate-600/50 rounded-lg text-sm text-white placeholder-slate-500 outline-none focus:ring-2 focus:ring-blue-500" />
+                        className="w-full px-3 py-2.5 bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded-lg text-sm text-gray-900 dark:text-white placeholder-slate-500 outline-none focus:ring-2 focus:ring-blue-500" />
                     </div>
                     <div>
-                      <label className="text-[10px] text-slate-400 mb-1 block">Qualité</label>
+                      <label className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500 mb-1 block">Qualité</label>
                       <div className="flex flex-wrap gap-1.5">
                         {qualityOptions.map(q => (
                           <button key={q} type="button" onClick={() => setOfferForm(p => ({ ...p, quality: q }))}
                             className={`px-2 py-1 rounded-full text-[10px] font-medium transition-all ${
-                              offerForm.quality === q ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-400 border border-slate-600/50'
+                              offerForm.quality === q ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-400 dark:text-slate-500 dark:text-slate-500 border border-gray-200'
                             }`}>{q}</button>
                         ))}
                       </div>
                     </div>
                     <div className="grid grid-cols-2 gap-2">
                       <div>
-                        <label className="text-[10px] text-slate-400 mb-1 block">Disponibilité</label>
+                        <label className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500 mb-1 block">Disponibilité</label>
                         <select value={offerForm.availability} onChange={(e) => setOfferForm(p => ({ ...p, availability: e.target.value }))}
-                          className="w-full px-3 py-2.5 bg-slate-700/50 border border-slate-600/50 rounded-lg text-sm text-white outline-none">
+                          className="w-full px-3 py-2.5 bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded-lg text-sm text-gray-900 dark:text-white outline-none">
                           <option>Immédiate</option><option>24 heures</option><option>48 heures</option><option>3-5 jours</option>
                         </select>
                       </div>
                       <div>
-                        <label className="text-[10px] text-slate-400 mb-1 block">Garantie</label>
+                        <label className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500 mb-1 block">Garantie</label>
                         <select value={offerForm.warranty} onChange={(e) => setOfferForm(p => ({ ...p, warranty: e.target.value }))}
-                          className="w-full px-3 py-2.5 bg-slate-700/50 border border-slate-600/50 rounded-lg text-sm text-white outline-none">
+                          className="w-full px-3 py-2.5 bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded-lg text-sm text-gray-900 dark:text-white outline-none">
                           <option>1 mois</option><option>3 mois</option><option>6 mois</option><option>12 mois</option>
                         </select>
                       </div>
                     </div>
                     <textarea placeholder="Notes..." value={offerForm.notes} onChange={(e) => setOfferForm(p => ({ ...p, notes: e.target.value }))} rows={2}
-                      className="w-full px-3 py-2.5 bg-slate-700/50 border border-slate-600/50 rounded-lg text-sm text-white placeholder-slate-500 outline-none resize-none" />
+                      className="w-full px-3 py-2.5 bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded-lg text-sm text-gray-900 dark:text-white placeholder-slate-500 outline-none resize-none" />
                     <div className="flex gap-2">
-                      <button onClick={() => setRespondingTo(null)} className="flex-1 py-2.5 bg-slate-700 text-white rounded-lg text-xs font-medium">Annuler</button>
+                      <button onClick={() => setRespondingTo(null)} className="flex-1 py-2.5 bg-gray-200 text-gray-900 dark:text-white rounded-lg text-xs font-medium">Annuler</button>
                       <button onClick={() => handleSubmit(req.id)} disabled={!offerForm.price}
                         className="flex-1 py-2.5 bg-blue-600 text-white rounded-lg text-xs font-semibold disabled:opacity-40 flex items-center justify-center gap-2">
                         <Check className="w-3.5 h-3.5" /> Envoyer
@@ -163,7 +163,7 @@ export default function SellerRequestsPage() {
                   <Check className="w-5 h-5 text-emerald-400" />
                   <div>
                     <p className="text-xs font-semibold text-emerald-400">Offre envoyée !</p>
-                    <p className="text-[10px] text-slate-400">L&apos;acheteur sera notifié</p>
+                    <p className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">L&apos;acheteur sera notifié</p>
                   </div>
                 </div>
               )}
@@ -173,7 +173,7 @@ export default function SellerRequestsPage() {
       </div>
 
       {/* Bottom Nav */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-xl border-t border-slate-700/50 z-50">
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white backdrop-blur-xl border-t border-gray-200 z-50">
         <div className="flex items-center justify-around h-16 max-w-lg mx-auto">
           {[
             { href: '/seller', label: 'Accueil', icon: Store },
@@ -185,15 +185,15 @@ export default function SellerRequestsPage() {
             const Icon = tab.icon;
             if (tab.center) return (
               <Link key={tab.href} href={tab.href} className="flex flex-col items-center -mt-4">
-                <div className="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center shadow-lg shadow-blue-600/30"><Icon className="w-6 h-6 text-white" /></div>
+                <div className="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center shadow-lg shadow-blue-600/30"><Icon className="w-6 h-6 text-gray-900 dark:text-white" /></div>
                 <span className="text-[10px] mt-1 text-blue-400 font-medium">{tab.label}</span>
               </Link>
             );
             return (
               <Link key={tab.href} href={tab.href} className="flex flex-col items-center relative">
-                <Icon className="w-5 h-5 text-slate-400" />
-                {tab.badge && <span className="absolute -top-1 -right-1 w-4 h-4 bg-rp-primary text-white text-[9px] rounded-full flex items-center justify-center font-bold">{tab.badge}</span>}
-                <span className="text-[10px] mt-0.5 text-slate-400">{tab.label}</span>
+                <Icon className="w-5 h-5 text-gray-400 dark:text-slate-500 dark:text-slate-500" />
+                {tab.badge && <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-600 text-white text-[9px] rounded-full flex items-center justify-center font-bold">{tab.badge}</span>}
+                <span className="text-[10px] mt-0.5 text-gray-400 dark:text-slate-500 dark:text-slate-500">{tab.label}</span>
               </Link>
             );
           })}

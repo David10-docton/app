@@ -34,7 +34,7 @@ export default function SellerOrdersPage() {
   const activeOrders = sales.filter(s => s.status !== 'completed');
 
   return (
-    <div className="min-h-screen bg-rp-bg">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-950">
       {/* Header */}
       <div className="bg-white px-4 pt-12 pb-4 border-b border-rp-border sticky top-0 z-40">
         <div className="max-w-lg mx-auto">
@@ -53,7 +53,7 @@ export default function SellerOrdersPage() {
             </div>
             <div className="text-right">
               <p className="text-xs text-rp-text-muted">En cours</p>
-              <p className="text-lg font-bold text-rp-primary">{activeOrders.length} commandes</p>
+              <p className="text-lg font-bold text-red-600">{activeOrders.length} commandes</p>
             </div>
           </div>
 
@@ -68,7 +68,7 @@ export default function SellerOrdersPage() {
                 key={f.key}
                 onClick={() => setFilter(f.key)}
                 className={`px-3 py-1.5 rounded-full text-xs font-medium ${
-                  filter === f.key ? 'bg-rp-primary text-white' : 'bg-rp-bg text-rp-text-muted'
+                  filter === f.key ? 'bg-red-600 text-white' : 'bg-gray-50 text-rp-text-muted'
                 }`}
               >
                 {f.label}
@@ -106,11 +106,11 @@ export default function SellerOrdersPage() {
 
               {/* Delivery Type Badge */}
               <div className="flex items-center justify-between mt-2">
-                <span className="text-[10px] bg-rp-bg px-2 py-1 rounded-full text-rp-text-muted">
+                <span className="text-[10px] bg-gray-50 px-2 py-1 rounded-full text-rp-text-muted">
                   {sale.deliveryType.replace('_', ' ')}
                 </span>
                 {sale.status === 'in_transit' && (
-                  <Link href={`/seller/orders/${sale.id}`} className="text-xs text-rp-primary font-medium">
+                  <Link href={`/seller/orders/${sale.id}`} className="text-xs text-red-600 font-medium">
                     Suivre →
                   </Link>
                 )}
@@ -125,20 +125,20 @@ export default function SellerOrdersPage() {
         })}
 
         {/* Monthly Summary */}
-        <div className="bg-gradient-to-r from-rp-secondary to-rp-secondary-light rounded-2xl p-4 text-white">
+        <div className="bg-gradient-to-r from-rp-secondary to-rp-secondary-light rounded-2xl p-4 text-gray-900 dark:text-white">
           <h3 className="font-bold mb-3">📊 Résumé mensuel</h3>
           <div className="grid grid-cols-3 gap-3">
             <div className="text-center">
               <p className="text-xl font-bold">{sales.length}</p>
-              <p className="text-[10px] text-white/70">Transactions</p>
+              <p className="text-[10px] text-gray-900 dark:text-white/70">Transactions</p>
             </div>
             <div className="text-center">
               <p className="text-xl font-bold">{(totalRevenue / 1000).toFixed(0)}k</p>
-              <p className="text-[10px] text-white/70">Revenue (FCFA)</p>
+              <p className="text-[10px] text-gray-900 dark:text-white/70">Revenue (FCFA)</p>
             </div>
             <div className="text-center">
               <p className="text-xl font-bold">97%</p>
-              <p className="text-[10px] text-white/70">Conformité</p>
+              <p className="text-[10px] text-gray-900 dark:text-white/70">Conformité</p>
             </div>
           </div>
         </div>

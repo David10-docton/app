@@ -64,16 +64,16 @@ export default function VehicleHistoryPage() {
   return (
     <div className="min-h-screen bg-rp-bg pb-24 lg:pb-8">
       {/* Header */}
-      <header className="bg-slate-900/80 backdrop-blur-xl border-b border-slate-700/50 sticky top-0 z-50">
+      <header className="bg-white backdrop-blur-xl border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-4xl mx-auto px-4 py-3 flex items-center gap-3">
-          <Link href="/profile" className="text-slate-400 hover:text-white">
+          <Link href="/profile" className="text-gray-400 dark:text-slate-500 dark:text-slate-500 hover:text-gray-900 dark:text-white">
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div className="flex-1">
-            <h1 className="text-sm font-bold text-white">Historique véhicule</h1>
-            <p className="text-[10px] text-slate-400">Suivi complet des pièces</p>
+            <h1 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white">Historique véhicule</h1>
+            <p className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">Suivi complet des pièces</p>
           </div>
-          <Link href="/requests/new" className="bg-rp-primary text-white text-xs font-bold px-3 py-2 rounded-lg flex items-center gap-1">
+          <Link href="/requests/new" className="bg-red-600 text-white text-xs font-bold px-3 py-2 rounded-lg flex items-center gap-1">
             <Plus className="w-3 h-3" /> Nouvelle demande
           </Link>
         </div>
@@ -88,23 +88,23 @@ export default function VehicleHistoryPage() {
               onClick={() => setSelectedVehicle(v)}
               className={`shrink-0 rounded-xl p-3 border transition-all ${
                 selectedVehicle?.id === v.id
-                  ? 'bg-rp-primary/10 border-rp-primary/50'
-                  : 'bg-slate-800/50 border-slate-700/50'
+                  ? 'bg-red-600/10 border-red-300'
+                  : 'bg-gray-50 border-gray-200'
               }`}
             >
               <div className="flex items-center gap-2">
                 <span className="text-xl">🚗</span>
                 <div className="text-left">
-                  <div className="text-xs font-bold text-white">{v.brand} {v.model}</div>
-                  <div className="text-[10px] text-slate-400">{v.year} • {v.plate}</div>
+                  <div className="text-xs font-bold text-gray-900 dark:text-white dark:text-white">{v.brand} {v.model}</div>
+                  <div className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">{v.year} • {v.plate}</div>
                 </div>
               </div>
             </button>
           ))}
-          <button className="shrink-0 rounded-xl p-3 border border-dashed border-slate-700/50 flex items-center justify-center min-w-[120px] hover:border-rp-primary/30 transition-all">
+          <button className="shrink-0 rounded-xl p-3 border border-dashed border-gray-200 flex items-center justify-center min-w-[120px] hover:border-red-200 transition-all">
             <div className="text-center">
-              <Plus className="w-5 h-5 text-slate-400 mx-auto" />
-              <span className="text-[10px] text-slate-400">Ajouter</span>
+              <Plus className="w-5 h-5 text-gray-400 dark:text-slate-500 dark:text-slate-500 mx-auto" />
+              <span className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">Ajouter</span>
             </div>
           </button>
         </div>
@@ -112,27 +112,27 @@ export default function VehicleHistoryPage() {
         {selectedVehicle && (
           <>
             {/* Vehicle Info */}
-            <div className="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-5">
+            <div className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl p-5">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-14 h-14 bg-rp-primary/20 rounded-xl flex items-center justify-center text-3xl">🚗</div>
+                <div className="w-14 h-14 bg-red-600/20 rounded-xl flex items-center justify-center text-3xl">🚗</div>
                 <div>
-                  <h2 className="text-lg font-bold text-white">{selectedVehicle.brand} {selectedVehicle.model}</h2>
-                  <p className="text-xs text-slate-400">{selectedVehicle.year} • {selectedVehicle.motor}</p>
-                  <p className="text-[10px] text-slate-500">VIN: {selectedVehicle.vin}</p>
+                  <h2 className="text-lg font-bold text-gray-900 dark:text-white dark:text-white">{selectedVehicle.brand} {selectedVehicle.model}</h2>
+                  <p className="text-xs text-gray-400 dark:text-slate-500 dark:text-slate-500">{selectedVehicle.year} • {selectedVehicle.motor}</p>
+                  <p className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">VIN: {selectedVehicle.vin}</p>
                 </div>
               </div>
               <div className="grid grid-cols-3 gap-2">
-                <div className="bg-slate-700/30 rounded-xl p-3 text-center">
-                  <div className="text-lg font-bold text-white">{selectedVehicle.history.length}</div>
-                  <div className="text-[10px] text-slate-400">Pièces</div>
+                <div className="bg-gray-100 rounded-xl p-3 text-center">
+                  <div className="text-lg font-bold text-gray-900 dark:text-white dark:text-white">{selectedVehicle.history.length}</div>
+                  <div className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">Pièces</div>
                 </div>
-                <div className="bg-slate-700/30 rounded-xl p-3 text-center">
+                <div className="bg-gray-100 rounded-xl p-3 text-center">
                   <div className="text-lg font-bold text-yellow-400">{selectedVehicle.totalSpent.toLocaleString()}</div>
-                  <div className="text-[10px] text-slate-400">FCFA dépensés</div>
+                  <div className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">FCFA dépensés</div>
                 </div>
-                <div className="bg-slate-700/30 rounded-xl p-3 text-center">
+                <div className="bg-gray-100 rounded-xl p-3 text-center">
                   <div className="text-lg font-bold text-emerald-400">85k</div>
-                  <div className="text-[10px] text-slate-400">km actuels</div>
+                  <div className="text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">km actuels</div>
                 </div>
               </div>
             </div>
@@ -142,7 +142,7 @@ export default function VehicleHistoryPage() {
               <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0" />
               <div>
                 <p className="text-xs font-bold text-amber-400">Prochain entretien</p>
-                <p className="text-[11px] text-slate-300">Prévu le {selectedVehicle.nextService} — Huile + Filtre</p>
+                <p className="text-[11px] text-gray-600 dark:text-slate-300 dark:text-slate-300">Prévu le {selectedVehicle.nextService} — Huile + Filtre</p>
               </div>
               <Link href="/requests/new" className="ml-auto bg-amber-500/20 text-amber-300 text-[10px] font-bold px-3 py-1.5 rounded-lg shrink-0">
                 Commander
@@ -150,16 +150,16 @@ export default function VehicleHistoryPage() {
             </div>
 
             {/* Maintenance schedule */}
-            <div className="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-4">
-              <h3 className="text-sm font-bold text-white mb-3">🔧 Planning d&apos;entretien</h3>
+            <div className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl p-4">
+              <h3 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white mb-3">🔧 Planning d&apos;entretien</h3>
               <div className="space-y-2">
                 {maintenanceSchedule.map((m, i) => (
-                  <div key={i} className="flex items-center gap-3 py-2 border-b border-slate-700/50 last:border-0">
+                  <div key={i} className="flex items-center gap-3 py-2 border-b border-gray-200 last:border-0">
                     <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold border ${urgencyColors[m.urgency]}`}>{m.interval}</span>
                     <div className="flex-1">
-                      <div className="text-xs text-white">{m.parts.join(', ')}</div>
+                      <div className="text-xs text-gray-900 dark:text-white">{m.parts.join(', ')}</div>
                     </div>
-                    <Link href="/requests/new" className="text-[10px] text-rp-primary font-medium">Commander</Link>
+                    <Link href="/requests/new" className="text-[10px] text-red-600 font-medium">Commander</Link>
                   </div>
                 ))}
               </div>
@@ -167,17 +167,17 @@ export default function VehicleHistoryPage() {
 
             {/* History */}
             <div className="space-y-3">
-              <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wide">Historique des pièces</h3>
+              <h3 className="text-sm font-semibold text-gray-400 dark:text-slate-500 dark:text-slate-500 uppercase tracking-wide">Historique des pièces</h3>
               {selectedVehicle.history.map((h, i) => (
-                <div key={i} className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-4">
+                <div key={i} className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl p-4">
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-slate-700/50 rounded-lg flex items-center justify-center">
-                        <Wrench className="w-5 h-5 text-rp-primary" />
+                      <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+                        <Wrench className="w-5 h-5 text-red-600" />
                       </div>
                       <div>
-                        <h4 className="text-sm font-bold text-white">{h.part}</h4>
-                        <div className="flex items-center gap-2 text-[10px] text-slate-400 mt-0.5">
+                        <h4 className="text-sm font-bold text-gray-900 dark:text-white dark:text-white">{h.part}</h4>
+                        <div className="flex items-center gap-2 text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500 mt-0.5">
                           <Calendar className="w-3 h-3" /> {h.date}
                           <span>•</span>
                           <span>{h.km.toLocaleString()} km</span>
@@ -185,13 +185,13 @@ export default function VehicleHistoryPage() {
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="text-sm font-bold text-white">{h.amount.toLocaleString()} FCFA</div>
+                      <div className="text-sm font-bold text-gray-900 dark:text-white dark:text-white">{h.amount.toLocaleString()} FCFA</div>
                       <div className="flex items-center gap-1">
                         <span className="text-[10px] bg-blue-500/20 text-blue-300 px-1.5 py-0.5 rounded">{h.quality}</span>
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center justify-between mt-2 text-[10px] text-slate-500">
+                  <div className="flex items-center justify-between mt-2 text-[10px] text-gray-400 dark:text-slate-500 dark:text-slate-500">
                     <span>📍 {h.seller}</span>
                     <span className="text-emerald-400">✓ {h.status}</span>
                   </div>
@@ -202,7 +202,7 @@ export default function VehicleHistoryPage() {
             {/* Recommendation */}
             <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4">
               <p className="text-xs font-bold text-blue-400 mb-1">💡 Recommandation Rapid</p>
-              <p className="text-[11px] text-slate-300">Basé sur votre historique, les prochaines pièces à prévoir : plaquettes arrière (~35 000 FCFA) et filtre à carburant (~15 000 FCFA).</p>
+              <p className="text-[11px] text-gray-600 dark:text-slate-300 dark:text-slate-300">Basé sur votre historique, les prochaines pièces à prévoir : plaquettes arrière (~35 000 FCFA) et filtre à carburant (~15 000 FCFA).</p>
               <Link href="/requests/new" className="inline-block mt-2 text-xs text-blue-400 font-medium hover:underline">Demander ces pièces →</Link>
             </div>
           </>
